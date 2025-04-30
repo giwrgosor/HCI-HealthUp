@@ -1,7 +1,9 @@
 package com.example.healthup;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -23,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button save_btn;
 
-    private void checkPermissions() {
+    private void askPermissions() {
         String[] permissions = {
                 Manifest.permission.CALL_PHONE,
                 Manifest.permission.SEND_SMS,
@@ -57,6 +59,21 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private boolean arePermissionsGranted() {
+        String[] permissions = {
+                Manifest.permission.CALL_PHONE,
+                Manifest.permission.SEND_SMS,
+                Manifest.permission.READ_PHONE_STATE
+        };
+
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,11 +87,14 @@ public class MainActivity extends AppCompatActivity {
 
         save_btn = findViewById(R.id.main_save_btn);
 
-        save_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkPermissions();
+        save_btn.setOnClickListener(view -> {
+            if(!arePermissionsGranted()) {
+                askPermissions();
+                Log.d("MainActivity","Mphke sto if");
             }
+            Log.d("MainActivity","bghke apo to if");
+            Intent intent = new Intent(this, MainMenuActivity.class);
+            startActivity(intent);
         });
     }
 }
