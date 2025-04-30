@@ -65,12 +65,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         int currentColor = colors[colorIndex];
         holder.contactName.setBackgroundColor(colors[colorIndex]);
 
-        boolean isExpanded;
-        if (position == expandedPosition) {
-            isExpanded = true;
-        } else {
-            isExpanded = false;
-        }
+        boolean isExpanded = position == expandedPosition;
 
         if (isExpanded) {
             holder.contactPhone.setVisibility(View.VISIBLE);
@@ -97,13 +92,17 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         }
 
         holder.itemView.setOnClickListener(v -> {
-            if (isExpanded) {
+            int adapterPosition = holder.getAdapterPosition();
+            if (adapterPosition == RecyclerView.NO_POSITION) return;
+
+            if (adapterPosition == expandedPosition) {
                 expandedPosition = -1;
             } else {
-                expandedPosition = position;
+                expandedPosition = adapterPosition;
             }
             notifyDataSetChanged();
         });
+
 
         holder.callIcon.setOnClickListener(v -> {
 
