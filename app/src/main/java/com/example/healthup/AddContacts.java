@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class AddContacts extends AppCompatActivity {
 
+    private EditText nameContactText;
     private EditText phoneContactText;
     private Button addContactBtn;
 
@@ -18,6 +19,7 @@ public class AddContacts extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.addcontacts);
 
+        nameContactText = findViewById(R.id.completedNameContact);
         phoneContactText = findViewById(R.id.completedPhoneContact);
         addContactBtn = findViewById(R.id.addContactButton);
 
@@ -31,6 +33,8 @@ public class AddContacts extends AppCompatActivity {
                     Toast.makeText(AddContacts.this, "Η επαφή προστέθηκε!", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(AddContacts.this, Contacts.class);
+                    intent.putExtra("name", nameContactText.getText().toString().trim());
+                    intent.putExtra("phone", phoneContactText.getText().toString().trim());
                     startActivity(intent);
 
                 } else {
