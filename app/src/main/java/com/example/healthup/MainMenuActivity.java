@@ -23,13 +23,21 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+//        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main_menu);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+//            return insets;
+//        });
+
+        sos_btn=findViewById(R.id.menu_sos_btn);
+        returnHome_btn=findViewById(R.id.menu_returnhome_btn);
+        contacts_btn=findViewById(R.id.menu_contacts_btn);
+        locations_btn=findViewById(R.id.menu_locations_btn);
+        pills_btn=findViewById(R.id.menu_pills_btn);
+        profile_btn=findViewById(R.id.menu_profile_btn);
+
 
         sos_btn.setOnClickListener(new View.OnClickListener() {
             @Override
