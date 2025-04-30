@@ -91,10 +91,10 @@ public class MainActivity extends AppCompatActivity {
             if(!arePermissionsGranted()) {
                 askPermissions();
                 Log.d("MainActivity","Mphke sto if");
+            }else {
+                Intent intent = new Intent(this, MainMenuActivity.class);
+                startActivity(intent);
             }
-            Log.d("MainActivity","bghke apo to if");
-            Intent intent = new Intent(this, MainMenuActivity.class);
-            startActivity(intent);
         });
     }
 }
