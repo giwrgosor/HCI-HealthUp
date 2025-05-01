@@ -28,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/locationListName"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/edit" />
+        app:srcCompat="@drawable/directions" />
 
     <ImageView
         android:id="@+id/locationListView"
@@ -38,6 +38,6 @@
         app:layout_constraintEnd_toStartOf="@+id/locationListName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/delete" />
+        app:srcCompat="@drawable/eye" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
