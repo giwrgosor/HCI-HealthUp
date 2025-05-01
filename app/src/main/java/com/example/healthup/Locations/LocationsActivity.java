@@ -51,7 +51,5 @@ public class LocationsActivity extends AppCompatActivity {
         adapter = new LocationsListViewAdapter(getLayoutInflater(),locationDAO.findAll(), this);
         locationsListView.setAdapter(adapter);
 
-
-
     }
 }

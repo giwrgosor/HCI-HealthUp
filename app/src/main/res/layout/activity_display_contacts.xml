@@ -70,7 +70,7 @@
         android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/location_background_rectangle" />
+        app:srcCompat="@drawable/background_rectangle" />
 
     <TextView
         android:id="@+id/nameDisplayContact"
@@ -95,7 +95,7 @@
         android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/location_background_rectangle" />
+        app:srcCompat="@drawable/background_rectangle" />
 
     <TextView
         android:id="@+id/phoneDisplayContact"
