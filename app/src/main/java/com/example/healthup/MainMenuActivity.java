@@ -7,6 +7,9 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.healthup.MemoryDAO.MemoryInitializer;
+import com.example.healthup.dao.Initializer;
+
 public class MainMenuActivity extends AppCompatActivity {
 
     private Button sos_btn;
@@ -35,6 +38,8 @@ public class MainMenuActivity extends AppCompatActivity {
         pills_btn=findViewById(R.id.menu_pills_btn);
         profile_btn=findViewById(R.id.menu_profile_btn);
 
+        Initializer initializer = new MemoryInitializer();
+        initializer.prepareData();
 
         sos_btn.setOnClickListener(new View.OnClickListener() {
             @Override

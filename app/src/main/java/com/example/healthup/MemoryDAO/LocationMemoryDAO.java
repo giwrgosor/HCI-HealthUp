@@ -21,7 +21,7 @@ public class LocationMemoryDAO implements LocationDAO {
     }
 
     @Override
-    public List<Location> findAll() {
+    public ArrayList<Location> findAll() {
         return new ArrayList<>(locations);
     }
 }

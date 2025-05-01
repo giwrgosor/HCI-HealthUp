@@ -12,6 +12,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.healthup.MemoryDAO.LocationMemoryDAO;
+import com.example.healthup.dao.LocationDAO;
 import com.example.healthup.domain.Location;
 
 import java.util.ArrayList;
@@ -46,14 +48,8 @@ public class LocationsActivity extends AppCompatActivity {
         });
 
 
-        ArrayList<Location> locations = new ArrayList<>();
-        Location loc = new Location("Test",37.8787182,23.7559329,"Test","test","test");
-        Location loc1 = new Location("Test1",10,15,"Test","test","test");
-        Location loc2 = new Location("Test2",10,15,"Test","test","test");
-        locations.add(loc);
-        locations.add(loc1);
-        locations.add(loc2);
-        adapter = new LocationsListViewAdapter(getLayoutInflater(),locations, this);
+        LocationDAO locationDAO = new LocationMemoryDAO() ;
+        adapter = new LocationsListViewAdapter(getLayoutInflater(),locationDAO.findAll(), this);
         locationsListView.setAdapter(adapter);
 
 

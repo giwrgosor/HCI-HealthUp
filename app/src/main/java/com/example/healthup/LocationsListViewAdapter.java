@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.healthup.domain.Location;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LocationsListViewAdapter extends BaseAdapter {
     private LayoutInflater inflater;
