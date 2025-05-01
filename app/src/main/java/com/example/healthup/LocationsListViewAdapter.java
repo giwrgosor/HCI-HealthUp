@@ -55,7 +55,7 @@ public class LocationsListViewAdapter extends BaseAdapter {
         viewLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, MainMenuActivity.class);
+                Intent intent = new Intent(context, ViewLocationActivity.class);
                 intent.putExtra("Location", currentLocation);
                 context.startActivity(intent);
             }
