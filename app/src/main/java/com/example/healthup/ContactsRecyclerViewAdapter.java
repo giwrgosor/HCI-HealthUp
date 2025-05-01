@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.healthup.domain.Contact;
+
 import java.text.Normalizer;
 import java.util.Collections;
 import java.util.Comparator;
@@ -53,7 +55,7 @@ public class ContactsRecyclerViewAdapter extends RecyclerView.Adapter<ContactsRe
 
         Contact contact = contacts.get(position);
         holder.contactName.setText(contact.getName());
-        holder.contactPhone.setText("Κινητό: " + formatPhoneNumber(contact.getPhone()));
+        holder.contactPhone.setText("Κινητό: " + contact.formatPhoneNumber(contact.getPhone()));
 
         int[] colors = {
                 Color.parseColor("#BDBDBD"), // Γκρι
@@ -146,17 +148,6 @@ public class ContactsRecyclerViewAdapter extends RecyclerView.Adapter<ContactsRe
         });
     }
 
-    private String formatPhoneNumber(String phone) {
-        if (phone == null) return "";
-
-        phone = phone.replaceAll("\\D", "");
-
-        if (phone.length() == 10) {
-            return phone.substring(0, 3) + " " + phone.substring(3, 6) + " " + phone.substring(6);
-        } else {
-            return phone;
-        }
-    }
 
 }
 
