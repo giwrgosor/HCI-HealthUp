@@ -1,4 +1,4 @@
-package com.example.healthup;
+package com.example.healthup.Locations;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,10 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.healthup.R;
 import com.example.healthup.domain.Location;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class LocationsListViewAdapter extends BaseAdapter {
     private LayoutInflater inflater;

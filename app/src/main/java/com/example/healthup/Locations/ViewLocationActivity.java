@@ -1,4 +1,4 @@
-package com.example.healthup;
+package com.example.healthup.Locations;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.healthup.MainMenuActivity;
+import com.example.healthup.R;
 import com.example.healthup.domain.Location;
 
 public class ViewLocationActivity extends AppCompatActivity {
