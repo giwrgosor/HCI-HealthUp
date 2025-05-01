@@ -1,5 +1,6 @@
 package com.example.healthup.Locations;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -59,6 +60,7 @@ public class LocationsListViewAdapter extends BaseAdapter {
                 Intent intent = new Intent(context, ViewLocationActivity.class);
                 intent.putExtra("Location", currentLocation);
                 context.startActivity(intent);
+                ((Activity) context).finish();
             }
         });
 

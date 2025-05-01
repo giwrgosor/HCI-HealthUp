@@ -66,4 +66,23 @@ public class Location implements Serializable {
     public void setLon(double lon) {
         this.lon = lon;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Location location = (Location) o;
+        return Double.compare(lat, location.lat) == 0 && Double.compare(lon, location.lon) == 0 && name.equals(location.name) && street.equals(location.street) && city.equals(location.city) && zipcode.equals(location.zipcode);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + Double.hashCode(lat);
+        result = 31 * result + Double.hashCode(lon);
+        result = 31 * result + street.hashCode();
+        result = 31 * result + city.hashCode();
+        result = 31 * result + zipcode.hashCode();
+        return result;
+    }
 }

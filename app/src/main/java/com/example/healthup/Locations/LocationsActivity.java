@@ -16,6 +16,7 @@ import com.example.healthup.MainMenuActivity;
 import com.example.healthup.MemoryDAO.LocationMemoryDAO;
 import com.example.healthup.R;
 import com.example.healthup.dao.LocationDAO;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class LocationsActivity extends AppCompatActivity {
@@ -23,6 +24,7 @@ public class LocationsActivity extends AppCompatActivity {
     private ListView locationsListView;
     private ImageView homeFromLocations;
     private LocationsListViewAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,17 @@ public class LocationsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MainMenuActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        FloatingActionButton addLocation_btn = findViewById(R.id.addLocation);
+
+        addLocation_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AddLocationActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 

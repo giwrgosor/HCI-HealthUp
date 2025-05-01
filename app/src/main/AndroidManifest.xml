@@ -22,6 +22,9 @@
         android:theme="@style/Theme.HealthUp"
         tools:targetApi="31">
         <activity
+            android:name=".Locations.AddLocationActivity"
+            android:exported="false" />
+        <activity
             android:name=".EditContactsActivity"
             android:exported="false" />
         <activity

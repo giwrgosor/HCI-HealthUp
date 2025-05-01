@@ -63,8 +63,9 @@
         android:id="@+id/LocationViewName"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:text="Όνομα Τοποθεσίας"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/ViewLocationsBackground"
@@ -75,6 +76,7 @@
         android:id="@+id/ViewLocationDisplayName"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:layout_marginTop="5dp"
         android:background="@drawable/background_rectangle"
         android:text="TextView"
@@ -89,6 +91,7 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:textColor="@color/black"
         android:text="Διεύθυνση"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -100,6 +103,7 @@
         android:id="@+id/ViewLocationDisplayAddress"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:layout_marginTop="5dp"
         android:background="@drawable/background_rectangle"
         android:text="TextView"
@@ -114,6 +118,7 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:textColor="@color/black"
         android:text="Ταχυδρομικός Κώδικας"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -127,6 +132,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:background="@drawable/background_rectangle"
+        android:textColor="@color/black"
         android:text="TextView"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -139,6 +145,7 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:textColor="@color/black"
         android:text="Πόλη"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -150,6 +157,7 @@
         android:id="@+id/ViewLocationDisplayCity"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:layout_marginTop="5dp"
         android:background="@drawable/background_rectangle"
         android:text="TextView"
@@ -158,6 +166,42 @@
         app:layout_constraintStart_toStartOf="parent"
         android:padding="12dp"
         app:layout_constraintTop_toBottomOf="@+id/LocationViewCity" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/deleteLocation_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:backgroundTint="@color/red"
+        app:tint="@color/white"
+        app:srcCompat="@drawable/delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/editLocation_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:backgroundTint="@color/orange"
+        app:tint="@color/white"
+        app:srcCompat="@drawable/edit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/directionsLocation_btn"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_margin="16dp"
+        app:backgroundTint="@color/green"
+        app:tint="@color/white"
+        app:srcCompat="@drawable/directions"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
 
 
 
