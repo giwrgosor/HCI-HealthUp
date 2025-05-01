@@ -26,6 +26,7 @@
     <TextView
         android:id="@+id/contactPhone"
         android:layout_width="0dp"
+        android:layout_marginStart="2dp"
         android:layout_height="wrap_content"
         android:text="6907777777"
         android:textAlignment="center"
@@ -35,15 +36,43 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/contactName"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="0dp"/>
+
+    <TextView
+        android:id="@+id/contactSpace"
+        android:layout_width="0dp"
+        android:layout_marginStart="2dp"
+        android:layout_height="40dp"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/contactPhone"
+        android:layout_marginTop="0dp"/>
 
     <ImageView
         android:id="@+id/callIcon"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@android:drawable/ic_menu_call"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="8dp"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/contactName"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/contactPhone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/phone" />
+
+    <ImageView
+        android:id="@+id/editIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="270dp"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/contactPhone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/edit" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
