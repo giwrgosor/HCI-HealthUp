@@ -9,7 +9,7 @@ import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class AddContacts extends AppCompatActivity {
+public class AddContactsActivity extends AppCompatActivity {
 
     private EditText nameContactText;
     private EditText phoneContactText;
@@ -17,7 +17,7 @@ public class AddContacts extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.addcontacts);
+        setContentView(R.layout.activity_add_contacts);
 
         nameContactText = findViewById(R.id.completedNameContact);
         phoneContactText = findViewById(R.id.completedPhoneContact);
@@ -30,15 +30,15 @@ public class AddContacts extends AppCompatActivity {
                 String phone = phoneContactText.getText().toString().trim();
 
                 if (phone.length() == 10 && phone.matches("\\d+")) {
-                    Toast.makeText(AddContacts.this, "Η επαφή προστέθηκε!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddContactsActivity.this, "Η επαφή προστέθηκε!", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(AddContacts.this, Contacts.class);
+                    Intent intent = new Intent(AddContactsActivity.this, ContactsActivity.class);
                     intent.putExtra("name", nameContactText.getText().toString().trim());
                     intent.putExtra("phone", phoneContactText.getText().toString().trim());
                     startActivity(intent);
 
                 } else {
-                    Toast.makeText(AddContacts.this, "Λάθος τηλέφωνο: Πρέπει να έχει 10 ψηφία.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddContactsActivity.this, "Λάθος τηλέφωνο: Πρέπει να έχει 10 ψηφία.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

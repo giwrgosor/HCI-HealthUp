@@ -9,19 +9,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.Normalizer;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
+public class ContactsRecyclerViewAdapter extends RecyclerView.Adapter<ContactsRecyclerViewAdapter.ViewHolder> {
 
     private int expandedPosition = -1;
     private List<Contact> contacts;
 
-    public ContactAdapter(List<Contact> contacts) {
+    public ContactsRecyclerViewAdapter(List<Contact> contacts) {
         this.contacts = contacts;
     }
 
@@ -42,18 +42,18 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
     }
 
     @Override
-    public ContactAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ContactsRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_contact, parent, false);
+                .inflate(R.layout.contact_list_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ContactAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ContactsRecyclerViewAdapter.ViewHolder holder, int position) {
 
         Contact contact = contacts.get(position);
         holder.contactName.setText(contact.getName());
-        holder.contactPhone.setText(contact.getPhone());
+        holder.contactPhone.setText("Κινητό: " + formatPhoneNumber(contact.getPhone()));
 
         int[] colors = {
                 Color.parseColor("#BDBDBD"), // Γκρι
@@ -121,10 +121,31 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
         Collections.sort(contactList, new Comparator<Contact>() {
             @Override
             public int compare(Contact c1, Contact c2) {
-                return c1.getName().compareToIgnoreCase(c2.getName());
+                String name1 = removeAccents(c1.getName());
+                String name2 = removeAccents(c2.getName());
+                return name1.compareToIgnoreCase(name2);
+            }
+
+            private String removeAccents(String text) {
+                if (text == null) return "";
+                return Normalizer.normalize(text, Normalizer.Form.NFD)
+                        .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
             }
         });
     }
+
+    private String formatPhoneNumber(String phone) {
+        if (phone == null) return "";
+
+        phone = phone.replaceAll("\\D", "");
+
+        if (phone.length() == 10) {
+            return phone.substring(0, 3) + " " + phone.substring(3, 6) + " " + phone.substring(6);
+        } else {
+            return phone;
+        }
+    }
+
 }
 
 

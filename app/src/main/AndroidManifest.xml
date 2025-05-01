@@ -31,10 +31,10 @@
             android:name=".MainMenuActivity"
             android:exported="true" />
         <activity
-            android:name=".AddContacts"
+            android:name=".AddContactsActivity"
             android:exported="true" />
         <activity
-            android:name=".Contacts"
+            android:name=".ContactsActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

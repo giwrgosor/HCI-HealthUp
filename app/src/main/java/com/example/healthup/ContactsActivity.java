@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,24 +13,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Contacts extends AppCompatActivity {
+public class ContactsActivity extends AppCompatActivity {
 
     private Button btn_addContact;
+    private ImageButton btn_numpadContact;
 
     private RecyclerView recyclerView;
     private List<Contact> contactList = new ArrayList<>();
-    private ContactAdapter adapter;
+    private ContactsRecyclerViewAdapter adapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.contacts);
+        setContentView(R.layout.activity_contacts);
 
         btn_addContact = findViewById(R.id.addAContact);
+        btn_numpadContact = findViewById(R.id.numpadContact);
 
         recyclerView = findViewById(R.id.contactsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new ContactAdapter(contactList);
+        adapter = new ContactsRecyclerViewAdapter(contactList);
         recyclerView.setAdapter(adapter);
 
         contactList.add(new Contact("Γιάννης", "6907777777"));
@@ -52,7 +55,15 @@ public class Contacts extends AppCompatActivity {
         btn_addContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Contacts.this, AddContacts.class);
+                Intent intent = new Intent(ContactsActivity.this, AddContactsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_numpadContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
                 startActivity(intent);
             }
         });

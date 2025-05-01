@@ -5,11 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -57,7 +53,7 @@ public class MainMenuActivity extends AppCompatActivity {
         contacts_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainMenuActivity.this, Contacts.class);
+                Intent intent = new Intent(MainMenuActivity.this, ContactsActivity.class);
                 startActivity(intent);
             }
         });
