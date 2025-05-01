@@ -27,7 +27,23 @@ public class AddContactsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                String name = nameContactText.getText().toString().trim();
                 String phone = phoneContactText.getText().toString().trim();
+
+                if (name.isEmpty() && phone.isEmpty()) {
+                    Toast.makeText(AddContactsActivity.this, "Συμπληρώστε τα πεδία!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (name.isEmpty()) {
+                    Toast.makeText(AddContactsActivity.this, "Συμπληρώστε το όνομα!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (phone.isEmpty()) {
+                    Toast.makeText(AddContactsActivity.this, "Συμπληρώστε το τηλέφωνο!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 if (phone.length() == 10 && phone.matches("\\d+")) {
                     Toast.makeText(AddContactsActivity.this, "Η επαφή προστέθηκε!", Toast.LENGTH_SHORT).show();

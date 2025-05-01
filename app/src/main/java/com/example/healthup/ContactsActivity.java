@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,7 +17,8 @@ import java.util.List;
 public class ContactsActivity extends AppCompatActivity {
 
     private Button btn_addContact;
-    private ImageButton btn_numpadContact;
+    private ImageView btn_homeContact;
+    private ImageView btn_numpadContact;
 
     private RecyclerView recyclerView;
     private List<Contact> contactList = new ArrayList<>();
@@ -28,6 +30,7 @@ public class ContactsActivity extends AppCompatActivity {
 
         btn_addContact = findViewById(R.id.addAContact);
         btn_numpadContact = findViewById(R.id.numpadContact);
+        btn_homeContact = findViewById(R.id.homeContact);
 
         recyclerView = findViewById(R.id.contactsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -64,6 +67,14 @@ public class ContactsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_DIAL);
+                startActivity(intent);
+            }
+        });
+
+        btn_homeContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ContactsActivity.this, MainMenuActivity.class);
                 startActivity(intent);
             }
         });
