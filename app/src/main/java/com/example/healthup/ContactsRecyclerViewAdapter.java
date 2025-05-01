@@ -29,14 +29,14 @@ public class ContactsRecyclerViewAdapter extends RecyclerView.Adapter<ContactsRe
         TextView contactName, contactPhone, fillContactSpace;
         ImageView callIcon;
 
-        ImageView editIcon;
+        ImageView displayIcon;
 
         public ViewHolder(View itemView) {
             super(itemView);
             contactName = itemView.findViewById(R.id.contactName);
             contactPhone = itemView.findViewById(R.id.contactPhone);
             callIcon = itemView.findViewById(R.id.callIcon);
-            editIcon = itemView.findViewById(R.id.editIcon);
+            displayIcon = itemView.findViewById(R.id.displayIcon);
             fillContactSpace = itemView.findViewById(R.id.contactSpace);
         }
     }
@@ -68,27 +68,32 @@ public class ContactsRecyclerViewAdapter extends RecyclerView.Adapter<ContactsRe
         boolean isExpanded = position == expandedPosition;
 
         if (isExpanded) {
+            // ορατότητα
             holder.contactPhone.setVisibility(View.VISIBLE);
             holder.callIcon.setVisibility(View.VISIBLE);
-            holder.editIcon.setVisibility(View.VISIBLE);
+            holder.displayIcon.setVisibility(View.VISIBLE);
             holder.fillContactSpace.setVisibility(View.VISIBLE);
-        } else {
-            holder.contactPhone.setVisibility(View.GONE);
-            holder.callIcon.setVisibility(View.GONE);
-            holder.editIcon.setVisibility(View.GONE);
-            holder.fillContactSpace.setVisibility(View.GONE);
-        }
 
-        if (isExpanded) {
+            // χρωματισμός
             holder.contactPhone.setBackgroundColor(currentColor);
             holder.callIcon.setBackgroundColor(currentColor);
-            holder.editIcon.setBackgroundColor(currentColor);
+            holder.displayIcon.setBackgroundColor(currentColor);
             holder.fillContactSpace.setBackgroundColor(currentColor);
+
         } else {
+
+            // ορατότητα
+            holder.contactPhone.setVisibility(View.GONE);
+            holder.callIcon.setVisibility(View.GONE);
+            holder.displayIcon.setVisibility(View.GONE);
+            holder.fillContactSpace.setVisibility(View.GONE);
+
+            // χρωματισμός
             holder.contactPhone.setBackgroundColor(Color.TRANSPARENT);
             holder.callIcon.setBackgroundColor(Color.TRANSPARENT);
-            holder.editIcon.setBackgroundColor(Color.TRANSPARENT);
+            holder.displayIcon.setBackgroundColor(Color.TRANSPARENT);
             holder.fillContactSpace.setBackgroundColor(Color.TRANSPARENT);
+
         }
 
         holder.itemView.setOnClickListener(v -> {
@@ -108,6 +113,13 @@ public class ContactsRecyclerViewAdapter extends RecyclerView.Adapter<ContactsRe
 
             Intent intent = new Intent(Intent.ACTION_DIAL);  // ACTION_CALL
             intent.setData(Uri.parse("tel:" + contact.getPhone()));
+            v.getContext().startActivity(intent);
+        });
+
+        holder.displayIcon.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), DisplayContactsActivity.class);
+            intent.putExtra("name", contact.getName());
+            intent.putExtra("phone", contact.getPhone());
             v.getContext().startActivity(intent);
         });
     }

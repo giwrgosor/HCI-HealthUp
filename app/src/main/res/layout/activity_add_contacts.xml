@@ -52,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/homeContact"
         android:layout_width="63dp"
         android:layout_height="36dp"
         android:layout_marginTop="22dp"
@@ -62,27 +62,33 @@
 
     <EditText
         android:id="@+id/completedNameContact"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
         android:layout_marginStart="88dp"
         android:layout_marginTop="432dp"
         android:ems="10"
+        android:hint="Όνομα"
         android:inputType="text"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <EditText
         android:id="@+id/completedPhoneContact"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
         android:layout_marginStart="89dp"
         android:layout_marginTop="544dp"
         android:ems="10"
+        android:hint="Τηλέφωνο"
         android:inputType="phone"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/textView2"

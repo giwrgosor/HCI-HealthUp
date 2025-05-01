@@ -64,7 +64,7 @@
         app:srcCompat="@drawable/phone" />
 
     <ImageView
-        android:id="@+id/editIcon"
+        android:id="@+id/displayIcon"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="270dp"
@@ -72,7 +72,7 @@
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/contactPhone"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/edit" />
+        app:srcCompat="@drawable/eye" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

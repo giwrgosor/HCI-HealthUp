@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.content.Intent;
 
@@ -14,6 +15,7 @@ public class AddContactsActivity extends AppCompatActivity {
     private EditText nameContactText;
     private EditText phoneContactText;
     private Button addContactBtn;
+    private ImageView btn_homeContact;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +24,7 @@ public class AddContactsActivity extends AppCompatActivity {
         nameContactText = findViewById(R.id.completedNameContact);
         phoneContactText = findViewById(R.id.completedPhoneContact);
         addContactBtn = findViewById(R.id.addContactButton);
+        btn_homeContact = findViewById(R.id.homeContact);
 
         addContactBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +59,14 @@ public class AddContactsActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(AddContactsActivity.this, "Λάθος τηλέφωνο: Πρέπει να έχει 10 ψηφία.", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        btn_homeContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddContactsActivity.this, MainMenuActivity.class);
+                startActivity(intent);
             }
         });
 
