@@ -28,10 +28,10 @@
             android:name=".Locations.AddLocationActivity"
             android:exported="false" />
         <activity
-            android:name=".EditContactsActivity"
+            android:name=".Contacts.EditContactsActivity"
             android:exported="false" />
         <activity
-            android:name=".DisplayContactsActivity"
+            android:name=".Contacts.DisplayContactsActivity"
             android:exported="false" />
         <activity
             android:name=".Locations.ViewLocationActivity"
@@ -43,10 +43,10 @@
             android:name=".MainMenuActivity"
             android:exported="true" />
         <activity
-            android:name=".AddContactsActivity"
+            android:name=".Contacts.AddContactsActivity"
             android:exported="true" />
         <activity
-            android:name=".ContactsActivity"
+            android:name=".Contacts.ContactsActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

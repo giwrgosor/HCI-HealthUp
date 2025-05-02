@@ -1,22 +1,24 @@
-package com.example.healthup;
+package com.example.healthup.Contacts;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+
 import androidx.appcompat.app.AlertDialog;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.example.healthup.MainMenuActivity;
+import com.example.healthup.R;
 import com.example.healthup.domain.Contact;
+
+import com.example.healthup.MemoryDAO.ContactsMemoryDAO;
+import com.example.healthup.dao.ContactsDAO;
+
 
 public class DisplayContactsActivity extends AppCompatActivity {
     private ImageView btn_homeDisplayContact, btn_callDisplayContact, btn_editDisplayContact, btn_deleteDisplayContact;
@@ -34,6 +36,8 @@ public class DisplayContactsActivity extends AppCompatActivity {
         btn_callDisplayContact = findViewById(R.id.callIcon);
         btn_editDisplayContact = findViewById(R.id.editIcon);
         btn_deleteDisplayContact = findViewById(R.id.deleteIcon);
+
+        ContactsDAO contactsDAO = new ContactsMemoryDAO();
 
         String name = getIntent().getStringExtra("name");
         String phone = getIntent().getStringExtra("phone");
@@ -80,12 +84,17 @@ public class DisplayContactsActivity extends AppCompatActivity {
                     .setTitle("Επιβεβαίωση διαγραφής")
                     .setMessage("Είστε σίγουρος ότι θέλετε να διαγράψετε την επαφή;")
                     .setPositiveButton("Ναι", (dialog, which) -> {
-                        Toast.makeText(this, "Η επαφή διαγράφηκε", Toast.LENGTH_SHORT).show();
-                        finish();
+                        if (name != null && phone != null) {
+                            Contact contactToDelete = new Contact(name, phone);
+                            contactsDAO.delete(contactToDelete);
+                            Toast.makeText(this, "Η επαφή διαγράφηκε", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
                     })
                     .setNegativeButton("Όχι", null)
                     .show();
         });
+
 
     }
 }

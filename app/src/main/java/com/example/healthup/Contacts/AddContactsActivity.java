@@ -1,4 +1,4 @@
-package com.example.healthup;
+package com.example.healthup.Contacts;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,6 +12,10 @@ import android.text.TextWatcher;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.healthup.MainMenuActivity;
+import com.example.healthup.MemoryDAO.ContactsMemoryDAO;
+import com.example.healthup.R;
+import com.example.healthup.dao.ContactsDAO;
 import com.example.healthup.domain.Contact;
 
 public class AddContactsActivity extends AppCompatActivity {
@@ -21,6 +25,9 @@ public class AddContactsActivity extends AppCompatActivity {
     private Button addContactBtn;
     private ImageView btn_homeContact;
 
+    private ContactsDAO contactsDAO;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contacts);
@@ -29,6 +36,8 @@ public class AddContactsActivity extends AppCompatActivity {
         phoneContactText = findViewById(R.id.completedPhoneContact);
         addContactBtn = findViewById(R.id.addContactButton);
         btn_homeContact = findViewById(R.id.homeContact);
+
+        contactsDAO = new ContactsMemoryDAO(); // in-memory βάση
 
         phoneContactText.addTextChangedListener(new TextWatcher() {
             private String current = "";
@@ -65,7 +74,6 @@ public class AddContactsActivity extends AppCompatActivity {
         addContactBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 String name = nameContactText.getText().toString().trim();
                 String phone = phoneContactText.getText().toString().trim();
                 String cleanedPhone = phone.replaceAll("\\D", "");
@@ -86,13 +94,13 @@ public class AddContactsActivity extends AppCompatActivity {
                 }
 
                 if (cleanedPhone.length() == 10) {
+                    Contact newContact = new Contact(name, phone);
+                    contactsDAO.save(newContact);
+
                     Toast.makeText(AddContactsActivity.this, "Η επαφή προστέθηκε!", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(AddContactsActivity.this, ContactsActivity.class);
-                    intent.putExtra("name", nameContactText.getText().toString().trim());
-                    intent.putExtra("phone", phoneContactText.getText().toString().trim());
                     startActivity(intent);
-
                 } else {
                     Toast.makeText(AddContactsActivity.this, "Λάθος τηλέφωνο: Πρέπει να έχει 10 ψηφία.", Toast.LENGTH_SHORT).show();
                 }
@@ -106,8 +114,5 @@ public class AddContactsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
     }
-
-
 }

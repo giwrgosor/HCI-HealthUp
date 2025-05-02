@@ -1,12 +1,17 @@
 package com.example.healthup.domain;
 
+import java.util.Objects;
+
 public class Contact {
     private String name;
     private String phone;
+    private static int counter = 0;
+    private int id;
 
     public Contact(String name, String phone) {
         this.name = name;
         this.phone = phone;
+        this.id = ++counter;
     }
 
     public String getName() { return name; }
@@ -26,5 +31,33 @@ public class Contact {
         }
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void changeContactData(Contact newContact){
+        this.name = newContact.getName();
+        this.phone = newContact.getPhone();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contact contact = (Contact) o;
+        return Objects.equals(name, contact.name) && Objects.equals(phone, contact.phone);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, phone);
+    }
 }

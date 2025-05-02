@@ -1,4 +1,4 @@
-package com.example.healthup;
+package com.example.healthup.Contacts;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.healthup.R;
 import com.example.healthup.domain.Contact;
 
 import java.text.Normalizer;
