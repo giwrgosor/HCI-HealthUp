@@ -135,35 +135,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/callIcon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="720dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/phone" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/deleteDisplayContactIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="80dp"
+        app:backgroundTint="@color/red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/delete"
+        app:tint="@color/white" />
 
-    <ImageView
-        android:id="@+id/editIcon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="183dp"
-        android:layout_marginTop="720dp"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/editDisplayContactIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        app:backgroundTint="@color/orange"
+        app:tint="@color/white"
+        app:srcCompat="@drawable/edit"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/edit" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageView
-        android:id="@+id/deleteIcon"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="318dp"
-        android:layout_marginTop="720dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/delete" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/callDisplayContactIcon"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="80dp"
+        app:backgroundTint="@color/green"
+        app:tint="@color/white"
+        app:srcCompat="@drawable/phone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

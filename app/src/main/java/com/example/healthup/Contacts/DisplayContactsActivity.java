@@ -18,10 +18,12 @@ import com.example.healthup.domain.Contact;
 
 import com.example.healthup.MemoryDAO.ContactsMemoryDAO;
 import com.example.healthup.dao.ContactsDAO;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class DisplayContactsActivity extends AppCompatActivity {
-    private ImageView btn_homeDisplayContact, btn_callDisplayContact, btn_editDisplayContact, btn_deleteDisplayContact;
+    private ImageView btn_homeDisplayContact;
+    private FloatingActionButton btn_callDisplayContact, btn_editDisplayContact, btn_deleteDisplayContact;
 
 
     @Override
@@ -33,9 +35,9 @@ public class DisplayContactsActivity extends AppCompatActivity {
         TextView phoneTextView = findViewById(R.id.phoneDisplayContact);
 
         btn_homeDisplayContact = findViewById(R.id.homeContact);
-        btn_callDisplayContact = findViewById(R.id.callIcon);
-        btn_editDisplayContact = findViewById(R.id.editIcon);
-        btn_deleteDisplayContact = findViewById(R.id.deleteIcon);
+        btn_callDisplayContact = findViewById(R.id.callDisplayContactIcon);
+        btn_editDisplayContact = findViewById(R.id.editDisplayContactIcon);
+        btn_deleteDisplayContact = findViewById(R.id.deleteDisplayContactIcon);
 
         ContactsDAO contactsDAO = new ContactsMemoryDAO();
 
