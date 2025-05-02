@@ -8,5 +8,7 @@ public interface LocationDAO {
 
     void delete(Location location);
     void save(Location location);
+    void editLocation(Location oldLocation, Location newLocation);
+    Location findById(int id);
     ArrayList<Location> findAll();
 }

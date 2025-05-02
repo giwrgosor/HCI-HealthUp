@@ -9,6 +9,8 @@ public class Location implements Serializable {
     private String street;
     private String city;
     private String zipcode;
+    private static int counter = 0;
+    private int id;
 
     public Location(String name, double lat, double lon, String street, String city, String zipcode) {
         this.name = name;
@@ -17,6 +19,7 @@ public class Location implements Serializable {
         this.street = street;
         this.city = city;
         this.zipcode = zipcode;
+        this.id = ++counter;
     }
 
     public String getStreet() {
@@ -65,6 +68,19 @@ public class Location implements Serializable {
 
     public void setLon(double lon) {
         this.lon = lon;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void changeData(Location newLocation){
+        this.name = newLocation.getName();
+        this.lat = newLocation.getLat();
+        this.lon = newLocation.getLon();
+        this.street = newLocation.getStreet();
+        this.city = newLocation.getCity();
+        this.zipcode = newLocation.getZipcode();
     }
 
     @Override

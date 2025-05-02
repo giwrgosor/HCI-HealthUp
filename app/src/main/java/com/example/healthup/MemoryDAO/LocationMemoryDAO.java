@@ -24,4 +24,25 @@ public class LocationMemoryDAO implements LocationDAO {
     public ArrayList<Location> findAll() {
         return new ArrayList<>(locations);
     }
+
+    @Override
+    public void editLocation(Location oldLocation, Location newLocation) {
+        for(Location location: locations){
+            if(location.equals(oldLocation)){
+                location.changeData(newLocation);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public Location findById(int id) {
+        for(Location location: locations){
+            if(location.getId() == id){
+                return location;
+            }
+        }
+
+        return null;
+    }
 }

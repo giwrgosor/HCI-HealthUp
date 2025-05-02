@@ -31,8 +31,20 @@ public class ViewLocationActivity extends AppCompatActivity {
     private TextView zipcode_txt;
     private TextView city_txt;
     private ImageView homeButton;
+    private Location location;
     private Context context = this;
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocationDAO locationDAO = new LocationMemoryDAO();
+        Location locationNew = locationDAO.findById(location.getId());
+        name_txt.setText(locationNew.getName());
+        address_txt.setText(locationNew.getStreet());
+        zipcode_txt.setText(locationNew.getZipcode());
+        city_txt.setText(locationNew.getCity());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +71,7 @@ public class ViewLocationActivity extends AppCompatActivity {
             }
         });
 
-        Location location = (Location) getIntent().getExtras().get("Location");
+        location = (Location) getIntent().getExtras().get("Location");
 
         name_txt.setText(location.getName());
         address_txt.setText(location.getStreet());
@@ -96,16 +108,21 @@ public class ViewLocationActivity extends AppCompatActivity {
                         .setMessage("Θέλετε σίγουρα να διαγράψετε την τοποθεσία " + location.getName() + "?")
                         .setPositiveButton("Ναι", (dialog, which) -> {
                             LocationDAO locationDAO = new LocationMemoryDAO();
-                            Log.d("ViewLocationActivity","Prin to delete exei: " + locationDAO.findAll().size());
                             locationDAO.delete(location);
-                            Log.d("ViewLocationActivity","Meta to delete exei: " + locationDAO.findAll().size());
                             Toast.makeText(context, "Η τοποθεσία " + location.getName() + " διαγράφηκε!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(context, LocationsActivity.class);
-                            startActivity(intent);
                             finish();
                         })
                         .setNegativeButton("Όχι", (dialog, which) -> dialog.dismiss())
                         .show();
+            }
+        });
+
+        edit_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context,EditLocationActivity.class);
+                intent.putExtra("Location",location);
+                startActivity(intent);
             }
         });
 

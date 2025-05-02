@@ -60,7 +60,7 @@ public class LocationsListViewAdapter extends BaseAdapter {
                 Intent intent = new Intent(context, ViewLocationActivity.class);
                 intent.putExtra("Location", currentLocation);
                 context.startActivity(intent);
-                ((Activity) context).finish();
+//                ((Activity) context).finish();
             }
         });
 

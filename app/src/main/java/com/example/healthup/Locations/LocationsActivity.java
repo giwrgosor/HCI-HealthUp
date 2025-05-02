@@ -25,6 +25,12 @@ public class LocationsActivity extends AppCompatActivity {
     private ImageView homeFromLocations;
     private LocationsListViewAdapter adapter;
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocationDAO locationDAO = new LocationMemoryDAO();
+        locationsListView.setAdapter(new LocationsListViewAdapter(getLayoutInflater(),locationDAO.findAll(),this));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
