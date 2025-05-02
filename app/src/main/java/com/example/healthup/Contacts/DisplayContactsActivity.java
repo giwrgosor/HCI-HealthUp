@@ -88,6 +88,8 @@ public class DisplayContactsActivity extends AppCompatActivity {
                             Contact contactToDelete = new Contact(name, phone);
                             contactsDAO.delete(contactToDelete);
                             Toast.makeText(this, "Η επαφή διαγράφηκε", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(this, ContactsActivity.class);
+                            startActivity(intent);
                             finish();
                         }
                     })

@@ -83,4 +83,14 @@ public class ContactsActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        contactList.clear();
+        contactList.addAll(contactsDAO.findAll());
+        adapter.sortContacts(contactList);
+        adapter.notifyDataSetChanged();
+    }
+
 }
