@@ -26,10 +26,10 @@ public class LocationMemoryDAO implements LocationDAO {
     }
 
     @Override
-    public void editLocation(Location oldLocation, Location newLocation) {
+    public void editLocation(Location oldLocation,String name, double latitude, double longitude, String address, String city, String zip) {
         for(Location location: locations){
             if(location.equals(oldLocation)){
-                location.changeData(newLocation);
+                location.changeData(name,latitude,longitude,address,city,zip);
                 break;
             }
         }

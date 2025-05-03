@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import android.Manifest;
 
+import com.example.healthup.MemoryDAO.MemoryInitializer;
+import com.example.healthup.dao.Initializer;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button save_btn;
@@ -80,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
 //            return insets;
 //        });
 
+        Initializer initializer = new MemoryInitializer();
+        initializer.prepareData();
+
         save_btn = findViewById(R.id.main_save_btn);
 
         save_btn.setOnClickListener(view -> {
@@ -89,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
             }else {
                 Intent intent = new Intent(this, MainMenuActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
     }

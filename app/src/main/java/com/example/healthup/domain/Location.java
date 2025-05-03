@@ -74,13 +74,13 @@ public class Location implements Serializable {
         return id;
     }
 
-    public void changeData(Location newLocation){
-        this.name = newLocation.getName();
-        this.lat = newLocation.getLat();
-        this.lon = newLocation.getLon();
-        this.street = newLocation.getStreet();
-        this.city = newLocation.getCity();
-        this.zipcode = newLocation.getZipcode();
+    public void changeData(String name, double latitude, double longitude, String street, String city, String zip){
+        this.name = name;
+        this.lat = latitude;
+        this.lon = longitude;
+        this.street = street;
+        this.city = city;
+        this.zipcode = zip;
     }
 
     @Override

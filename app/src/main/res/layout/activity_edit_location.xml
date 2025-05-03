@@ -68,19 +68,19 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/EditLocationsBackground"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editImageView4" />
 
     <EditText
-        android:id="@+id/EditLocationDisplayName"
+        android:id="@+id/editLocationName"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:background="@drawable/background_rectangle"
         android:hint="Εισαγάγετε το όνομα"
         android:padding="12dp"
-        android:text="TextView"
+        android:inputType="textCapSentences"
         android:textColorHint="#999999"
         android:textColor="@color/black"
         android:textSize="18sp"
@@ -97,19 +97,19 @@
         android:text="Διεύθυνση"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/EditLocationsBackground"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditLocationDisplayName" />
+        app:layout_constraintTop_toBottomOf="@+id/editLocationName" />
 
     <EditText
-        android:id="@+id/EditLocationDisplayAddress"
+        android:id="@+id/editLocationAddress"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:background="@drawable/background_rectangle"
         android:hint="Εισαγάγετε τη διεύθυνση"
         android:padding="12dp"
-        android:text="TextView"
+        android:inputType="textCapSentences"
         android:textColor="@color/black"
         android:textColorHint="#999999"
         android:textSize="18sp"
@@ -126,12 +126,12 @@
         android:text="Ταχυδρομικός Κώδικας"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/EditLocationsBackground"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditLocationDisplayAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/editLocationAddress" />
 
     <EditText
-        android:id="@+id/EditLocationDisplayZipCode"
+        android:id="@+id/editLocationZipCode"
         android:layout_width="300dp"
         android:inputType="number"
         android:layout_height="wrap_content"
@@ -139,7 +139,6 @@
         android:background="@drawable/background_rectangle"
         android:hint="Εισαγάγετε τον ταχ. κώδ."
         android:padding="12dp"
-        android:text="TextView"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textColorHint="#999999"
@@ -156,12 +155,12 @@
         android:text="Πόλη"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/EditLocationsBackground"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/EditLocationDisplayZipCode" />
+        app:layout_constraintTop_toBottomOf="@+id/editLocationZipCode" />
 
     <EditText
-        android:id="@+id/EditLocationDisplayCity"
+        android:id="@+id/editLocationCity"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
@@ -169,7 +168,7 @@
         android:background="@drawable/background_rectangle"
         android:hint="Εισαγάγετε την πόλη"
         android:padding="12dp"
-        android:text="TextView"
+        android:inputType="textCapSentences"
         android:textColor="@color/black"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"

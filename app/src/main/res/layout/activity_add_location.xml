@@ -7,4 +7,185 @@
     android:layout_height="match_parent"
     tools:context=".Locations.AddLocationActivity">
 
+    <ImageView
+        android:id="@+id/AddLocationsBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/locations" />
+
+    <ImageView
+        android:id="@+id/AddLocationBanner"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/imagebasic" />
+
+    <ImageView
+        android:id="@+id/homeButtonAddLocation"
+        android:layout_width="63dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="22dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/home" />
+
+    <TextView
+        android:id="@+id/addLocationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:text="Προσθήκη Τοποθεσίας"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/AddLocationBanner" />
+
+    <ImageView
+        android:id="@+id/addImageView4"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/AddLocationBanner"
+        app:srcCompat="@drawable/location"
+        app:tint="@color/blue" />
+
+    <TextView
+        android:id="@+id/LocationAddName"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Όνομα Τοποθεσίας"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addImageView4" />
+
+    <EditText
+        android:id="@+id/addLocationName"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/background_rectangle"
+        android:hint="Εισαγάγετε το όνομα"
+        android:padding="12dp"
+        android:inputType="textCapSentences"
+        android:textColorHint="#999999"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LocationAddName" />
+
+    <TextView
+        android:id="@+id/LocationAddAddress"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Διεύθυνση"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addLocationName" />
+
+    <EditText
+        android:id="@+id/addLocationAddress"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/background_rectangle"
+        android:hint="Εισαγάγετε τη διεύθυνση"
+        android:padding="12dp"
+        android:inputType="textCapSentences"
+        android:textColor="@color/black"
+        android:textColorHint="#999999"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LocationAddAddress" />
+
+    <TextView
+        android:id="@+id/LocationAddZipCode"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/black"
+        android:text="Ταχυδρομικός Κώδικας"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addLocationAddress" />
+
+    <EditText
+        android:id="@+id/addLocationZipCode"
+        android:layout_width="300dp"
+        android:inputType="number"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/background_rectangle"
+        android:hint="Εισαγάγετε τον ταχ. κώδ."
+        android:padding="12dp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textColorHint="#999999"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LocationAddZipCode" />
+
+    <TextView
+        android:id="@+id/LocationAddCity"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/black"
+        android:text="Πόλη"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addLocationZipCode" />
+
+    <EditText
+        android:id="@+id/addLocationCity"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColorHint="#999999"
+        android:background="@drawable/background_rectangle"
+        android:hint="Εισαγάγετε την πόλη"
+        android:padding="12dp"
+        android:inputType="textCapSentences"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LocationAddCity" />
+
+    <Button
+        android:id="@+id/addLocation_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/green"
+        android:text="Προσθήκη"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

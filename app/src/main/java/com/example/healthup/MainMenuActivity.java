@@ -40,9 +40,6 @@ public class MainMenuActivity extends AppCompatActivity {
         pills_btn=findViewById(R.id.menu_pills_btn);
         profile_btn=findViewById(R.id.menu_profile_btn);
 
-        Initializer initializer = new MemoryInitializer();
-        initializer.prepareData();
-
         sos_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

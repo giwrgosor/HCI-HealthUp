@@ -38,10 +38,10 @@ public class EditLocationActivity extends AppCompatActivity {
 
         Location location = (Location) getIntent().getExtras().get("Location");
 
-        EditText name_edt = findViewById(R.id.EditLocationDisplayName);
-        EditText address_edt = findViewById(R.id.EditLocationDisplayAddress);
-        EditText zip_edt = findViewById(R.id.EditLocationDisplayZipCode);
-        EditText city_edt = findViewById(R.id.EditLocationDisplayCity);
+        EditText name_edt = findViewById(R.id.editLocationName);
+        EditText address_edt = findViewById(R.id.editLocationAddress);
+        EditText zip_edt = findViewById(R.id.editLocationZipCode);
+        EditText city_edt = findViewById(R.id.editLocationCity);
 
         name_edt.setText(location.getName());
         address_edt.setText(location.getStreet());
@@ -80,9 +80,7 @@ public class EditLocationActivity extends AppCompatActivity {
                             double latitude = geoaddress.getLatitude();
                             double longitude = geoaddress.getLongitude();
 
-                            Location newLocation = new Location(name,latitude,longitude,address,city,zip);
-
-                            locationDAO.editLocation(location,newLocation);
+                            locationDAO.editLocation(location,name,latitude,longitude,address,city,zip);
                             Toast.makeText(EditLocationActivity.this, "Η τοποθεσία ενημερώθηκε επιτυχώς!", Toast.LENGTH_SHORT).show();
                             finish();
                         } else {

@@ -1,6 +1,12 @@
 package com.example.healthup.Locations;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,7 +14,14 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.healthup.MemoryDAO.LocationMemoryDAO;
 import com.example.healthup.R;
+import com.example.healthup.dao.LocationDAO;
+import com.example.healthup.domain.Location;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class AddLocationActivity extends AppCompatActivity {
 
@@ -22,5 +35,56 @@ public class AddLocationActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        EditText name_edt = findViewById(R.id.addLocationName);
+        EditText address_edt = findViewById(R.id.addLocationAddress);
+        EditText zip_edt = findViewById(R.id.addLocationZipCode);
+        EditText city_edt = findViewById(R.id.addLocationCity);
+        Button save = findViewById(R.id.addLocation_btn);
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = String.valueOf(name_edt.getText());
+                String address = String.valueOf(address_edt.getText());
+                String zip = String.valueOf(zip_edt.getText());
+                String city = String.valueOf(city_edt.getText());
+                LocationDAO locationDAO = new LocationMemoryDAO();
+
+                if(name.isEmpty()){
+                    Toast.makeText(AddLocationActivity.this, "Παρακαλώ συμπληρώστε το Όνομα της τοποθεσίας.", Toast.LENGTH_SHORT).show();
+                }
+                else if(address.isEmpty()){
+                    Toast.makeText(AddLocationActivity.this, "Παρακαλώ συμπληρώστε τη Διεύθυνση της τοποθεσίας.", Toast.LENGTH_SHORT).show();
+                }
+                else if(zip.isEmpty()){
+                    Toast.makeText(AddLocationActivity.this, "Παρακαλώ συμπληρώστε τον Ταχυδρομικό Κώδικα της τοποθεσίας.", Toast.LENGTH_SHORT).show();
+                }
+                else if(city.isEmpty()){
+                    Toast.makeText(AddLocationActivity.this, "Παρακαλώ συμπληρώστε την Πόλη της τοποθεσίας.", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Geocoder geocoder = new Geocoder(AddLocationActivity.this, Locale.getDefault());
+                    String addressStr = address + ", " + city + ", " + zip;
+                    try {
+                        List<Address> addresses = geocoder.getFromLocationName(addressStr, 1);
+                        if (addresses != null && !addresses.isEmpty()) {
+                            Address geoaddress = addresses.get(0);
+                            double latitude = geoaddress.getLatitude();
+                            double longitude = geoaddress.getLongitude();
+
+                            locationDAO.save(new Location(name,latitude,longitude,address,city,zip));
+                            Toast.makeText(AddLocationActivity.this, "Η τοποθεσία προστέθηκε με επιτυχία!", Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            Toast.makeText(AddLocationActivity.this,"Δεν βρέθηκε η τοποθεσία. Βεβαιωθείτε ότι εισάγατε σωστά τα στοιχεία της τοποθεσίας!", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
     }
 }
