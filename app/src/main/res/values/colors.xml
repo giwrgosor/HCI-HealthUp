@@ -6,4 +6,5 @@
     <color name="green">#4CAF50</color>
     <color name="red">#D32F2F</color>
     <color name="orange">#FFA500</color>
+    <color name="gray">#FF888888</color>
 </resources>

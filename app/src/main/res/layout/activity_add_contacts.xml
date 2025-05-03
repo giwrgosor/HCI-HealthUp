@@ -60,35 +60,58 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/home" />
 
+    <ImageView
+        android:id="@+id/backgroundRectangle"
+        android:layout_width="288dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="436dp"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background_rectangle" />
+
 
     <EditText
         android:id="@+id/completedNameContact"
         android:layout_width="288dp"
         android:layout_height="48dp"
-        android:layout_marginStart="59dp"
-        android:layout_marginTop="436dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="438dp"
         android:ems="10"
         android:hint="Συμπληρώστε όνομα"
-        android:textColorHint="#999999"
+        android:background="@android:color/transparent"
         android:inputType="text"
         android:textColor="@color/black"
+        android:textColorHint="#999999"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/backgroundRectangle1"
+        android:layout_width="288dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="547dp"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background_rectangle" />
 
     <EditText
         android:id="@+id/completedPhoneContact"
         android:layout_width="288dp"
         android:layout_height="48dp"
-        android:layout_marginStart="59dp"
-        android:layout_marginTop="556dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="550dp"
         android:ems="10"
         android:hint="Συμπληρώστε τηλέφωνο"
-        android:textColorHint="#999999"
+        android:background="@android:color/transparent"
         android:inputType="phone"
         android:textColor="@color/black"
+        android:textColorHint="#999999"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -120,15 +143,16 @@
 
     <Button
         android:id="@+id/addContactButton"
-        android:layout_width="288dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="684dp"
-        android:backgroundTint="@android:color/holo_green_dark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/green"
         android:text="Προσθήκη"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

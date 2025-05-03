@@ -57,28 +57,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView" />
 
-    <Button
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addAContact"
-        android:layout_width="59dp"
-        android:layout_height="59dp"
-        android:layout_marginStart="316dp"
-        android:layout_marginTop="708dp"
-        android:backgroundTint="@android:color/holo_green_dark"
-        android:text="+"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:backgroundTint="@color/green"
+        app:tint="@color/white"
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/numpadContact"
-        android:layout_width="59dp"
-        android:layout_height="59dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="708dp"
-        android:background="@null"
-        android:src="@drawable/numpadcontact"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:backgroundTint="@color/gray"
+        app:tint="@color/white"
+        app:srcCompat="@drawable/numpadcontact"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

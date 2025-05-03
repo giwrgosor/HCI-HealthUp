@@ -15,12 +15,13 @@ import com.example.healthup.MemoryDAO.ContactsMemoryDAO;
 import com.example.healthup.R;
 import com.example.healthup.dao.ContactsDAO;
 import com.example.healthup.domain.Contact;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
 public class ContactsActivity extends AppCompatActivity {
 
-    private Button btn_addContact;
+    private FloatingActionButton btn_addContact;
     private ImageView btn_homeContact;
     private ImageView btn_numpadContact;
 
