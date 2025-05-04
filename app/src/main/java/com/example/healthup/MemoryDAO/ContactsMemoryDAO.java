@@ -14,7 +14,7 @@ public class ContactsMemoryDAO implements ContactsDAO {
     public void save(Contact contact){
         contacts.add(contact);
     }
-    public void editLocation(Contact oldContact, Contact newContact) {
+    public void editContact(Contact oldContact, Contact newContact) {
 
         for(Contact contact: contacts){
             if(contact.equals(oldContact)){

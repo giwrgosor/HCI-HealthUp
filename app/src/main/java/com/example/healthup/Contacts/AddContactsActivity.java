@@ -37,7 +37,7 @@ public class AddContactsActivity extends AppCompatActivity {
         addContactBtn = findViewById(R.id.addContactButton);
         btn_homeContact = findViewById(R.id.homeContact);
 
-        contactsDAO = new ContactsMemoryDAO(); // in-memory βάση
+        contactsDAO = new ContactsMemoryDAO();
 
         phoneContactText.addTextChangedListener(new TextWatcher() {
             private String current = "";

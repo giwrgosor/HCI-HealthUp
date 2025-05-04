@@ -13,17 +13,22 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.healthup.MainMenuActivity;
+import com.example.healthup.MemoryDAO.LocationMemoryDAO;
 import com.example.healthup.R;
+import com.example.healthup.dao.LocationDAO;
 import com.example.healthup.domain.Contact;
 
 import com.example.healthup.MemoryDAO.ContactsMemoryDAO;
 import com.example.healthup.dao.ContactsDAO;
+import com.example.healthup.domain.Location;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class DisplayContactsActivity extends AppCompatActivity {
     private ImageView btn_homeDisplayContact;
     private FloatingActionButton btn_callDisplayContact, btn_editDisplayContact, btn_deleteDisplayContact;
+    private Contact contact;
+    private  TextView nameTextView, phoneTextView;
 
 
     @Override
@@ -31,8 +36,8 @@ public class DisplayContactsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_contacts);
 
-        TextView nameTextView = findViewById(R.id.nameDisplayContact);
-        TextView phoneTextView = findViewById(R.id.phoneDisplayContact);
+        nameTextView = findViewById(R.id.nameDisplayContact);
+        phoneTextView = findViewById(R.id.phoneDisplayContact);
 
         btn_homeDisplayContact = findViewById(R.id.homeContact);
         btn_callDisplayContact = findViewById(R.id.callDisplayContactIcon);
@@ -43,6 +48,8 @@ public class DisplayContactsActivity extends AppCompatActivity {
 
         String name = getIntent().getStringExtra("name");
         String phone = getIntent().getStringExtra("phone");
+
+        this.contact = new Contact(name, phone);
 
         if (name != null) {
             nameTextView.setText(name);
@@ -75,6 +82,7 @@ public class DisplayContactsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(DisplayContactsActivity.this, EditContactsActivity.class);
+                intent.putExtra("id", contact.getId());
                 intent.putExtra("name", name);
                 intent.putExtra("phone", phone);
                 startActivity(intent);
@@ -99,6 +107,17 @@ public class DisplayContactsActivity extends AppCompatActivity {
                     .show();
         });
 
+    }
 
+    protected void onResume() {
+        super.onResume();
+
+        ContactsDAO contactsDAO = new ContactsMemoryDAO();
+        Contact updatedContact = contactsDAO.findById(contact.getId());
+
+        if (updatedContact != null) {
+            nameTextView.setText(updatedContact.getName());
+            phoneTextView.setText(Contact.formatPhoneNumber(updatedContact.getPhone()));
+        }
     }
 }
