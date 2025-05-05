@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.healthup.Contacts.ContactsActivity;
 import com.example.healthup.Locations.LocationsActivity;
 import com.example.healthup.MemoryDAO.MemoryInitializer;
+import com.example.healthup.Pills.DisplayPillsActivity;
 import com.example.healthup.dao.Initializer;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -72,8 +73,9 @@ public class MainMenuActivity extends AppCompatActivity {
 
         pills_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
+            public void onClick(View view) { // προσωρινα για να δω οτι δουλευει
+                Intent intent = new Intent(MainMenuActivity.this, DisplayPillsActivity.class);
+                startActivity(intent);
             }
         });
 
