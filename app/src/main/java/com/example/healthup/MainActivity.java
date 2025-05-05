@@ -2,6 +2,8 @@ package com.example.healthup;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -16,12 +18,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
 import android.Manifest;
 
+import com.example.healthup.Locations.AddLocationActivity;
+import com.example.healthup.MemoryDAO.LocationMemoryDAO;
 import com.example.healthup.MemoryDAO.MemoryInitializer;
+import com.example.healthup.MemoryDAO.UserMemoryDAO;
 import com.example.healthup.dao.Initializer;
+import com.example.healthup.dao.LocationDAO;
+import com.example.healthup.dao.UserDAO;
+import com.example.healthup.domain.Location;
+import com.example.healthup.domain.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
     private String zipcode;
     private String bloodType;
     private String bloodRhFactor;
+    private UserDAO userDAO;
+    private User user;
+    private LocationDAO locationDAO;
+    private Location location;
 
 
     private void askPermissions() {
@@ -69,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 100) {
             for (int i = 0; i < permissions.length; i++) {
                 if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Παρακαλώ, αποδεχτείτε όλους τους όρους για να συνεχίσετε.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Παρακαλώ, αποδεχτείτε όλους τους όρους για να συνεχίσετε με την αποθήκευση.", Toast.LENGTH_SHORT).show();
                     break;
                 }
             }
@@ -142,9 +158,7 @@ public class MainActivity extends AppCompatActivity {
             zipcode = startZip_edt.getText().toString();
             bloodType = spinnerBloodType.getSelectedItem().toString();
             bloodRhFactor = spinnerRhFactor.getSelectedItem().toString();
-            Log.d("MainActivity","Perase tous orismous");
             if (name.isEmpty()) {
-                Log.d("MainActivity","Mphke if");
                 Toast.makeText(MainActivity.this,"Παρακαλώ συμπληρώστε το όνομα σας.",Toast.LENGTH_SHORT).show();
             } else if (surname.isEmpty()) {
                 Toast.makeText(MainActivity.this,"Παρακαλώ συμπληρώστε το επώνυμο σας.",Toast.LENGTH_SHORT).show();
@@ -159,13 +173,34 @@ public class MainActivity extends AppCompatActivity {
             }else if (bloodRhFactor.equals("Rh")) {
                 Toast.makeText(MainActivity.this,"Παρακαλώ συμπληρώστε τον παράγοντα Rh του αίματος σας.",Toast.LENGTH_SHORT).show();
             }else{
-                fieldsError = false;
+                Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
+                String addressStr = address + ", " + city + ", " + zipcode;
+                try {
+                    List<Address> addresses = geocoder.getFromLocationName(addressStr, 1);
+                    if (addresses != null && !addresses.isEmpty()) {
+                        Address geoaddress = addresses.get(0);
+                        double latitude = geoaddress.getLatitude();
+                        double longitude = geoaddress.getLongitude();
+                        location = new Location("Σπίτι",latitude,longitude,address,city,zipcode);
+                        fieldsError = false;
+                    } else {
+                        Toast.makeText(MainActivity.this,"Δεν βρέθηκε η τοποθεσία. Βεβαιωθείτε ότι εισάγατε σωστά τα στοιχεία της τοποθεσίας!", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
 
             if(!fieldsError) {
                 if (!arePermissionsGranted()) {
                     askPermissions();
                 } else{
+                    user = new User(name,surname,bloodType,bloodRhFactor);
+                    userDAO = new UserMemoryDAO();
+                    userDAO.editUser(user);
+                    locationDAO = new LocationMemoryDAO();
+                    locationDAO.save(location);
                     Intent intent = new Intent(this, MainMenuActivity.class);
                     startActivity(intent);
                     finish();

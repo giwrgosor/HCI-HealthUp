@@ -11,7 +11,7 @@ public abstract class Initializer {
     public abstract LocationDAO getLocationDAO();
     public abstract ContactsDAO getContactsDAO();
     public abstract PillsDAO getPillsDAO();
-
+    public abstract UserDAO getUserDAO();
 
     public void prepareData(){
         eraseData();
