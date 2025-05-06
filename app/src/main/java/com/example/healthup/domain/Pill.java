@@ -1,48 +1,54 @@
 package com.example.healthup.domain;
 
-import java.util.Objects;
+import java.util.HashMap;
 
 public class Pill {
-    private String name;
+    private static int idCounter = 1;
     private int id;
-    private static int counter = 0;
+    private String name;
+
+    private HashMap<String, boolean[]> weeklySchedule = new HashMap<>();
+
+    public Pill() {
+        this.id = idCounter++;
+        for (String day : new String[]{"ΔΕΥ", "ΤΡΙ", "ΤΕΤ", "ΠΕΜ", "ΠΑΡ", "ΣΑΒ", "ΚΥΡ"}) {
+            weeklySchedule.put(day, new boolean[6]);
+        }
+    }
 
     public Pill(String name) {
+        this();
         this.name = name;
-        this.id = ++counter;
     }
 
-    public Pill(int id, String name) {
-        this.name = name;
-        this.id = id;
+    public int getId() { return id; }
+
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public void setScheduleForDay(String day, boolean[] schedule) {
+        weeklySchedule.put(day, schedule);
     }
 
-    public String getName() {
-        return name;
+    public boolean[] getScheduleForDay(String day) {
+        return weeklySchedule.get(day);
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public HashMap<String, boolean[]> getWeeklySchedule() {
+        return weeklySchedule;
     }
 
     public void changePillData(Pill newPill) {
         this.name = newPill.getName();
+        this.weeklySchedule = newPill.getWeeklySchedule();
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Pill)) return false;
-        Pill pill = (Pill) o;
-        return Objects.equals(name, pill.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
+    public boolean equals(Object obj) {
+        if (obj instanceof Pill) {
+            Pill other = (Pill) obj;
+            return this.id == other.id;
+        }
+        return false;
     }
 }
