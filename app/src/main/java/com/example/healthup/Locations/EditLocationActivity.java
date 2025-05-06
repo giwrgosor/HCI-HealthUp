@@ -44,9 +44,14 @@ public class EditLocationActivity extends AppCompatActivity {
         EditText city_edt = findViewById(R.id.editLocationCity);
 
         if(location.getId() == 1){
-            Toast.makeText(EditLocationActivity.this,"Επεξεργάζεστε την τοποθεσία \"Σπίτι\". Η ονομασία της τοποθεσίας απαγορεύεται να αλλάξει!",Toast.LENGTH_LONG).show();
             name_edt.setFocusable(false);
             name_edt.setClickable(false);
+            name_edt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(EditLocationActivity.this,"Μόνο η διεύθυνση της τοποθεσίας \"Σπίτι\" μπορεί να μεταβληθεί!",Toast.LENGTH_LONG).show();
+                }
+            });
         }
 
         name_edt.setText(location.getName());

@@ -12,6 +12,7 @@ import com.example.healthup.Locations.LocationsActivity;
 import com.example.healthup.MemoryDAO.MemoryInitializer;
 import com.example.healthup.Pills.DisplayPillsActivity;
 import com.example.healthup.Profile.DisplayProfileActivity;
+import com.example.healthup.Sos.EmergencySelectionActivity;
 import com.example.healthup.dao.Initializer;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -45,7 +46,8 @@ public class MainMenuActivity extends AppCompatActivity {
         sos_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(MainMenuActivity.this, EmergencySelectionActivity.class);
+                startActivity(intent);
             }
         });
 
