@@ -130,14 +130,8 @@ public class MainActivity extends AppCompatActivity {
         startAddress_edt = findViewById(R.id.startAddress_edt);
         startName_edt = findViewById(R.id.startName_edt);
 
-
-
-
-
-
         String[] bloodTypes = {"Τύπος","A", "B", "AB", "O"};
         String[] rhFactors = {"Rh","+", "-"};
-
 
         ArrayAdapter<String> bloodTypeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, bloodTypes);
         bloodTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -196,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                 if (!arePermissionsGranted()) {
                     askPermissions();
                 } else{
-                    user = new User(name,surname,bloodType,bloodRhFactor);
+                    user = new User(name,surname,bloodType,bloodRhFactor,address,city,zipcode);
                     userDAO = new UserMemoryDAO();
                     userDAO.editUser(user);
                     locationDAO = new LocationMemoryDAO();

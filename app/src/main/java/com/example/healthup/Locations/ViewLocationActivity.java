@@ -103,17 +103,21 @@ public class ViewLocationActivity extends AppCompatActivity {
         delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new AlertDialog.Builder(context)
-                        .setTitle("Επιβεβαίωση Διαγραφής")
-                        .setMessage("Θέλετε σίγουρα να διαγράψετε την τοποθεσία " + location.getName() + "?")
-                        .setPositiveButton("Ναι", (dialog, which) -> {
-                            LocationDAO locationDAO = new LocationMemoryDAO();
-                            locationDAO.delete(location);
-                            Toast.makeText(context, "Η τοποθεσία " + location.getName() + " διαγράφηκε!", Toast.LENGTH_SHORT).show();
-                            finish();
-                        })
-                        .setNegativeButton("Όχι", (dialog, which) -> dialog.dismiss())
-                        .show();
+                if(!(location.getId()==1)) {
+                    new AlertDialog.Builder(context)
+                            .setTitle("Επιβεβαίωση Διαγραφής")
+                            .setMessage("Θέλετε σίγουρα να διαγράψετε την τοποθεσία " + location.getName() + "?")
+                            .setPositiveButton("Ναι", (dialog, which) -> {
+                                LocationDAO locationDAO = new LocationMemoryDAO();
+                                locationDAO.delete(location);
+                                Toast.makeText(context, "Η τοποθεσία " + location.getName() + " διαγράφηκε!", Toast.LENGTH_SHORT).show();
+                                finish();
+                            })
+                            .setNegativeButton("Όχι", (dialog, which) -> dialog.dismiss())
+                            .show();
+                }else{
+                    Toast.makeText(context, "Δεν επιτρέπεται η διαγραφή της τοποθεσίας \"ΣΠΙΤΙ\", αλλά μόνο η επεξεργασία της!", Toast.LENGTH_LONG).show();
+                }
             }
         });
 

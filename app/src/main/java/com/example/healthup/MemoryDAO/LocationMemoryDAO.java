@@ -36,6 +36,16 @@ public class LocationMemoryDAO implements LocationDAO {
     }
 
     @Override
+    public void editLocation(Location oldLocation, Location newLocation) {
+        for(Location location: locations){
+            if(location.equals(oldLocation)){
+                location.changeData(newLocation);
+                break;
+            }
+        }
+    }
+
+    @Override
     public Location findById(int id) {
         for(Location location: locations){
             if(location.getId() == id){
@@ -43,6 +53,16 @@ public class LocationMemoryDAO implements LocationDAO {
             }
         }
 
+        return null;
+    }
+
+    @Override
+    public Location findByName(String name) {
+        for(Location location: locations){
+            if(location.getName().equals(name)){
+                return location;
+            }
+        }
         return null;
     }
 }

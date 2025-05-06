@@ -4,7 +4,7 @@ import com.example.healthup.dao.UserDAO;
 import com.example.healthup.domain.User;
 
 public class UserMemoryDAO implements UserDAO {
-    private static User user = new User(null,null,null,null);
+    private static User user = new User(null,null,null,null,null,null,null);
 
     @Override
     public void editUser(User newUser) {
@@ -12,6 +12,11 @@ public class UserMemoryDAO implements UserDAO {
         user.setSurname(newUser.getSurname());
         user.setBloodType(newUser.getBloodType());
         user.setBloodRhFactor(newUser.getBloodRhFactor());
+        user.setAddress(newUser.getAddress());
+        user.setCity(newUser.getCity());
+        user.setZipcode(newUser.getZipcode());
+        user.setBloodRhFactor(newUser.getBloodRhFactor());
+        user.setBloodType(newUser.getBloodType());
     }
 
     @Override

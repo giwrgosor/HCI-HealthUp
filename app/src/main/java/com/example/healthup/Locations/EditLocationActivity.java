@@ -43,6 +43,12 @@ public class EditLocationActivity extends AppCompatActivity {
         EditText zip_edt = findViewById(R.id.editLocationZipCode);
         EditText city_edt = findViewById(R.id.editLocationCity);
 
+        if(location.getId() == 1){
+            Toast.makeText(EditLocationActivity.this,"Επεξεργάζεστε την τοποθεσία \"Σπίτι\". Η ονομασία της τοποθεσίας απαγορεύεται να αλλάξει!",Toast.LENGTH_LONG).show();
+            name_edt.setFocusable(false);
+            name_edt.setClickable(false);
+        }
+
         name_edt.setText(location.getName());
         address_edt.setText(location.getStreet());
         zip_edt.setText(location.getZipcode());

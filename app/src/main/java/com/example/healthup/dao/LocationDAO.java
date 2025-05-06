@@ -8,7 +8,9 @@ public interface LocationDAO {
 
     void delete(Location location);
     void save(Location location);
+    void editLocation(Location oldLocation, Location newLocation);
     void editLocation(Location oldLocation, String name, double latitude, double longitude, String address, String city, String zip);
     Location findById(int id);
+    Location findByName(String name);
     ArrayList<Location> findAll();
 }

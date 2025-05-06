@@ -83,6 +83,15 @@ public class Location implements Serializable {
         this.zipcode = zip;
     }
 
+    public void changeData(Location location){
+        this.name = location.getName();
+        this.lat = location.getLat();
+        this.lon = location.getLon();
+        this.street = location.getStreet();
+        this.city = location.getCity();
+        this.zipcode = location.getZipcode();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
