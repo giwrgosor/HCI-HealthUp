@@ -7,6 +7,7 @@ public class Contact {
     private String phone;
     private static int counter = 0;
     private int id;
+    private boolean isEmergency;
 
     public Contact(String name, String phone) {
         this.name = name;
@@ -18,6 +19,13 @@ public class Contact {
         this.id = id;
         this.name = name;
         this.phone = phone;
+    }
+
+    public Contact(String name, String phone, boolean isEmergency) {
+        this.name = name;
+        this.phone = phone;
+        this.isEmergency = isEmergency;
+        this.id = ++counter;
     }
 
     public String getName() { return name; }
@@ -52,6 +60,14 @@ public class Contact {
     public void changeContactData(Contact newContact){
         this.name = newContact.getName();
         this.phone = newContact.getPhone();
+    }
+
+    public boolean isEmergency() {
+        return isEmergency;
+    }
+
+    public void setEmergency(boolean emergency) {
+        isEmergency = emergency;
     }
 
     @Override

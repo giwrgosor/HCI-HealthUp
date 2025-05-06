@@ -33,6 +33,7 @@ public class ContactsRecyclerViewAdapter extends RecyclerView.Adapter<ContactsRe
         ImageView callIcon;
 
         ImageView displayIcon;
+        ImageView emergencyIcon;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -41,6 +42,7 @@ public class ContactsRecyclerViewAdapter extends RecyclerView.Adapter<ContactsRe
             callIcon = itemView.findViewById(R.id.callIcon);
             displayIcon = itemView.findViewById(R.id.displayIcon);
             fillContactSpace = itemView.findViewById(R.id.contactSpace);
+            emergencyIcon = itemView.findViewById(R.id.emergencyIcon);
         }
     }
 
@@ -125,6 +127,12 @@ public class ContactsRecyclerViewAdapter extends RecyclerView.Adapter<ContactsRe
             intent.putExtra("phone", contact.getPhone());
             v.getContext().startActivity(intent);
         });
+
+        if (contact.isEmergency()) {
+            holder.emergencyIcon.setVisibility(View.VISIBLE);
+        } else {
+            holder.emergencyIcon.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -136,6 +144,12 @@ public class ContactsRecyclerViewAdapter extends RecyclerView.Adapter<ContactsRe
         Collections.sort(contactList, new Comparator<Contact>() {
             @Override
             public int compare(Contact c1, Contact c2) {
+                if (c1.isEmergency() && !c2.isEmergency()) {
+                    return -1;
+                } else if (!c1.isEmergency() && c2.isEmergency()) {
+                    return 1;
+                }
+
                 String name1 = removeAccents(c1.getName());
                 String name2 = removeAccents(c2.getName());
                 return name1.compareToIgnoreCase(name2);

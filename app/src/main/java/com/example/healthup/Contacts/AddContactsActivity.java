@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -18,6 +19,8 @@ import com.example.healthup.R;
 import com.example.healthup.dao.ContactsDAO;
 import com.example.healthup.domain.Contact;
 
+import java.util.ArrayList;
+
 public class AddContactsActivity extends AppCompatActivity {
 
     private EditText nameContactText;
@@ -26,6 +29,8 @@ public class AddContactsActivity extends AppCompatActivity {
     private ImageView btn_homeContact;
 
     private ContactsDAO contactsDAO;
+    private CheckBox emergencyCheckBox;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,11 @@ public class AddContactsActivity extends AppCompatActivity {
         btn_homeContact = findViewById(R.id.homeContact);
 
         contactsDAO = new ContactsMemoryDAO();
+
+        emergencyCheckBox = findViewById(R.id.emergencyCheckBox);
+
+        boolean isEmergency = emergencyCheckBox.isChecked();
+
 
         phoneContactText.addTextChangedListener(new TextWatcher() {
             private String current = "";
@@ -78,6 +88,9 @@ public class AddContactsActivity extends AppCompatActivity {
                 String phone = phoneContactText.getText().toString().trim();
                 String cleanedPhone = phone.replaceAll("\\D", "");
 
+                boolean isEmergency = emergencyCheckBox.isChecked();
+
+
                 if (name.isEmpty() && phone.isEmpty()) {
                     Toast.makeText(AddContactsActivity.this, "Συμπληρώστε τα πεδία!", Toast.LENGTH_SHORT).show();
                     return;
@@ -93,8 +106,18 @@ public class AddContactsActivity extends AppCompatActivity {
                     return;
                 }
 
+                ArrayList<Contact> currentContacts = contactsDAO.findAll();
+                for (Contact existingContact : currentContacts) {
+                    String existingCleanedPhone = existingContact.getPhone().replaceAll("\\D", "");
+                    if (existingCleanedPhone.equals(cleanedPhone)) {
+                        Toast.makeText(AddContactsActivity.this, "Αυτός ο αριθμός υπάρχει ήδη!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
+
                 if (cleanedPhone.length() == 10) {
-                    Contact newContact = new Contact(name, phone);
+                    Contact newContact = new Contact(name, phone, isEmergency);
                     contactsDAO.save(newContact);
 
                     Toast.makeText(AddContactsActivity.this, "Η επαφή προστέθηκε!", Toast.LENGTH_SHORT).show();
@@ -104,6 +127,7 @@ public class AddContactsActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(AddContactsActivity.this, "Λάθος τηλέφωνο: Πρέπει να έχει 10 ψηφία.", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
