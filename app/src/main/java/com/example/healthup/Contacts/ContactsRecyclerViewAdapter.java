@@ -125,6 +125,7 @@ public class ContactsRecyclerViewAdapter extends RecyclerView.Adapter<ContactsRe
             Intent intent = new Intent(v.getContext(), DisplayContactsActivity.class);
             intent.putExtra("name", contact.getName());
             intent.putExtra("phone", contact.getPhone());
+            intent.putExtra("emergency", contact.isEmergency());
             v.getContext().startActivity(intent);
         });
 

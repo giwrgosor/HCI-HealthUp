@@ -52,9 +52,10 @@ public class ContactsActivity extends AppCompatActivity {
 
         String name = getIntent().getStringExtra("name");
         String phone = getIntent().getStringExtra("phone");
+        Boolean emergency = getIntent().getBooleanExtra("emergency", false);
 
         if (name != null && phone != null) {
-            Contact newContact = new Contact(name, phone);
+            Contact newContact = new Contact(name, phone, emergency);
             contactsDAO.save(newContact);
             adapter.notifyItemInserted(contactList.size() - 1);
             adapter.sortContacts(contactList);

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
+
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +31,7 @@ public class DisplayContactsActivity extends AppCompatActivity {
     private FloatingActionButton btn_callDisplayContact, btn_editDisplayContact, btn_deleteDisplayContact;
     private Contact contact;
     private  TextView nameTextView, phoneTextView;
+    private CheckBox emergencyCheckBox;
 
 
     @Override
@@ -43,13 +46,15 @@ public class DisplayContactsActivity extends AppCompatActivity {
         btn_callDisplayContact = findViewById(R.id.callDisplayContactIcon);
         btn_editDisplayContact = findViewById(R.id.editDisplayContactIcon);
         btn_deleteDisplayContact = findViewById(R.id.deleteDisplayContactIcon);
+        emergencyCheckBox = findViewById(R.id.emergencyDisplayCheckBox);
 
         ContactsDAO contactsDAO = new ContactsMemoryDAO();
 
         String name = getIntent().getStringExtra("name");
         String phone = getIntent().getStringExtra("phone");
+        Boolean emergency = getIntent().getBooleanExtra("emergency", false);
 
-        this.contact = new Contact(name, phone);
+        this.contact = new Contact(name, phone, emergency);
 
         if (name != null) {
             nameTextView.setText(name);
@@ -58,6 +63,14 @@ public class DisplayContactsActivity extends AppCompatActivity {
         if (phone != null) {
             String formattedPhone = Contact.formatPhoneNumber(phone);
             phoneTextView.setText(formattedPhone);
+        }
+
+        if (emergency != null && emergency) {
+            emergencyCheckBox.setChecked(true);
+            emergencyCheckBox.setEnabled(false);
+        } else {
+            emergencyCheckBox.setChecked(false);
+            emergencyCheckBox.setEnabled(false);
         }
 
         btn_homeDisplayContact.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +98,7 @@ public class DisplayContactsActivity extends AppCompatActivity {
                 intent.putExtra("id", contact.getId());
                 intent.putExtra("name", name);
                 intent.putExtra("phone", phone);
+                intent.putExtra("emergency", emergency);
                 startActivity(intent);
             }
         });
@@ -118,6 +132,7 @@ public class DisplayContactsActivity extends AppCompatActivity {
         if (updatedContact != null) {
             nameTextView.setText(updatedContact.getName());
             phoneTextView.setText(Contact.formatPhoneNumber(updatedContact.getPhone()));
+            emergencyCheckBox.setChecked(updatedContact.isEmergency());
         }
     }
 }

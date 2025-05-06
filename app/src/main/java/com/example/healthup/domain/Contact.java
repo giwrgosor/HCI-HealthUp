@@ -28,6 +28,13 @@ public class Contact {
         this.id = ++counter;
     }
 
+    public Contact(int id, String name, String phone, boolean isEmergency) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.isEmergency = isEmergency;
+    }
+
     public String getName() { return name; }
     public String getPhone() { return phone; }
 
@@ -57,9 +64,10 @@ public class Contact {
         return id;
     }
 
-    public void changeContactData(Contact newContact){
+    public void changeContactData(Contact newContact) {
         this.name = newContact.getName();
         this.phone = newContact.getPhone();
+        this.isEmergency = newContact.isEmergency();
     }
 
     public boolean isEmergency() {
