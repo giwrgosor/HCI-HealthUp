@@ -50,9 +50,9 @@ public class EmergencySelectionActivity extends AppCompatActivity {
         ambulance_btn = findViewById(R.id.ambulance_btn);
         fire_btn = findViewById(R.id.firedepartment_btn);
 
-        police_btn.setOnClickListener(v -> showConfirmationDialog("Αστυνομία","tel:6948573112"));
-        ambulance_btn.setOnClickListener(v -> showConfirmationDialog("ΕΚΑΒ","tel:6948573112"));
-        fire_btn.setOnClickListener(v -> showConfirmationDialog("Πυροσβεστική","tel:6948573112"));
+        police_btn.setOnClickListener(v -> showConfirmationDialog("Αστυνομία","tel:100"));
+        ambulance_btn.setOnClickListener(v -> showConfirmationDialog("ΕΚΑΒ","tel:166"));
+        fire_btn.setOnClickListener(v -> showConfirmationDialog("Πυροσβεστική","tel:199"));
     }
 
     private void showConfirmationDialog(String serviceName, String phoneNumber) {
