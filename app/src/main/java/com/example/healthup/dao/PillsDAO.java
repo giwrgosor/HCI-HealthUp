@@ -6,8 +6,9 @@ import java.util.ArrayList;
 public interface PillsDAO {
     void save(Pill pill);
     void delete(Pill pill);
-    void editPill(Pill oldPill, Pill newPill);
     ArrayList<Pill> findAll();
     Pill findById(int id);
     boolean existsByName(String name);
+
+    void update(Pill pill);
 }

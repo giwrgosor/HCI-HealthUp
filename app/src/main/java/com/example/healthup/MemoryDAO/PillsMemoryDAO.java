@@ -20,11 +20,11 @@ public class PillsMemoryDAO implements PillsDAO {
     }
 
     @Override
-    public void editPill(Pill oldPill, Pill newPill) {
-        for (Pill p : pills) {
-            if (p.equals(oldPill)) {
-                p.changePillData(newPill);
-                break;
+    public void update(Pill pill) {
+        for (int i = 0; i < pills.size(); i++) {
+            if (pills.get(i).getId() == pill.getId()) {
+                pills.set(i, pill);
+                return;
             }
         }
     }

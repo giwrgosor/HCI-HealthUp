@@ -1,8 +1,9 @@
 package com.example.healthup.domain;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class Pill {
+public class Pill implements Serializable {
     private static int idCounter = 1;
     private int id;
     private String name;

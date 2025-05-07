@@ -1,10 +1,12 @@
 package com.example.healthup.Pills;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -14,6 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.healthup.MainMenuActivity;
 import com.example.healthup.MemoryDAO.PillsMemoryDAO;
 import com.example.healthup.R;
 import com.example.healthup.dao.PillsDAO;
@@ -30,6 +33,7 @@ public class AddPillsActivity extends AppCompatActivity {
     private final Map<String, boolean[]> daySchedules = new HashMap<>();
     private final PillsDAO pillsDAO = new PillsMemoryDAO();
     private Button btn_addPill;
+    private ImageView btn_homePill;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,7 @@ public class AddPillsActivity extends AppCompatActivity {
         beforeSleep = findViewById(R.id.checkbox_monday_before_sleep);
 
         btn_addPill = findViewById(R.id.addPillButton);
+        btn_homePill = findViewById(R.id.homePill);
 
         setupDayButtons();
         updateDayButtonColors();
@@ -54,6 +59,14 @@ public class AddPillsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 savePill();
+            }
+        });
+
+        btn_homePill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddPillsActivity.this, MainMenuActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -92,7 +105,14 @@ public class AddPillsActivity extends AppCompatActivity {
     }
 
     private void loadScheduleForSelectedDay() {
-        boolean[] schedule = daySchedules.getOrDefault(selectedDay, new boolean[6]);
+
+        boolean[] schedule;
+        if (daySchedules.containsKey(selectedDay)) {
+            schedule = daySchedules.get(selectedDay);
+        } else {
+            schedule = new boolean[6];
+        }
+
         beforeBreakfast.setChecked(schedule[0]);
         afterBreakfast.setChecked(schedule[1]);
         noon.setChecked(schedule[2]);
