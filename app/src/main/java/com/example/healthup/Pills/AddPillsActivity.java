@@ -1,6 +1,7 @@
 package com.example.healthup.Pills;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -28,6 +29,7 @@ public class AddPillsActivity extends AppCompatActivity {
     private final Map<String, Button> dayButtons = new HashMap<>();
     private final Map<String, boolean[]> daySchedules = new HashMap<>();
     private final PillsDAO pillsDAO = new PillsMemoryDAO();
+    private Button btn_addPill;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +45,20 @@ public class AddPillsActivity extends AppCompatActivity {
         beforeDinner = findViewById(R.id.checkbox_monday_before_dinner);
         beforeSleep = findViewById(R.id.checkbox_monday_before_sleep);
 
+        btn_addPill = findViewById(R.id.addPillButton);
+
         setupDayButtons();
+        updateDayButtonColors();
+
+        btn_addPill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                savePill();
+            }
+        });
 
     }
+
 
     private void setupDayButtons() {
         dayButtons.put("ΔΕΥ", findViewById(R.id.mondayButton));
@@ -107,6 +120,11 @@ public class AddPillsActivity extends AppCompatActivity {
             return;
         }
 
+        if (pillsDAO.existsByName(name)) {
+            Toast.makeText(this, "Υπάρχει ήδη χάπι με αυτό το όνομα!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Pill pill = new Pill();
         pill.setName(name);
         for (Map.Entry<String, boolean[]> entry : daySchedules.entrySet()) {
@@ -117,4 +135,6 @@ public class AddPillsActivity extends AppCompatActivity {
         Toast.makeText(this, "Το χάπι αποθηκεύτηκε!", Toast.LENGTH_SHORT).show();
         finish();
     }
+
+
 }

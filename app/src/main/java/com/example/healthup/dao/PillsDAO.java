@@ -9,4 +9,5 @@ public interface PillsDAO {
     void editPill(Pill oldPill, Pill newPill);
     ArrayList<Pill> findAll();
     Pill findById(int id);
+    boolean existsByName(String name);
 }

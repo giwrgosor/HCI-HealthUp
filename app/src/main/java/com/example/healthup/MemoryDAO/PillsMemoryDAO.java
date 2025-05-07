@@ -43,4 +43,13 @@ public class PillsMemoryDAO implements PillsDAO {
         }
         return null;
     }
+
+    public boolean existsByName(String name) {
+        for (Pill pill : pills) {
+            if (pill.getName().equalsIgnoreCase(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
