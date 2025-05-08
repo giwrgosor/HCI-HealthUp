@@ -29,6 +29,7 @@ public class EmergencyCallTracker extends PhoneStateListener {
                 if (wasCalling) {
                     wasCalling = false;
                     Intent intent = new Intent(context, UserSosInfoActivity.class);
+                    intent.putExtra("PhoneNum",phoneNumber);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }

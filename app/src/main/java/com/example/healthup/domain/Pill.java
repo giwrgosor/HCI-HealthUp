@@ -2,6 +2,7 @@ package com.example.healthup.domain;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Pill implements Serializable {
     private static int idCounter = 1;
@@ -51,5 +52,16 @@ public class Pill implements Serializable {
             return this.id == other.id;
         }
         return false;
+    }
+
+    public int getTimesPerWeek() {
+        int count = 0;
+        for (Map.Entry<String, boolean[]> entry : weeklySchedule.entrySet()) {
+            boolean[] slots = entry.getValue();
+            for (boolean takes : slots) {
+                if (takes) count++;
+            }
+        }
+        return count;
     }
 }

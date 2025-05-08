@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@drawable/background_rectangle"
+    android:layout_marginBottom="8dp">
+
+    <TextView
+        android:id="@+id/pillName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Όνομα Χαπιού"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/pillFrequency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3 φορές την εβδομάδα"
+        android:textSize="16sp"
+        android:textColor="@color/black" />
+</LinearLayout>
