@@ -148,7 +148,7 @@ public class UserSosInfoActivity extends AppCompatActivity {
             ArrayList<String> phoneNumbers = new ArrayList<>();
             for(Contact contact: contacts){
                 if(contact.isEmergency()){
-                    phoneNumbers.add(contact.getPhone());
+                    phoneNumbers.add("+30" + contact.getPhone());
                 }
             }
             for (String number : phoneNumbers) {
