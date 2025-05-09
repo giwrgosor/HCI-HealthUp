@@ -162,7 +162,9 @@ public class PillScheduleActivity extends AppCompatActivity {
 
                         CheckBox checkBox = new CheckBox(this);
 
-                        String key = pill.getName() + "_" + timeSlots[i];
+//                        String key = pill.getName() + "_" + timeSlots[i];
+                        String today = java.text.DateFormat.getDateInstance().format(Calendar.getInstance().getTime());
+                        String key = pill.getName() + "_" + timeSlots[i] + "_" + today;
 
                         SharedPreferences sharedPreferences = getSharedPreferences("PillPreferences", MODE_PRIVATE);
                         boolean isTaken = sharedPreferences.getBoolean(key, pill.isTaken());
