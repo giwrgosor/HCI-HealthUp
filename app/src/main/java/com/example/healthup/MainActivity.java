@@ -96,7 +96,9 @@ public class MainActivity extends AppCompatActivity {
         String[] permissions = {
                 Manifest.permission.CALL_PHONE,
                 Manifest.permission.SEND_SMS,
-                Manifest.permission.READ_PHONE_STATE
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
         };
 
         for (String permission : permissions) {
