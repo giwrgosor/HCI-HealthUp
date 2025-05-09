@@ -142,15 +142,17 @@
 
     <CheckBox
         android:id="@+id/emergencyDisplayCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="287dp"
+        android:layout_height="48dp"
         android:layout_marginStart="60dp"
         android:layout_marginTop="605dp"
         android:text="Επαφή Έκτακτης Ανάγκης"
         android:textColor="@color/black"
         android:textSize="18sp"
+        android:buttonTint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/deleteDisplayContactIcon"
