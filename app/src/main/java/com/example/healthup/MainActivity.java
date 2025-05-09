@@ -57,13 +57,15 @@ public class MainActivity extends AppCompatActivity {
     private LocationDAO locationDAO;
     private Location location;
 
+    String[] permissions = {
+            Manifest.permission.CALL_PHONE,
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+    };
 
     private void askPermissions() {
-        String[] permissions = {
-                Manifest.permission.CALL_PHONE,
-                Manifest.permission.SEND_SMS,
-                Manifest.permission.READ_PHONE_STATE
-        };
 
         List<String> listPermissionsNeeded = new ArrayList<>();
 
@@ -93,13 +95,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean arePermissionsGranted() {
-        String[] permissions = {
-                Manifest.permission.CALL_PHONE,
-                Manifest.permission.SEND_SMS,
-                Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-        };
 
         for (String permission : permissions) {
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
