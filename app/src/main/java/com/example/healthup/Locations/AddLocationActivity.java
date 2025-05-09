@@ -1,11 +1,13 @@
 package com.example.healthup.Locations;
 
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -14,6 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.healthup.MainMenuActivity;
 import com.example.healthup.MemoryDAO.LocationMemoryDAO;
 import com.example.healthup.R;
 import com.example.healthup.dao.LocationDAO;
@@ -41,6 +44,15 @@ public class AddLocationActivity extends AppCompatActivity {
         EditText zip_edt = findViewById(R.id.addLocationZipCode);
         EditText city_edt = findViewById(R.id.addLocationCity);
         Button save = findViewById(R.id.addLocation_btn);
+        ImageButton homeButtonAddLocation = findViewById(R.id.homeButtonAddLocation);
+
+        homeButtonAddLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AddLocationActivity.this, MainMenuActivity.class);
+                startActivity(intent);
+            }
+        });
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override

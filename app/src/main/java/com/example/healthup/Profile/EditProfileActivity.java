@@ -1,5 +1,6 @@
 package com.example.healthup.Profile;
 
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -16,6 +18,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.healthup.MainMenuActivity;
 import com.example.healthup.MemoryDAO.LocationMemoryDAO;
 import com.example.healthup.MemoryDAO.UserMemoryDAO;
 import com.example.healthup.R;
@@ -43,6 +46,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private User user;
     private Button saveBtn;
     private Location location;
+    private ImageButton homeButtonEditProfile;
 
 
     @Override
@@ -67,6 +71,7 @@ public class EditProfileActivity extends AppCompatActivity {
         saveBtn = findViewById(R.id.editProfile_save_btn);
         bloodTypeSpinner = findViewById(R.id.editProfile_spinnerBloodType);
         rhFactorSpinner = findViewById(R.id.editProfile_spinnerRhFactor);
+        homeButtonEditProfile = findViewById(R.id.homeButtonEditProfile);
 
         ArrayAdapter<String> bloodTypeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, bloodTypes);
         bloodTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -87,6 +92,14 @@ public class EditProfileActivity extends AppCompatActivity {
 
         bloodTypeSpinner.setSelection(Arrays.asList(bloodTypes).indexOf(user.getBloodType()));
         rhFactorSpinner.setSelection(Arrays.asList(rhFactors).indexOf(user.getBloodRhFactor()));
+
+        homeButtonEditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EditProfileActivity.this, MainMenuActivity.class);
+                startActivity(intent);
+            }
+        });
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override

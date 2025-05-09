@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -30,7 +31,7 @@ public class EditPillsActivity extends AppCompatActivity {
     private final PillsDAO pillsDAO = new PillsMemoryDAO();
     private Button btn_saveChanges;
     private Pill pill;
-    private ImageView btn_homePill;
+    private ImageButton btn_homePill;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class EditPillsActivity extends AppCompatActivity {
         beforeSleep = findViewById(R.id.checkbox_monday_before_sleep);
 
         btn_saveChanges = findViewById(R.id.savePillButton);
-        btn_homePill = findViewById(R.id.homePill);
+        btn_homePill = findViewById(R.id.homeEditPills);
 
         setupDayButtons();
 

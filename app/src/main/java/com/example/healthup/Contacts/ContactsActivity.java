@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +23,7 @@ import java.util.List;
 public class ContactsActivity extends AppCompatActivity {
 
     private FloatingActionButton btn_addContact;
-    private ImageView btn_homeContact;
+    private ImageButton btn_homeContact;
     private ImageView btn_numpadContact;
 
     private RecyclerView recyclerView;

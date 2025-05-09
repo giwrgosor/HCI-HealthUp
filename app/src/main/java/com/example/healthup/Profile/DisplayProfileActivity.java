@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -13,6 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.healthup.MainMenuActivity;
 import com.example.healthup.MemoryDAO.UserMemoryDAO;
 import com.example.healthup.R;
 import com.example.healthup.dao.UserDAO;
@@ -31,6 +33,7 @@ public class DisplayProfileActivity extends AppCompatActivity {
     private TextView bloodType_txt;
     private TextView bloodFactor_txt;
     private FloatingActionButton edit_btn;
+    private ImageButton homeButtonDisplayProfile;
 
     @Override
     protected void onResume(){
@@ -67,6 +70,7 @@ public class DisplayProfileActivity extends AppCompatActivity {
         zip_txt = findViewById(R.id.displayProfileZip_txt);
         bloodType_txt = findViewById(R.id.displayProfileBloodType);
         bloodFactor_txt = findViewById(R.id.displayProfileRhFactor);
+        homeButtonDisplayProfile = findViewById(R.id.homeButtonDisplayProfile);
 
         name_txt.setText(user.getName());
         surname_txt.setText(user.getSurname());
@@ -77,6 +81,14 @@ public class DisplayProfileActivity extends AppCompatActivity {
         bloodFactor_txt.setText(user.getBloodRhFactor());
 
         edit_btn = findViewById(R.id.editUserProfile_btn);
+
+        homeButtonDisplayProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DisplayProfileActivity.this, MainMenuActivity.class);
+                startActivity(intent);
+            }
+        });
 
         edit_btn.setOnClickListener(new View.OnClickListener() {
             @Override

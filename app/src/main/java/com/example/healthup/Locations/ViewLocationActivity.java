@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,7 +31,7 @@ public class ViewLocationActivity extends AppCompatActivity {
     private TextView address_txt;
     private TextView zipcode_txt;
     private TextView city_txt;
-    private ImageView homeButton;
+    private ImageButton homeButton;
     private Location location;
     private Context context = this;
 

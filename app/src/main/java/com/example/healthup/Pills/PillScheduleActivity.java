@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,7 +27,7 @@ import java.util.Calendar;
 public class PillScheduleActivity extends AppCompatActivity {
 
     private FloatingActionButton btn_displayPill;
-    private ImageView btn_homePill;
+    private ImageButton btn_homePill;
     private LinearLayout scheduleLayout;
     private PillsDAO pillDAO;
     private TextView dayTextView;
@@ -37,7 +38,7 @@ public class PillScheduleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pill_schedule);
 
         btn_displayPill = findViewById(R.id.displayPillIcon);
-        btn_homePill = findViewById(R.id.homePill);
+        btn_homePill = findViewById(R.id.homePillSchedule);
         scheduleLayout = findViewById(R.id.schedule_layout);
 
         dayTextView = findViewById(R.id.dayPill);

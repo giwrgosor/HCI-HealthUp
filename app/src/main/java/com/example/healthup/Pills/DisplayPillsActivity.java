@@ -3,6 +3,7 @@ package com.example.healthup.Pills;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +22,7 @@ import java.util.List;
 public class DisplayPillsActivity extends AppCompatActivity {
 
     private FloatingActionButton btn_addPill;
-    private ImageView btn_homePill;
+    private ImageButton btn_homePill;
 
     private RecyclerView recyclerView;
     private List<Pill> pillList;
@@ -36,7 +37,7 @@ public class DisplayPillsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_pills);
 
         btn_addPill = findViewById(R.id.addPillIcon);
-        btn_homePill = findViewById(R.id.homePill);
+        btn_homePill = findViewById(R.id.homeViewPill);
 
         recyclerView = findViewById(R.id.pillsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

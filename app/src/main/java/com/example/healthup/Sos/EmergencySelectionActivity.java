@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
@@ -20,6 +21,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.healthup.MainMenuActivity;
 import com.example.healthup.R;
 import com.example.healthup.domain.EmergencyCallTracker;
 
@@ -29,6 +31,7 @@ public class EmergencySelectionActivity extends AppCompatActivity {
     private LinearLayout ambulance_btn;
     private LinearLayout fire_btn;
     private EmergencyCallTracker callTracker;
+    private ImageButton homeButtonEmergency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +52,12 @@ public class EmergencySelectionActivity extends AppCompatActivity {
         police_btn = findViewById(R.id.police_btn);
         ambulance_btn = findViewById(R.id.ambulance_btn);
         fire_btn = findViewById(R.id.firedepartment_btn);
+        homeButtonEmergency = findViewById(R.id.homeButtonEmergency);
 
         police_btn.setOnClickListener(v -> showConfirmationDialog("Αστυνομία","tel:100"));
         ambulance_btn.setOnClickListener(v -> showConfirmationDialog("ΕΚΑΒ","tel:166"));
         fire_btn.setOnClickListener(v -> showConfirmationDialog("Πυροσβεστική","tel:199"));
+        homeButtonEmergency.setOnClickListener(v -> startActivity(new Intent(EmergencySelectionActivity.this, MainMenuActivity.class)));
     }
 
     private void showConfirmationDialog(String serviceName, String phoneNumber) {

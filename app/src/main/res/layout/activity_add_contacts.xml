@@ -42,7 +42,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="25dp"
         android:text="Προσθήκη Επαφής"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -50,11 +50,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/homeContact"
-        android:layout_width="63dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="22dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Home Button"
+        android:scaleType="centerCrop"
+        android:padding="6dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/home" />

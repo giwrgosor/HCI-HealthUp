@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 import android.content.Intent;
@@ -26,7 +27,7 @@ public class AddContactsActivity extends AppCompatActivity {
     private EditText nameContactText;
     private EditText phoneContactText;
     private Button addContactBtn;
-    private ImageView btn_homeContact;
+    private ImageButton btn_homeContact;
 
     private ContactsDAO contactsDAO;
     private CheckBox emergencyCheckBox;
@@ -45,9 +46,6 @@ public class AddContactsActivity extends AppCompatActivity {
         contactsDAO = new ContactsMemoryDAO();
 
         emergencyCheckBox = findViewById(R.id.emergencyCheckBox);
-
-        boolean isEmergency = emergencyCheckBox.isChecked();
-
 
         phoneContactText.addTextChangedListener(new TextWatcher() {
             private String current = "";

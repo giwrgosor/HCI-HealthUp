@@ -2,12 +2,14 @@ package com.example.healthup.Sos;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.healthup.MainMenuActivity;
 import com.example.healthup.MemoryDAO.ContactsMemoryDAO;
 import com.example.healthup.MemoryDAO.PillsMemoryDAO;
 import com.example.healthup.MemoryDAO.UserMemoryDAO;
@@ -40,6 +43,7 @@ public class UserSosInfoActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_CODE = 1000;
     private String message = "Ενεργοποιήθηκε η λειτουργία έκτακτης ανάγκης για τον χρήστη: ";
     private String numberCalled;
+    private ImageButton homeButtonEmergencyProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,9 @@ public class UserSosInfoActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.emergenyNameSurname_txt)).setText(MessageFormat.format("{0} {1}", user.getName(), user.getSurname()));
         ((TextView) findViewById(R.id.emergencyAddress_txt)).setText(user.getAddress());
         ((TextView) findViewById(R.id.emergencyCityZipcode_txt)).setText(String.format("%s, %s", user.getCity(), user.getZipcode()));
+        homeButtonEmergencyProfile = findViewById(R.id.homeButtonEmergencyProfile);
+
+        homeButtonEmergencyProfile.setOnClickListener(v -> startActivity(new Intent(UserSosInfoActivity.this, MainMenuActivity.class)));
 
         PillsDAO pillsDAO = new PillsMemoryDAO();
         ArrayList<Pill> pills = pillsDAO.findAll();

@@ -3,6 +3,7 @@ package com.example.healthup.Locations;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -22,7 +23,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class LocationsActivity extends AppCompatActivity {
 
     private ListView locationsListView;
-    private ImageView homeFromLocations;
+    private ImageButton homeFromLocations;
     private LocationsListViewAdapter adapter;
 
     @Override

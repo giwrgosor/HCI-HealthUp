@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.appcompat.app.AlertDialog;
 
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class DisplayContactsActivity extends AppCompatActivity {
-    private ImageView btn_homeDisplayContact;
+    private ImageButton btn_homeDisplayContact;
     private FloatingActionButton btn_callDisplayContact, btn_editDisplayContact, btn_deleteDisplayContact;
     private Contact contact;
     private  TextView nameTextView, phoneTextView;
@@ -42,7 +43,7 @@ public class DisplayContactsActivity extends AppCompatActivity {
         nameTextView = findViewById(R.id.nameDisplayContact);
         phoneTextView = findViewById(R.id.phoneDisplayContact);
 
-        btn_homeDisplayContact = findViewById(R.id.homeContact);
+        btn_homeDisplayContact = findViewById(R.id.homeViewContact);
         btn_callDisplayContact = findViewById(R.id.callDisplayContactIcon);
         btn_editDisplayContact = findViewById(R.id.editDisplayContactIcon);
         btn_deleteDisplayContact = findViewById(R.id.deleteDisplayContactIcon);

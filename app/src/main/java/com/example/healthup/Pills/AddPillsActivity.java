@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -33,7 +34,7 @@ public class AddPillsActivity extends AppCompatActivity {
     private final Map<String, boolean[]> daySchedules = new HashMap<>();
     private final PillsDAO pillsDAO = new PillsMemoryDAO();
     private Button btn_addPill;
-    private ImageView btn_homePill;
+    private ImageButton btn_homePill;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

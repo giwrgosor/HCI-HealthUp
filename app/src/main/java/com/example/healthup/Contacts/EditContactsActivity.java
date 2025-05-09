@@ -8,12 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.healthup.Locations.EditLocationActivity;
+import com.example.healthup.MainActivity;
 import com.example.healthup.MemoryDAO.ContactsMemoryDAO;
 import com.example.healthup.R;
 import com.example.healthup.dao.ContactsDAO;
@@ -25,6 +27,7 @@ public class EditContactsActivity extends AppCompatActivity {
     private ContactsDAO contactsDAO;
     private Button btn_saveContact;
     private CheckBox emergencyEdit;
+    private ImageButton editcontact_homeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,7 @@ public class EditContactsActivity extends AppCompatActivity {
         editPhone = findViewById(R.id.editPhoneContact);
         btn_saveContact = findViewById(R.id.saveContactButton);
         emergencyEdit = findViewById(R.id.emergencyEditCheckBox);
+        editcontact_homeBtn = findViewById(R.id.homeEditContact);
 
         int contactId = getIntent().getIntExtra("id", -1);
         String oldName = getIntent().getStringExtra("name");
@@ -46,7 +50,7 @@ public class EditContactsActivity extends AppCompatActivity {
         editName.setText(oldName);
         editPhone.setText(Contact.formatPhoneNumber(oldPhone));
 
-        if (emergency != null && emergency) {
+        if (emergency) {
             emergencyEdit.setChecked(true);
         } else {
             emergencyEdit.setChecked(false);
@@ -129,6 +133,14 @@ public class EditContactsActivity extends AppCompatActivity {
                     Toast.makeText(EditContactsActivity.this, "Λάθος τηλέφωνο: Πρέπει να έχει 10 ψηφία.", Toast.LENGTH_SHORT).show();
                 }
 
+            }
+        });
+
+        editcontact_homeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(EditContactsActivity.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
