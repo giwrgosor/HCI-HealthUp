@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,24 +19,28 @@ import com.example.healthup.dao.Initializer;
 
 public class MainMenuActivity extends AppCompatActivity {
 
-    private Button sos_btn;
-    private Button returnHome_btn;
-    private Button contacts_btn;
-    private Button locations_btn;
-    private Button pills_btn;
-    private Button profile_btn;
+    private FrameLayout sos_btn;
+    private FrameLayout returnHome_btn;
+    private FrameLayout locations_btn;
+    private FrameLayout pills_btn;
+    private FrameLayout profile_btn;
+    private FrameLayout contacts_btn;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main_menu);
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
+
+        contacts_btn=findViewById(R.id.menu_contacts_btn);
+
+        contacts_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainMenuActivity.this, ContactsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         sos_btn=findViewById(R.id.menu_sos_btn);
         returnHome_btn=findViewById(R.id.menu_returnhome_btn);
@@ -56,14 +61,6 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-            }
-        });
-
-        contacts_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainMenuActivity.this, ContactsActivity.class);
-                startActivity(intent);
             }
         });
 
