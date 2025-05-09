@@ -73,7 +73,7 @@ public class ContactsActivity extends AppCompatActivity {
         btn_numpadContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_DIAL);
+                Intent intent = new Intent(ContactsActivity.this,KeypadActivity.class);
                 startActivity(intent);
             }
         });

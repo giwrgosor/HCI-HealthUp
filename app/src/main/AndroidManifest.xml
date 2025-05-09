@@ -24,6 +24,9 @@
         android:theme="@style/Theme.HealthUp"
         tools:targetApi="31">
         <activity
+            android:name=".Contacts.KeypadActivity"
+            android:exported="false" />
+        <activity
             android:name=".Sos.UserSosInfoActivity"
             android:exported="false" />
         <activity

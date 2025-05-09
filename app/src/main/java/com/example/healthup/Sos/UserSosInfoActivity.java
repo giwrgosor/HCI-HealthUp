@@ -146,14 +146,14 @@ public class UserSosInfoActivity extends AppCompatActivity {
             ContactsDAO contactsDAO = new ContactsMemoryDAO();
             ArrayList<Contact> contacts = contactsDAO.findAll();
             ArrayList<String> phoneNumbers = new ArrayList<>();
+            ArrayList<String> parts = smsManager.divideMessage(message);
             for(Contact contact: contacts){
                 if(contact.isEmergency()){
                     phoneNumbers.add("+30" + contact.getPhone());
                 }
             }
             for (String number : phoneNumbers) {
-                smsManager.sendTextMessage(number, null, message, null, null);
-            }
+                smsManager.sendMultipartTextMessage(number, null, parts, null, null);            }
             Toast.makeText(this, "Στάλθηκαν τα SMS με επιτυχία!", Toast.LENGTH_SHORT).show();
         } catch (SecurityException e) {
             Toast.makeText(this, "Απορρίφθηκε η άδεια να σταλθεί SMS", Toast.LENGTH_SHORT).show();
