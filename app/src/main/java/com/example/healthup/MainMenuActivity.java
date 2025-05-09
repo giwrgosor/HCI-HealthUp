@@ -11,6 +11,7 @@ import com.example.healthup.Contacts.ContactsActivity;
 import com.example.healthup.Locations.LocationsActivity;
 import com.example.healthup.MemoryDAO.MemoryInitializer;
 import com.example.healthup.Pills.DisplayPillsActivity;
+import com.example.healthup.Pills.PillScheduleActivity;
 import com.example.healthup.Profile.DisplayProfileActivity;
 import com.example.healthup.Sos.EmergencySelectionActivity;
 import com.example.healthup.dao.Initializer;
@@ -76,8 +77,8 @@ public class MainMenuActivity extends AppCompatActivity {
 
         pills_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { // προσωρινα για να δω οτι δουλευει
-                Intent intent = new Intent(MainMenuActivity.this, DisplayPillsActivity.class);
+            public void onClick(View view) {
+                Intent intent = new Intent(MainMenuActivity.this, PillScheduleActivity.class);
                 startActivity(intent);
             }
         });

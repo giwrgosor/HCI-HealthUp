@@ -7,6 +7,21 @@ public class Pill implements Serializable {
     private static int idCounter = 1;
     private int id;
     private String name;
+    private String dayOfWeek;
+    private String timeSlot;
+    private boolean taken;
+
+    public Pill(String name, String dayOfWeek, String timeSlot) {
+        this.name = name;
+        this.dayOfWeek = dayOfWeek;
+        this.timeSlot = timeSlot;
+        this.taken = false;
+    }
+
+    public String getTimeSlot() { return timeSlot; }
+    public String getDayOfWeek() { return dayOfWeek; }
+    public boolean isTaken() { return taken; }
+    public void setTaken(boolean taken) { this.taken = taken; }
 
     private HashMap<String, boolean[]> weeklySchedule = new HashMap<>();
 

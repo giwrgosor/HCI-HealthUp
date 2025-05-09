@@ -1,20 +1,198 @@
 package com.example.healthup.Pills;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.example.healthup.MainMenuActivity;
+import com.example.healthup.MemoryDAO.PillsMemoryDAO;
 import com.example.healthup.R;
+import com.example.healthup.dao.PillsDAO;
+import com.example.healthup.domain.Pill;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class PillScheduleActivity extends AppCompatActivity {
+
+    private FloatingActionButton btn_displayPill;
+    private ImageView btn_homePill;
+    private LinearLayout scheduleLayout;
+    private PillsDAO pillDAO;
+    private TextView dayTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pill_schedule);
+
+        btn_displayPill = findViewById(R.id.displayPillIcon);
+        btn_homePill = findViewById(R.id.homePill);
+        scheduleLayout = findViewById(R.id.schedule_layout);
+
+        dayTextView = findViewById(R.id.dayPill);
+        pillDAO = new PillsMemoryDAO();
+
+        btn_displayPill.setOnClickListener(view -> {
+            Intent intent = new Intent(PillScheduleActivity.this, DisplayPillsActivity.class);
+            startActivity(intent);
+        });
+
+        btn_homePill.setOnClickListener(view -> {
+            Intent intent = new Intent(PillScheduleActivity.this, MainMenuActivity.class);
+            startActivity(intent);
+        });
+
+        String fullDay = getDays();
+
+        if (fullDay.contains("ΚΥΡ")){
+            dayTextView.setText("~   ΚΥΡΙΑΚΗ   ~");
+        } else if (fullDay.contains("ΔΕΥ")){
+            dayTextView.setText("~   ΔΕΥΤΕΡΑ   ~");
+        } else if (fullDay.contains("ΤΡΙ")) {
+            dayTextView.setText("~   ΤΡΙΤΗ   ~");
+        } else if (fullDay.contains("ΤΕΤ")){
+            dayTextView.setText("~   ΤΕΤΑΡΤΗ   ~");
+        } else if (fullDay.contains("ΠΕΜ")){
+            dayTextView.setText("~   ΠΕΜΠΤΗ   ~");
+        } else if (fullDay.contains("ΠΑΡ")){
+            dayTextView.setText("~   ΠΑΡΑΣΚΕΥΗ   ~");
+        } else {
+            dayTextView.setText("~   ΣΑΒΒΑΤΟ   ~");
+        }
+        //dayTextView.setText(fullDay);
+
+        displayScheduleForToday(getDays());
     }
+
+    private String getDays() {
+        String[] greekDays = {"ΚΥΡ", "ΔΕΥ", "ΤΡΙ", "ΤΕΤ", "ΠΕΜ", "ΠΑΡ", "ΣΑΒ"};
+        int dayIndex = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1;
+        return greekDays[dayIndex];
+    }
+
+    private void displayScheduleForToday(String day) {
+        String[] timeSlots = {
+                "Πριν το Πρωινό", "Μετά το Πρωινό", "Μεσημέρι",
+                "Απόγευμα", "Πριν το Βραδινό", "Πριν τον Ύπνο"
+        };
+
+        ArrayList<Pill> allPills = pillDAO.findAll();
+
+        for (int i = 0; i < timeSlots.length; i++) {
+            boolean hasPillsForSlot = false;
+
+            LinearLayout titleRow = new LinearLayout(this);
+            titleRow.setOrientation(LinearLayout.HORIZONTAL);
+            titleRow.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+            ));
+            titleRow.setGravity(Gravity.CENTER_HORIZONTAL);
+
+            TextView slotTitle = new TextView(this);
+            slotTitle.setText(timeSlots[i]);
+            slotTitle.setTextSize(22);
+
+            int[] slotColors = {
+                    getResources().getColor(R.color.colorSlot1),
+                    getResources().getColor(R.color.colorSlot2),
+                    getResources().getColor(R.color.colorSlot3),
+                    getResources().getColor(R.color.colorSlot4),
+                    getResources().getColor(R.color.colorSlot5),
+                    getResources().getColor(R.color.colorSlot6)
+            };
+
+            slotTitle.setTextColor(slotColors[i]);
+            slotTitle.setPadding(0, 24, 0, 8);
+            slotTitle.setTypeface(null, Typeface.BOLD);
+
+            for (Pill pill : allPills) {
+                boolean[] schedule = pill.getScheduleForDay(day);
+                if (schedule != null && schedule.length > i && schedule[i]) {
+                    hasPillsForSlot = true;
+                    break;
+                }
+            }
+
+            if (hasPillsForSlot) {
+                titleRow.addView(slotTitle);
+                scheduleLayout.addView(titleRow);
+
+                View separatorLine = new View(this);
+                separatorLine.setLayoutParams(new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, 2
+                ));
+                separatorLine.setBackgroundColor(getResources().getColor(R.color.gray));
+                scheduleLayout.addView(separatorLine);
+
+                boolean hasPills = false;
+
+                for (Pill pill : allPills) {
+                    boolean[] schedule = pill.getScheduleForDay(day);
+                    if (schedule != null && schedule.length > i && schedule[i]) {
+                        LinearLayout pillRow = new LinearLayout(this);
+                        pillRow.setOrientation(LinearLayout.HORIZONTAL);
+                        pillRow.setLayoutParams(new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT
+                        ));
+                        pillRow.setPadding(0, 4, 0, 4);
+
+                        TextView pillName = new TextView(this);
+                        pillName.setText(pill.getName());
+                        pillName.setTextColor(getResources().getColor(R.color.black));
+                        pillName.setLayoutParams(new LinearLayout.LayoutParams(
+                                0,
+                                LinearLayout.LayoutParams.WRAP_CONTENT,
+                                1
+                        ));
+                        pillName.setTextSize(20);
+
+                        CheckBox checkBox = new CheckBox(this);
+
+                        String key = pill.getName() + "_" + timeSlots[i];
+
+                        SharedPreferences sharedPreferences = getSharedPreferences("PillPreferences", MODE_PRIVATE);
+                        boolean isTaken = sharedPreferences.getBoolean(key, pill.isTaken());
+                        checkBox.setChecked(isTaken);
+
+                        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putBoolean(key, isChecked);
+                            editor.apply();
+                        });
+
+                        pillRow.addView(pillName);
+                        pillRow.addView(checkBox);
+
+                        scheduleLayout.addView(pillRow);
+                        hasPills = true;
+                    }
+                }
+
+                if (!hasPills) {
+                    TextView noPills = new TextView(this);
+                    noPills.setText("Δεν υπάρχουν χάπια");
+                    noPills.setTextSize(14);
+                    noPills.setTextColor(getResources().getColor(R.color.gray));
+                    scheduleLayout.addView(noPills);
+                }
+            }
+        }
+    }
+
+
+
+
 }

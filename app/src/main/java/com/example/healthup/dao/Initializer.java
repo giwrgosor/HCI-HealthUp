@@ -29,7 +29,7 @@ public abstract class Initializer {
         PillsDAO pillDAO = getPillsDAO();
         Pill depon = new Pill("Depon");
         depon.setScheduleForDay("ΔΕΥ", new boolean[]{true, false, false, true, false, true});
-        depon.setScheduleForDay("ΠΑΡ", new boolean[]{false, true, true, false, false, false});
+        depon.setScheduleForDay("ΠΕΜ", new boolean[]{false, true, true, false, false, false});
         pillDAO.save(depon);
 
         Pill panadol = new Pill("Panadol Extra");
@@ -37,12 +37,21 @@ public abstract class Initializer {
         pillDAO.save(panadol);
 
         Pill algo = new Pill("Algofren");
-        algo.setScheduleForDay("ΤΕΤ", new boolean[]{true, true, false, false, true, false});
+        algo.setScheduleForDay("ΠΕΜ", new boolean[]{true, true, false, false, true, false});
         pillDAO.save(algo);
 
         Pill ponstan = new Pill("Ponstan");
         ponstan.setScheduleForDay("ΚΥΡ", new boolean[]{false, false, false, true, false, true});
         pillDAO.save(ponstan);
+
+        Pill nurofen = new Pill("Nurofen");
+        nurofen.setScheduleForDay("ΤΕΤ", new boolean[]{false, false, true, false, true, true});
+        pillDAO.save(nurofen);
+
+        Pill legofer = new Pill("Legofer");
+        legofer.setScheduleForDay("ΠΑΡ", new boolean[]{false, false, true, false, true, false});
+        legofer.setScheduleForDay("ΣΑΒ", new boolean[]{false, false, true, false, true, false});
+        pillDAO.save(legofer);
 
     }
 }

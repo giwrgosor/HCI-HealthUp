@@ -7,4 +7,10 @@
     <color name="red">#D32F2F</color>
     <color name="orange">#FFA500</color>
     <color name="gray">#FF888888</color>
+    <color name="colorSlot1">#FF5733</color>  <!-- Σκούρο Πορτοκαλί -->
+    <color name="colorSlot2">#067C1B</color>  <!-- Σκρούρο Πράσινο -->
+    <color name="colorSlot3">#3357FF</color>  <!-- Μπλε -->
+    <color name="colorSlot4">#FF33A6</color>  <!-- Ροζ -->
+    <color name="colorSlot5">#009688</color>  <!-- Σμαραγδί -->
+    <color name="colorSlot6">#9C27B0</color>  <!-- Μωβ -->
 </resources>
