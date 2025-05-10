@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.healthup.Locations.EditLocationActivity;
 import com.example.healthup.MainActivity;
+import com.example.healthup.MainMenuActivity;
 import com.example.healthup.MemoryDAO.ContactsMemoryDAO;
 import com.example.healthup.R;
 import com.example.healthup.dao.ContactsDAO;
@@ -139,7 +140,7 @@ public class EditContactsActivity extends AppCompatActivity {
         editcontact_homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EditContactsActivity.this, MainActivity.class);
+                Intent intent = new Intent(EditContactsActivity.this, MainMenuActivity.class);
                 startActivity(intent);
             }
         });

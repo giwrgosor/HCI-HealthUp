@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,13 +12,16 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.example.healthup.MainActivity;
+import com.example.healthup.MainMenuActivity;
 import com.example.healthup.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class KeypadActivity extends AppCompatActivity {
 
     private TextView numberDisplay;
-    private FloatingActionButton call;
+    private FloatingActionButton call, backspace;
+    private ImageButton btn_homeKeypad;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,27 @@ public class KeypadActivity extends AppCompatActivity {
 
         numberDisplay = findViewById(R.id.numberDisplay);
         call = findViewById(R.id.keypadCall);
+        backspace = findViewById(R.id.keypadBackspace);
+        btn_homeKeypad = findViewById(R.id.homeButtonKeypad);
+
+        btn_homeKeypad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(KeypadActivity.this, MainMenuActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        backspace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String currentRaw = numberDisplay.getText().toString().replaceAll("\\s+", "");
+                if (!currentRaw.isEmpty()) {
+                    currentRaw = currentRaw.substring(0, currentRaw.length() - 1);
+                    numberDisplay.setText(formatPhoneNumber(currentRaw));
+                }
+            }
+        });
 
         setupKeyListeners();
     }
@@ -72,9 +97,23 @@ public class KeypadActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String currentText = numberDisplay.getText().toString();
-                numberDisplay.setText(String.format("%s%s", currentText, digit));
+                String currentRaw = numberDisplay.getText().toString().replaceAll("\\s+", "");
+                if (currentRaw.length() >= 10) return;
+
+                currentRaw += digit;
+                numberDisplay.setText(formatPhoneNumber(currentRaw));
             }
         };
     }
+
+    private String formatPhoneNumber(String digits) {
+        if (digits.length() <= 3) {
+            return digits;
+        } else if (digits.length() <= 6) {
+            return digits.substring(0, 3) + " " + digits.substring(3);
+        } else {
+            return digits.substring(0, 3) + " " + digits.substring(3, 6) + " " + digits.substring(6);
+        }
+    }
+
 }

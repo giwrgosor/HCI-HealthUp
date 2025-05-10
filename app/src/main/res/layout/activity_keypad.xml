@@ -31,7 +31,7 @@
 
     <!-- Home Button -->
     <ImageButton
-        android:id="@+id/homeButtonEditProfile"
+        android:id="@+id/homeButtonKeypad"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="4dp"
@@ -171,5 +171,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/phone"
         app:tint="@color/white" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/keypadBackspace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:backgroundTint="@color/gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_backspace"
+        app:tint="@color/white" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
