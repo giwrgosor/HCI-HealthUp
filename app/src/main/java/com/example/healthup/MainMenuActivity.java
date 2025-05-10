@@ -5,6 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -48,6 +53,11 @@ public class MainMenuActivity extends AppCompatActivity {
         locations_btn=findViewById(R.id.menu_locations_btn);
         pills_btn=findViewById(R.id.menu_pills_btn);
         profile_btn=findViewById(R.id.menu_profile_btn);
+
+        TextView dateText = findViewById(R.id.date_text);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE d MMMM\naa:mm", new Locale("el", "GR"));
+        String currentDateAndTime = sdf.format(new Date());
+        dateText.setText(currentDateAndTime);
 
         sos_btn.setOnClickListener(new View.OnClickListener() {
             @Override
