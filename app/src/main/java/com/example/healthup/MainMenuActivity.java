@@ -1,11 +1,14 @@
 package com.example.healthup;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,12 +18,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.healthup.Contacts.ContactsActivity;
 import com.example.healthup.Locations.LocationsActivity;
+import com.example.healthup.MemoryDAO.LocationMemoryDAO;
 import com.example.healthup.MemoryDAO.MemoryInitializer;
 import com.example.healthup.Pills.DisplayPillsActivity;
 import com.example.healthup.Pills.PillScheduleActivity;
 import com.example.healthup.Profile.DisplayProfileActivity;
 import com.example.healthup.Sos.EmergencySelectionActivity;
 import com.example.healthup.dao.Initializer;
+import com.example.healthup.dao.LocationDAO;
+import com.example.healthup.domain.Location;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -70,7 +76,19 @@ public class MainMenuActivity extends AppCompatActivity {
         returnHome_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                LocationDAO locationDAO = new LocationMemoryDAO();
+                Location location = locationDAO.findById(1);
+                String uri = "https://www.google.com/maps/dir/?api=1"
+                        + "&destination=" + location.getLat() + "," + location.getLon()
+                        + "&travelmode=driving";
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                intent.setPackage("com.google.android.apps.maps"); // Ensure it opens in Google Maps
+                Context context = getApplicationContext();
+                if (intent.resolveActivity(context.getPackageManager()) != null) {
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(context, "Το Google Maps δεν είναι εγκατεστημένο", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
