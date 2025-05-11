@@ -2,17 +2,22 @@ package com.example.healthup;
 
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
+import android.location.Location;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,7 +31,7 @@ import com.example.healthup.Profile.DisplayProfileActivity;
 import com.example.healthup.Sos.EmergencySelectionActivity;
 import com.example.healthup.dao.Initializer;
 import com.example.healthup.dao.LocationDAO;
-import com.example.healthup.domain.Location;
+import com.example.healthup.domain.FetchWeatherForecast;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -36,6 +41,7 @@ public class MainMenuActivity extends AppCompatActivity {
     private FrameLayout pills_btn;
     private FrameLayout profile_btn;
     private FrameLayout contacts_btn;
+    private TextView weatherTextView;
 
 
     @Override
@@ -44,6 +50,7 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
 
         contacts_btn=findViewById(R.id.menu_contacts_btn);
+        weatherTextView = findViewById(R.id.weather_forecast_text);
 
         contacts_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +66,37 @@ public class MainMenuActivity extends AppCompatActivity {
         locations_btn=findViewById(R.id.menu_locations_btn);
         pills_btn=findViewById(R.id.menu_pills_btn);
         profile_btn=findViewById(R.id.menu_profile_btn);
+
+        try {
+            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+            Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (location == null) {
+                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            }
+
+            if (location != null) {
+                double lat = location.getLatitude();
+                double lon = location.getLongitude();
+
+//                FetchWeatherForecast weatherTask = new FetchWeatherForecast(lat, lon, weatherTextView);
+//                weatherTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "0000");
+
+                new FetchWeatherForecast(lat, lon){
+                    protected void onPostExecute(String[] result) {
+                        if (result != null) {
+                            weatherTextView.setText(result[0]);
+                        }
+                    }
+                }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "0000");
+
+            } else {
+                weatherTextView.setText("Δεν βρέθηκε τοποθεσία.");
+            }
+
+        } catch (SecurityException e) {
+            Toast.makeText(this, "Δεν δώσατε άδεια τοποθεσίας.", Toast.LENGTH_SHORT).show();
+        }
+
 
         TextView dateText = findViewById(R.id.date_text);
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE d MMMM\naa:mm", new Locale("el", "GR"));
@@ -77,7 +115,7 @@ public class MainMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 LocationDAO locationDAO = new LocationMemoryDAO();
-                Location location = locationDAO.findById(1);
+                com.example.healthup.domain.Location location = locationDAO.findById(1);
                 String uri = "https://www.google.com/maps/dir/?api=1"
                         + "&destination=" + location.getLat() + "," + location.getLon()
                         + "&travelmode=driving";
