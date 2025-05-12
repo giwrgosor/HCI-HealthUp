@@ -38,7 +38,7 @@ public class FetchWeatherForecast extends AsyncTask<String, Void, String[]>{
         long roundedHigh = Math.round(high);
         long roundedLow = Math.round(low);
 
-        String highLowStr = "From " + roundedLow + "°C to " + roundedHigh + "°C";
+        String highLowStr = roundedLow + "°C έως " + roundedHigh + "°C";
         return highLowStr;
     }
 

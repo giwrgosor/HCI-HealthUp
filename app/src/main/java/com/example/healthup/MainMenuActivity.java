@@ -1,5 +1,6 @@
 package com.example.healthup;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
@@ -7,14 +8,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import android.location.Location;
@@ -24,12 +23,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.healthup.Contacts.ContactsActivity;
 import com.example.healthup.Locations.LocationsActivity;
 import com.example.healthup.MemoryDAO.LocationMemoryDAO;
-import com.example.healthup.MemoryDAO.MemoryInitializer;
-import com.example.healthup.Pills.DisplayPillsActivity;
 import com.example.healthup.Pills.PillScheduleActivity;
 import com.example.healthup.Profile.DisplayProfileActivity;
 import com.example.healthup.Sos.EmergencySelectionActivity;
-import com.example.healthup.dao.Initializer;
 import com.example.healthup.dao.LocationDAO;
 import com.example.healthup.domain.FetchWeatherForecast;
 
@@ -41,16 +37,19 @@ public class MainMenuActivity extends AppCompatActivity {
     private FrameLayout pills_btn;
     private FrameLayout profile_btn;
     private FrameLayout contacts_btn;
-    private TextView weatherTextView;
+    private TextView weatherTempText;
+    private ImageView weatherIcon;
 
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
         contacts_btn=findViewById(R.id.menu_contacts_btn);
-        weatherTextView = findViewById(R.id.weather_forecast_text);
+        weatherIcon = findViewById(R.id.weather_icon);
+        weatherTempText = findViewById(R.id.weather_temperature);
 
         contacts_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,16 +80,45 @@ public class MainMenuActivity extends AppCompatActivity {
 //                FetchWeatherForecast weatherTask = new FetchWeatherForecast(lat, lon, weatherTextView);
 //                weatherTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "0000");
 
-                new FetchWeatherForecast(lat, lon){
+                new FetchWeatherForecast(lat, lon) {
+                    @Override
                     protected void onPostExecute(String[] result) {
-                        if (result != null) {
-                            weatherTextView.setText(result[0]);
+                        if (result != null && result.length >= 2) {
+
+                            String regex = "[-]";
+                            String description = result[0].toLowerCase(Locale.ROOT);
+                            String[] myArray = description.split(regex);
+                            String[] weatherArray = new String[myArray.length];
+
+                            for (int i = 0; i < myArray.length; i++) {
+                                weatherArray[i] = myArray[i].trim();
+                            }
+
+
+                            weatherTempText.setText(weatherArray[2]);
+
+                            if (weatherArray[1].contains("cloud")) {
+                                weatherIcon.setImageResource(R.drawable.ic_cloudy);
+                            } else if (weatherArray[1].contains("thunderstorm")){
+                                weatherIcon.setImageResource(R.drawable.ic_thunderstorm);
+                            } else if (weatherArray[1].contains("snow")){
+                                weatherIcon.setImageResource(R.drawable.ic_snow);
+                            } else if (weatherArray[1].contains("drizzle")){
+                                weatherIcon.setImageResource(R.drawable.ic_drizzle);
+                            } else if (weatherArray[1].contains("sun") || description.contains("clear")) {
+                                weatherIcon.setImageResource(R.drawable.ic_sunny);
+                            } else if (weatherArray[1].contains("rain")) {
+                                weatherIcon.setImageResource(R.drawable.ic_rainy);
+                            } else {
+                                weatherIcon.setImageResource(R.drawable.ic_weather_default);
+                            }
                         }
                     }
                 }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "0000");
 
+
             } else {
-                weatherTextView.setText("Δεν βρέθηκε τοποθεσία.");
+                weatherTempText.setText("Δεν βρέθηκε τοποθεσία.");
             }
 
         } catch (SecurityException e) {

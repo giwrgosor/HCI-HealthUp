@@ -17,32 +17,52 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/weather_forecast_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/weather_icon_layout"
+        android:layout_width="192dp"
+        android:layout_height="92dp"
+        android:layout_marginStart="16dp"
         android:gravity="center"
-        android:text="Forecast loading..."
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@id/date_text"
+        app:layout_constraintEnd_toStartOf="@id/date_text"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
+        <ImageView
+            android:id="@+id/weather_icon"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="Weather Icon"
+            android:src="@drawable/ic_weather_default" />
 
+        <TextView
+            android:id="@+id/weather_temperature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="--°C"
+            android:textColor="@color/blue"
+            android:textSize="20sp" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/date_text"
-        android:layout_width="178dp"
-        android:layout_height="58dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="153dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="Τρίτη 8 Απριλίου\n9:41"
         android:textColor="@color/blue"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.927"
+        app:layout_constraintHorizontal_bias="0.925"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
