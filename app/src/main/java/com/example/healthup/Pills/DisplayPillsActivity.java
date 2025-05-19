@@ -45,7 +45,8 @@ public class DisplayPillsActivity extends AppCompatActivity {
         pillsDAO = new PillsMemoryDAO();
         pillList = pillsDAO.findAll();
 
-        adapter = new PillsRecyclerViewAdapter(pillList, pillsDAO);
+        adapter = new PillsRecyclerViewAdapter(this, pillList, pillsDAO);
+
         recyclerView.setAdapter(adapter);
 
         int spacingPx = 32;
@@ -76,5 +77,23 @@ public class DisplayPillsActivity extends AppCompatActivity {
         pillList.addAll(pillsDAO.findAll());
         adapter.notifyDataSetChanged();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 2001 && resultCode == RESULT_OK) {
+            pillList.clear();
+            pillList.addAll(pillsDAO.findAll());
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(RESULT_OK);
+        super.onBackPressed();
+    }
+
 
 }

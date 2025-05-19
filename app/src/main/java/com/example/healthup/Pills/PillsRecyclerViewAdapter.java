@@ -1,5 +1,6 @@
 package com.example.healthup.Pills;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -25,8 +26,9 @@ public class PillsRecyclerViewAdapter extends RecyclerView.Adapter<PillsRecycler
 
     private List<Pill> pills;
     private PillsDAO pillsDAO;
-
-    public PillsRecyclerViewAdapter(List<Pill> pills, PillsDAO pillsDAO) {
+    private Activity activity;
+    public PillsRecyclerViewAdapter(Activity activity, List<Pill> pills, PillsDAO pillsDAO) {
+        this.activity = activity;
         this.pills = pills;
         this.pillsDAO = pillsDAO;
     }
@@ -76,10 +78,9 @@ public class PillsRecyclerViewAdapter extends RecyclerView.Adapter<PillsRecycler
         });
 
         holder.pillListEdit.setOnClickListener(v -> {
-            Context context = v.getContext();
-            Intent intent = new Intent(context, EditPillsActivity.class);
+            Intent intent = new Intent(activity, EditPillsActivity.class);
             intent.putExtra("pill", pill);
-            context.startActivity(intent);
+            activity.startActivityForResult(intent, 2001);
         });
 
     }

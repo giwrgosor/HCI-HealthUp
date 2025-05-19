@@ -155,6 +155,9 @@ public class EditPillsActivity extends AppCompatActivity {
 
         pillsDAO.update(pill);
         Toast.makeText(this, "Το χάπι ενημερώθηκε!", Toast.LENGTH_SHORT).show();
+
+        setResult(RESULT_OK);
+
         finish();
     }
 }

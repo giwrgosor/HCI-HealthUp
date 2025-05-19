@@ -46,7 +46,7 @@ public class PillScheduleActivity extends AppCompatActivity {
 
         btn_displayPill.setOnClickListener(view -> {
             Intent intent = new Intent(PillScheduleActivity.this, DisplayPillsActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, 3001);
         });
 
         btn_homePill.setOnClickListener(view -> {
@@ -195,6 +195,15 @@ public class PillScheduleActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 3001) {
+            scheduleLayout.removeAllViews();
+            displayScheduleForToday(getDays());
+        }
+    }
 
 
 
