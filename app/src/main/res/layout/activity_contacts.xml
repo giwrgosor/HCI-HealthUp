@@ -78,7 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        app:backgroundTint="@color/gray"
+        app:backgroundTint="@color/blue"
         app:tint="@color/white"
         app:srcCompat="@drawable/numpadcontact"
         app:layout_constraintBottom_toBottomOf="parent"
