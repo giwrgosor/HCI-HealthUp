@@ -121,13 +121,21 @@ public class EditContactsActivity extends AppCompatActivity {
 
                     Toast.makeText(EditContactsActivity.this, "Η επαφή ενημερώθηκε επιτυχώς!", Toast.LENGTH_SHORT).show();
 
-                    Intent intent = new Intent(EditContactsActivity.this, DisplayContactsActivity.class);
-                    intent.putExtra("id", newContact.getId());
-                    intent.putExtra("name", newContact.getName());
-                    intent.putExtra("phone", newContact.getPhone());
-                    intent.putExtra("emergency", newContact.isEmergency());
-                    startActivity(intent);
+//                    Intent intent = new Intent(EditContactsActivity.this, DisplayContactsActivity.class);
+//                    intent.putExtra("id", newContact.getId());
+//                    intent.putExtra("name", newContact.getName());
+//                    intent.putExtra("phone", newContact.getPhone());
+//                    intent.putExtra("emergency", newContact.isEmergency());
+//                    startActivity(intent);
+//
+//                    finish();
 
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("id", newContact.getId());
+                    resultIntent.putExtra("name", newContact.getName());
+                    resultIntent.putExtra("phone", newContact.getPhone());
+                    resultIntent.putExtra("emergency", newContact.isEmergency());
+                    setResult(RESULT_OK, resultIntent);
                     finish();
 
                 } else {

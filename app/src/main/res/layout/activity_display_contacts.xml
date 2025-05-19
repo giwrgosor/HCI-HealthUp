@@ -149,7 +149,6 @@
         android:text="Επαφή Έκτακτης Ανάγκης"
         android:textColor="@color/black"
         android:textSize="18sp"
-        android:buttonTint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

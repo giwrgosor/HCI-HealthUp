@@ -15,16 +15,6 @@ import android.widget.TextView;
 
 public class AnimationActivity extends AppCompatActivity {
 
-    private static final int[] COLORS = {
-            0xFFE91E63, // Ροζ
-            0xFF2196F3, // Μπλε
-            0xFFFFC107, // Κίτρινο
-            0xFF4CAF50, // Πράσινο
-            0xFFFF5722, // Πορτοκαλί
-            0xFF9C27B0, // Μωβ
-            0xFF00BCD4  // Κυανό
-    };
-
     private static final int SPLASH_DURATION = 6000;
     private static final String TEXT = "Help Up";
 
@@ -60,7 +50,14 @@ public class AnimationActivity extends AppCompatActivity {
                     builder.append(TEXT.charAt(index));
 
                     builder.setSpan(
-                            new ForegroundColorSpan(COLORS[index % COLORS.length]),
+                            new ForegroundColorSpan(0xFFFFFFFF),
+                            builder.length() - 1,
+                            builder.length(),
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                    );
+
+                    builder.setSpan(
+                            new android.text.style.StyleSpan(android.graphics.Typeface.BOLD),
                             builder.length() - 1,
                             builder.length(),
                             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE

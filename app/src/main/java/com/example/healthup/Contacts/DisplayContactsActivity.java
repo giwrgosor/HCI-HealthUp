@@ -68,10 +68,12 @@ public class DisplayContactsActivity extends AppCompatActivity {
 
         if (emergency != null && emergency) {
             emergencyCheckBox.setChecked(true);
-            emergencyCheckBox.setEnabled(false);
+//            emergencyCheckBox.setEnabled(false);
+            emergencyCheckBox.setClickable(false);
         } else {
             emergencyCheckBox.setChecked(false);
-            emergencyCheckBox.setEnabled(false);
+//            emergencyCheckBox.setEnabled(false);
+            emergencyCheckBox.setClickable(false);
         }
 
         btn_homeDisplayContact.setOnClickListener(new View.OnClickListener() {
@@ -92,17 +94,27 @@ public class DisplayContactsActivity extends AppCompatActivity {
             }
         });
 
-        btn_editDisplayContact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DisplayContactsActivity.this, EditContactsActivity.class);
-                intent.putExtra("id", contact.getId());
-                intent.putExtra("name", name);
-                intent.putExtra("phone", phone);
-                intent.putExtra("emergency", emergency);
-                startActivity(intent);
-            }
+//        btn_editDisplayContact.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(DisplayContactsActivity.this, EditContactsActivity.class);
+//                intent.putExtra("id", contact.getId());
+//                intent.putExtra("name", name);
+//                intent.putExtra("phone", phone);
+//                intent.putExtra("emergency", emergency);
+//                startActivity(intent);
+//            }
+//        });
+
+        btn_editDisplayContact.setOnClickListener(view -> {
+            Intent intent = new Intent(DisplayContactsActivity.this, EditContactsActivity.class);
+            intent.putExtra("id", contact.getId());
+            intent.putExtra("name", contact.getName());
+            intent.putExtra("phone", contact.getPhone());
+            intent.putExtra("emergency", contact.isEmergency());
+            startActivityForResult(intent, 1); // Code 1 για edit
         });
+
 
         btn_deleteDisplayContact.setOnClickListener(view -> {
             new AlertDialog.Builder(this)
@@ -136,4 +148,23 @@ public class DisplayContactsActivity extends AppCompatActivity {
             emergencyCheckBox.setChecked(updatedContact.isEmergency());
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
+            String updatedName = data.getStringExtra("name");
+            String updatedPhone = data.getStringExtra("phone");
+            boolean updatedEmergency = data.getBooleanExtra("emergency", false);
+            int updatedId = data.getIntExtra("id", contact.getId());
+
+            contact = new Contact(updatedId, updatedName, updatedPhone, updatedEmergency);
+
+            nameTextView.setText(updatedName);
+            phoneTextView.setText(Contact.formatPhoneNumber(updatedPhone));
+            emergencyCheckBox.setChecked(updatedEmergency);
+        }
+    }
+
 }
