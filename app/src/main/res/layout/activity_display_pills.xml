@@ -69,8 +69,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pillsRecyclerView"
         android:layout_width="398dp"
-        android:layout_height="410dp"
+        android:layout_height="430dp"
         android:layout_marginTop="32dp"
+        android:scrollbars="vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 

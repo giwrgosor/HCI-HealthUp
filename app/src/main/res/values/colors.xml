@@ -13,4 +13,11 @@
     <color name="colorSlot4">#FF33A6</color>  <!-- Ροζ -->
     <color name="colorSlot5">#009688</color>  <!-- Σμαραγδί -->
     <color name="colorSlot6">#9C27B0</color>  <!-- Μωβ -->
+
+    <!-- Φιλικά χρώματα για αχρωματοψία -->
+    <color name="colorPrimary">#0072B2</color> <!-- μπλε -->
+    <color name="colorPrimaryDark">#005288</color>
+    <color name="colorAccent">#D55E00</color> <!-- πορτοκαλί -->
+    <color name="backgroundColor">#FFFFFF</color>
+    <color name="textColor">#000000</color>
 </resources>

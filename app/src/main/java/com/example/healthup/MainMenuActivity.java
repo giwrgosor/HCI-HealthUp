@@ -1,24 +1,35 @@
 package com.example.healthup;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import android.location.Location;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.example.healthup.Contacts.ContactsActivity;
 import com.example.healthup.Locations.LocationsActivity;
@@ -39,17 +50,95 @@ public class MainMenuActivity extends AppCompatActivity {
     private FrameLayout contacts_btn;
     private TextView weatherTempText;
     private ImageView weatherIcon;
+    private ImageButton voice_btn;
+    private ImageButton menuButton;
+    private String mAnswer;
 
 
     @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main_menu);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         contacts_btn=findViewById(R.id.menu_contacts_btn);
         weatherIcon = findViewById(R.id.weather_icon);
         weatherTempText = findViewById(R.id.weather_temperature);
+        voice_btn = findViewById(R.id.voiceRecMain);
+
+        if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK) == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+            int whiteColor = getResources().getColor(android.R.color.white);
+
+            TextView dateText = findViewById(R.id.date_text);
+            TextView weatherTemp = findViewById(R.id.weather_temperature);
+            dateText.setTextColor(whiteColor);
+            weatherTemp.setTextColor(whiteColor);
+
+            ImageView background = findViewById(R.id.background);
+            if (background != null) {
+                background.setImageResource(R.drawable.blackbackground);
+            }
+
+            int[] textViewIds = {
+                    R.id.callTxt, R.id.homeTxt, R.id.mapTxt,
+                    R.id.contactTxt, R.id.pillTxt, R.id.profilTxt
+            };
+
+
+            for (int id : textViewIds) {
+                ((android.widget.TextView) findViewById(id)).setTextColor(whiteColor);
+            }
+
+            int[] lineIds = {
+                    R.id.line1, R.id.line2, R.id.line3
+            };
+
+            for (int id : lineIds) {
+                View line = findViewById(id);
+                if (line != null) {
+                    line.setBackgroundColor(whiteColor);
+                }
+            }
+        }
+
+        menuButton = findViewById(R.id.mainMenuButton);
+        menuButton.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(MainMenuActivity.this, menuButton);
+            popupMenu.getMenuInflater().inflate(R.menu.hamburger_menu, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(item -> {
+                int id = item.getItemId();
+                if (id == R.id.light_mode) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    return true;
+                } else if (id == R.id.dark_mode) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    return true;
+                } else if (id == R.id.mode_colorblind) {
+                    applyColorBlindTheme();
+                    return true;
+                }
+                return false;
+            });
+            popupMenu.show();
+        });
+
+        voice_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int REQUEST_SPEECH_RECOGNIZER = 3000;
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
+            }
+        });
+
 
         contacts_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +216,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
 
         TextView dateText = findViewById(R.id.date_text);
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE d MMMM\naa:mm", new Locale("el", "GR"));
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE d MMMM", new Locale("el", "GR"));
         String currentDateAndTime = sdf.format(new Date());
         dateText.setText(currentDateAndTime);
 
@@ -181,5 +270,31 @@ public class MainMenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void applyColorBlindTheme() {
+        getSharedPreferences("settings", MODE_PRIVATE)
+                .edit()
+                .putString("theme", "colorblind")
+                .apply();
+
+        recreate();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        int REQUEST_SPEECH_RECOGNIZER = 3000;
+        super.onActivityResult(requestCode, resultCode, data); Log.i("DEMO-REQUESTCODE",
+                Integer.toString(requestCode)); Log.i("DEMO-RESULTCODE", Integer.toString(resultCode));
+        if (requestCode == REQUEST_SPEECH_RECOGNIZER && resultCode == Activity.RESULT_OK && data != null){
+            ArrayList<String> text = data
+                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            mAnswer = text.get(0);
+            Log.i("DEMO-ANSWER", text.get(0));
+
+
+        }
+        else{
+            System.out.println("Recognizer API error");
+        }
     }
 }

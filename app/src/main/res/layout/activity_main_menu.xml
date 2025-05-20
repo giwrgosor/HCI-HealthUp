@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/main"
     android:layout_height="match_parent"
     tools:context=".MainMenuActivity">
 
@@ -18,11 +19,34 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
+    <ImageButton
+        android:id="@+id/mainMenuButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="12dp"
+        android:layout_marginEnd="4dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Menu"
+        android:src="@drawable/ic_settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/voiceRecMain"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="76dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Voice Recognition"
+        android:src="@drawable/ic_microphone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/weather_icon_layout"
         android:layout_width="192dp"
-        android:layout_height="92dp"
-        android:layout_marginStart="16dp"
+        android:layout_height="100dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="@id/date_text"
@@ -35,7 +59,7 @@
         <ImageView
             android:id="@+id/weather_icon"
             android:layout_width="match_parent"
-            android:layout_height="54dp"
+            android:layout_height="64dp"
             android:layout_gravity="center_horizontal"
             android:contentDescription="Weather Icon"
             android:src="@drawable/ic_weather_default" />
@@ -43,32 +67,32 @@
         <TextView
             android:id="@+id/weather_temperature"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="38dp"
             android:gravity="center"
-            android:textStyle="bold"
             android:text="--°C"
             android:textColor="@color/blue"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/date_text"
-        android:layout_width="153dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="20dp"
+        android:layout_width="198dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="60dp"
         android:gravity="center"
-        android:text="Τρίτη 8 Απριλίου\n9:41"
+        android:text="Τρίτη 8 Απριλίου"
         android:textColor="@color/blue"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.925"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <GridLayout
         android:id="@+id/menu_grid"
-        android:layout_width="396dp"
+        android:layout_width="400dp"
         android:layout_height="691dp"
         android:layout_margin="16dp"
         android:alignmentMode="alignMargins"
@@ -77,8 +101,10 @@
         android:rowCount="3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/date_text">
+        app:layout_constraintTop_toBottomOf="@id/date_text"
+        app:layout_constraintVertical_bias="0.454">
 
         <!-- ΣΟΣ -->
         <FrameLayout
@@ -102,6 +128,7 @@
                     android:src="@drawable/ic_sos" />
 
                 <TextView
+                    android:id="@+id/callTxt"
                     android:layout_width="match_parent"
                     android:layout_height="62dp"
                     android:layout_marginTop="4dp"
@@ -131,13 +158,14 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="140dp"
+                    android:layout_height="137dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_home" />
 
                 <TextView
+                    android:id="@+id/homeTxt"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:layout_marginTop="4dp"
                     android:gravity="center"
                     android:text="Επιστροφή στο σπίτι"
@@ -170,6 +198,7 @@
                     android:src="@drawable/ic_maps" />
 
                 <TextView
+                    android:id="@+id/mapTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -204,6 +233,7 @@
                     android:src="@drawable/ic_contacts" />
 
                 <TextView
+                    android:id="@+id/contactTxt"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginTop="4dp"
@@ -238,6 +268,7 @@
                     android:src="@drawable/ic_pills" />
 
                 <TextView
+                    android:id="@+id/pillTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -272,6 +303,7 @@
                     android:src="@drawable/ic_profil" />
 
                 <TextView
+                    android:id="@+id/profilTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
@@ -287,6 +319,7 @@
     </GridLayout>
 
     <View
+        android:id="@+id/line1"
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:layout_marginTop="110dp"
@@ -295,17 +328,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    
+
     <View
+        android:id="@+id/line2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="340dp"
+        android:layout_marginTop="345dp"
         android:background="#000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
+        android:id="@+id/line3"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="#000000"

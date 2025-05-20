@@ -9,4 +9,11 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_margin">8dp</item>
     </style>
+    <style name="AppTheme.ColorBlind" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:background">@color/backgroundColor</item>
+    </style>
 </resources>

@@ -1,18 +1,26 @@
 package com.example.healthup;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.view.View;
 import android.widget.AdapterView;
+
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -35,6 +43,13 @@ import com.example.healthup.dao.UserDAO;
 import com.example.healthup.domain.Location;
 import com.example.healthup.domain.User;
 
+import android.widget.PopupMenu;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+
 public class MainActivity extends AppCompatActivity {
 
     private Button save_btn;
@@ -56,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
     private User user;
     private LocationDAO locationDAO;
     private Location location;
+    private ImageButton menuButton;
+    private ImageButton voice_btn;
+    private String mAnswer;
 
     String[] permissions = {
             Manifest.permission.CALL_PHONE,
@@ -104,16 +122,75 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    private void applyColorBlindTheme() {
+        getSharedPreferences("settings", MODE_PRIVATE)
+                .edit()
+                .putString("theme", "colorblind")
+                .apply();
+
+        recreate();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        EdgeToEdge.enable(this);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        String themePref = getSharedPreferences("settings", MODE_PRIVATE)
+                .getString("theme", "default");
+
+        if (themePref.equals("colorblind")) {
+            setTheme(R.style.AppTheme_ColorBlind);
+        }
+
+        if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK) == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+            ImageView background = findViewById(R.id.startScreenBackground);
+            background.setImageResource(R.drawable.blackbackground);
+
+            int whiteColor = ContextCompat.getColor(this, android.R.color.white);
+
+            int[] textViewIds = {
+                    R.id.startScreenTextName, R.id.startTextSurname, R.id.startTextAddress,
+                    R.id.startTextCity, R.id.startTextZip, R.id.startScreenBlood
+            };
+
+
+            for (int id : textViewIds) {
+                ((android.widget.TextView) findViewById(id)).setTextColor(whiteColor);
+            }
+
+            ImageView icon = findViewById(R.id.startScreenImg);
+            icon.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
+
+        }
+
+
+        menuButton = findViewById(R.id.menuButton);
+        menuButton.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(MainActivity.this, menuButton);
+            popupMenu.getMenuInflater().inflate(R.menu.hamburger_menu, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(item -> {
+                int id = item.getItemId();
+                if (id == R.id.light_mode) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    return true;
+                } else if (id == R.id.dark_mode) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    return true;
+                } else if (id == R.id.mode_colorblind) {
+                    applyColorBlindTheme();
+                    return true;
+                }
+                return false;
+            });
+            popupMenu.show();
+        });
 
         Initializer initializer = new MemoryInitializer();
         initializer.prepareData();
@@ -126,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
         startSurname_edt = findViewById(R.id.startSurname_edt);
         startAddress_edt = findViewById(R.id.startAddress_edt);
         startName_edt = findViewById(R.id.startName_edt);
+        voice_btn = findViewById(R.id.voiceRec);
 
         String[] bloodTypes = {"Τύπος","A", "B", "AB", "O"};
         String[] rhFactors = {"Rh","+", "-"};
@@ -198,5 +276,35 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        voice_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int REQUEST_SPEECH_RECOGNIZER = 3000;
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Please say the information you want to fill in, like 'My name is John Smith' or 'The address is 123 Main Street'. You can say anything you'd like to update.");
+                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
+            }
+        });
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        int REQUEST_SPEECH_RECOGNIZER = 3000;
+        super.onActivityResult(requestCode, resultCode, data); Log.i("DEMO-REQUESTCODE",
+                Integer.toString(requestCode)); Log.i("DEMO-RESULTCODE", Integer.toString(resultCode));
+        if (requestCode == REQUEST_SPEECH_RECOGNIZER && resultCode == Activity.RESULT_OK && data != null){
+            ArrayList<String> text = data
+                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            mAnswer = text.get(0);
+            Log.i("DEMO-ANSWER", text.get(0));
+
+
+        }
+        else{
+            System.out.println("Recognizer API error");
+        }
     }
 }
