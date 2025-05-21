@@ -47,6 +47,15 @@ public class ContactsActivity extends AppCompatActivity {
             return insets;
         });
 
+        if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
+                == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+
+            ImageView background = findViewById(R.id.imageView);
+            if (background != null) {
+                background.setImageResource(R.drawable.blackbackground);
+            }
+        }
+
         btn_addContact = findViewById(R.id.addAContact);
         btn_numpadContact = findViewById(R.id.numpadContact);
         btn_homeContact = findViewById(R.id.homeContact);
