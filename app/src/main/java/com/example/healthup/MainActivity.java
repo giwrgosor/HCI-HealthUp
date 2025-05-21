@@ -139,6 +139,13 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        ImageButton menuBtn = findViewById(R.id.menuButton);
+        ImageButton voiceBtn = findViewById(R.id.voiceRec);
+
+        int blackColor = ContextCompat.getColor(this, android.R.color.black);
+        menuBtn.setColorFilter(blackColor, PorterDuff.Mode.SRC_IN);
+        voiceBtn.setColorFilter(blackColor, PorterDuff.Mode.SRC_IN);
+
         String themePref = getSharedPreferences("settings", MODE_PRIVATE)
                 .getString("theme", "default");
 
@@ -164,6 +171,9 @@ public class MainActivity extends AppCompatActivity {
 
             ImageView icon = findViewById(R.id.startScreenImg);
             icon.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
+
+            menuBtn.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
+            voiceBtn.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
 
         }
 

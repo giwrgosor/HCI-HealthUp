@@ -3,6 +3,7 @@ package com.example.healthup.Contacts;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ public class KeypadActivity extends AppCompatActivity {
     private TextView numberDisplay;
     private FloatingActionButton call, backspace;
     private ImageButton btn_homeKeypad;
+    private ImageButton voiceKeypad_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,8 @@ public class KeypadActivity extends AppCompatActivity {
         call = findViewById(R.id.keypadCall);
         backspace = findViewById(R.id.keypadBackspace);
         btn_homeKeypad = findViewById(R.id.homeButtonKeypad);
+
+        voiceKeypad_btn = findViewById(R.id.voiceRecKeypad);
 
         if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
                 == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
@@ -49,6 +53,17 @@ public class KeypadActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(KeypadActivity.this, MainMenuActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        voiceKeypad_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int REQUEST_SPEECH_RECOGNIZER = 3000;
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
             }
         });
 

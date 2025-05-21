@@ -2,6 +2,7 @@ package com.example.healthup.Contacts;
 
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +37,7 @@ public class AddContactsActivity extends AppCompatActivity {
 
     private ContactsDAO contactsDAO;
     private CheckBox emergencyCheckBox;
+    private ImageButton voiceAddContacts_btn;
 
 
     @Override
@@ -53,6 +55,8 @@ public class AddContactsActivity extends AppCompatActivity {
         phoneContactText = findViewById(R.id.completedPhoneContact);
         addContactBtn = findViewById(R.id.addContactButton);
         btn_homeContact = findViewById(R.id.homeContact);
+
+        voiceAddContacts_btn = findViewById(R.id.voiceRecAddContacts);
 
         contactsDAO = new ContactsMemoryDAO();
 
@@ -113,6 +117,17 @@ public class AddContactsActivity extends AppCompatActivity {
             ImageView icon = findViewById(R.id.addContactBackground);
             icon.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
         }
+
+        voiceAddContacts_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int REQUEST_SPEECH_RECOGNIZER = 3000;
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
+            }
+        });
 
         addContactBtn.setOnClickListener(new View.OnClickListener() {
             @Override

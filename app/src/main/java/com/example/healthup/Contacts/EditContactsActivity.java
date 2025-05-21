@@ -3,6 +3,7 @@ package com.example.healthup.Contacts;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -34,6 +35,7 @@ public class EditContactsActivity extends AppCompatActivity {
     private Button btn_saveContact;
     private CheckBox emergencyEdit;
     private ImageButton editcontact_homeBtn;
+    private ImageButton voiceEditContacts_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class EditContactsActivity extends AppCompatActivity {
         btn_saveContact = findViewById(R.id.saveContactButton);
         emergencyEdit = findViewById(R.id.emergencyEditCheckBox);
         editcontact_homeBtn = findViewById(R.id.homeEditContact);
+        voiceEditContacts_btn = findViewById(R.id.voiceRecEditContacts);
 
         int contactId = getIntent().getIntExtra("id", -1);
         String oldName = getIntent().getStringExtra("name");
@@ -123,6 +126,17 @@ public class EditContactsActivity extends AppCompatActivity {
                 }
 
                 isFormatting = false;
+            }
+        });
+
+        voiceEditContacts_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int REQUEST_SPEECH_RECOGNIZER = 3000;
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
             }
         });
 

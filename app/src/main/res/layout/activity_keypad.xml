@@ -58,6 +58,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/editProfileBanner" />
 
+    <ImageButton
+        android:id="@+id/voiceRecKeypad"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Voice Recognition"
+        android:src="@drawable/ic_microphone"
+        android:scaleType="centerCrop"
+        android:padding="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/numberDisplay"
         android:layout_width="350dp"

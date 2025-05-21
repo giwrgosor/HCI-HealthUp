@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -38,6 +39,7 @@ public class DisplayContactsActivity extends AppCompatActivity {
     private Contact contact;
     private  TextView nameTextView, phoneTextView;
     private CheckBox emergencyCheckBox;
+    private ImageButton voiceDisplayContacts_btn;
 
 
     @Override
@@ -59,6 +61,7 @@ public class DisplayContactsActivity extends AppCompatActivity {
         btn_editDisplayContact = findViewById(R.id.editDisplayContactIcon);
         btn_deleteDisplayContact = findViewById(R.id.deleteDisplayContactIcon);
         emergencyCheckBox = findViewById(R.id.emergencyDisplayCheckBox);
+        voiceDisplayContacts_btn = findViewById(R.id.voiceRecDisplayContacts);
 
         ContactsDAO contactsDAO = new ContactsMemoryDAO();
 
@@ -110,6 +113,17 @@ public class DisplayContactsActivity extends AppCompatActivity {
             ImageView icon = findViewById(R.id.displayIconPerson);
             icon.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
         }
+
+        voiceDisplayContacts_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int REQUEST_SPEECH_RECOGNIZER = 3000;
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
+            }
+        });
 
         btn_homeDisplayContact.setOnClickListener(new View.OnClickListener() {
             @Override

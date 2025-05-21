@@ -2,6 +2,7 @@ package com.example.healthup.Contacts;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -35,6 +36,7 @@ public class ContactsActivity extends AppCompatActivity {
     private ContactsRecyclerViewAdapter adapter;
 
     private ContactsDAO contactsDAO;
+    private ImageButton voiceContacts_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +61,7 @@ public class ContactsActivity extends AppCompatActivity {
         btn_addContact = findViewById(R.id.addAContact);
         btn_numpadContact = findViewById(R.id.numpadContact);
         btn_homeContact = findViewById(R.id.homeContact);
+        voiceContacts_btn = findViewById(R.id.voiceRecContacts);
 
         recyclerView = findViewById(R.id.contactsRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -86,6 +89,17 @@ public class ContactsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ContactsActivity.this, AddContactsActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        voiceContacts_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int REQUEST_SPEECH_RECOGNIZER = 3000;
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
             }
         });
 

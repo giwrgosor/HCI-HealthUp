@@ -23,22 +23,27 @@
         android:id="@+id/mainMenuButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_margin="12dp"
-        android:layout_marginEnd="4dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:background="@android:color/transparent"
         android:contentDescription="Menu"
+        android:padding="6dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <ImageButton
         android:id="@+id/voiceRecMain"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="76dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="70dp"
         android:background="@android:color/transparent"
         android:contentDescription="Voice Recognition"
+        android:padding="6dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_microphone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

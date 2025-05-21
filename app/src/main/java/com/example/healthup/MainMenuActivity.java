@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -27,6 +28,7 @@ import android.location.Location;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -72,6 +74,13 @@ public class MainMenuActivity extends AppCompatActivity {
         weatherTempText = findViewById(R.id.weather_temperature);
         voice_btn = findViewById(R.id.voiceRecMain);
 
+        ImageButton menuBtn = findViewById(R.id.mainMenuButton);
+        ImageButton voiceBtn = findViewById(R.id.voiceRecMain);
+
+        int blackColor = ContextCompat.getColor(this, android.R.color.black);
+        menuBtn.setColorFilter(blackColor, PorterDuff.Mode.SRC_IN);
+        voiceBtn.setColorFilter(blackColor, PorterDuff.Mode.SRC_IN);
+
         if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK) == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
             int whiteColor = getResources().getColor(android.R.color.white);
 
@@ -105,6 +114,9 @@ public class MainMenuActivity extends AppCompatActivity {
                     line.setBackgroundColor(whiteColor);
                 }
             }
+
+            menuBtn.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
+            voiceBtn.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
         }
 
         menuButton = findViewById(R.id.mainMenuButton);
