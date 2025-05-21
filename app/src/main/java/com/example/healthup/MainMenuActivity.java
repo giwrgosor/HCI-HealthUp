@@ -110,7 +110,7 @@ public class MainMenuActivity extends AppCompatActivity {
         menuButton = findViewById(R.id.mainMenuButton);
         menuButton.setOnClickListener(v -> {
             PopupMenu popupMenu = new PopupMenu(MainMenuActivity.this, menuButton);
-            popupMenu.getMenuInflater().inflate(R.menu.hamburger_menu, popupMenu.getMenu());
+            popupMenu.getMenuInflater().inflate(R.menu.settings_menu, popupMenu.getMenu());
             popupMenu.setOnMenuItemClickListener(item -> {
                 int id = item.getItemId();
                 if (id == R.id.light_mode) {
@@ -118,9 +118,6 @@ public class MainMenuActivity extends AppCompatActivity {
                     return true;
                 } else if (id == R.id.dark_mode) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    return true;
-                } else if (id == R.id.mode_colorblind) {
-                    applyColorBlindTheme();
                     return true;
                 }
                 return false;

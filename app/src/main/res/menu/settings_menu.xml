@@ -6,7 +6,4 @@
     <item
         android:id="@+id/dark_mode"
         android:title="Dark Mode" />
-    <item
-        android:id="@+id/mode_colorblind"
-        android:title="Color Blind Mode" />
 </menu>

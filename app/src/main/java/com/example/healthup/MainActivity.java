@@ -3,9 +3,7 @@ package com.example.healthup;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -19,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.view.View;
-import android.widget.AdapterView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -34,7 +31,6 @@ import java.util.Locale;
 
 import android.Manifest;
 
-import com.example.healthup.Locations.AddLocationActivity;
 import com.example.healthup.MemoryDAO.LocationMemoryDAO;
 import com.example.healthup.MemoryDAO.MemoryInitializer;
 import com.example.healthup.MemoryDAO.UserMemoryDAO;
@@ -175,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
         menuButton = findViewById(R.id.menuButton);
         menuButton.setOnClickListener(v -> {
             PopupMenu popupMenu = new PopupMenu(MainActivity.this, menuButton);
-            popupMenu.getMenuInflater().inflate(R.menu.hamburger_menu, popupMenu.getMenu());
+            popupMenu.getMenuInflater().inflate(R.menu.settings_menu, popupMenu.getMenu());
             popupMenu.setOnMenuItemClickListener(item -> {
                 int id = item.getItemId();
                 if (id == R.id.light_mode) {
@@ -183,9 +179,6 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 } else if (id == R.id.dark_mode) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    return true;
-                } else if (id == R.id.mode_colorblind) {
-                    applyColorBlindTheme();
                     return true;
                 }
                 return false;
