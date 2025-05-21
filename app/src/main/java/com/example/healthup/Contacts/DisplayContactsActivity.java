@@ -154,7 +154,7 @@ public class DisplayContactsActivity extends AppCompatActivity {
         btn_deleteDisplayContact.setOnClickListener(view -> {
             new AlertDialog.Builder(this)
                     .setTitle("Επιβεβαίωση διαγραφής")
-                    .setMessage("Είστε σίγουρος ότι θέλετε να διαγράψετε την επαφή;")
+                    .setMessage("Είστε σίγουρος ότι θέλετε να διαγράψετε την επαφή \"" + name + "\";")
                     .setPositiveButton("Ναι", (dialog, which) -> {
                         if (name != null && phone != null) {
                             Contact contactToDelete = new Contact(name, phone);
