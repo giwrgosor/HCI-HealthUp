@@ -1,14 +1,17 @@
 package com.example.healthup.Profile;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -47,6 +50,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button saveBtn;
     private Location location;
     private ImageButton homeButtonEditProfile;
+    private ImageButton voiceEditProfile_btn;
 
 
     @Override
@@ -73,6 +77,8 @@ public class EditProfileActivity extends AppCompatActivity {
         rhFactorSpinner = findViewById(R.id.editProfile_spinnerRhFactor);
         homeButtonEditProfile = findViewById(R.id.homeButtonEditProfile);
 
+        voiceEditProfile_btn = findViewById(R.id.voiceRecEditProfile);
+
         ArrayAdapter<String> bloodTypeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, bloodTypes);
         bloodTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bloodTypeSpinner.setAdapter(bloodTypeAdapter);
@@ -93,11 +99,44 @@ public class EditProfileActivity extends AppCompatActivity {
         bloodTypeSpinner.setSelection(Arrays.asList(bloodTypes).indexOf(user.getBloodType()));
         rhFactorSpinner.setSelection(Arrays.asList(rhFactors).indexOf(user.getBloodRhFactor()));
 
+        if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
+                == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+
+            int whiteColor = getResources().getColor(android.R.color.white);
+            ImageView background = findViewById(R.id.editProfileBackground);
+            if (background != null) {
+                background.setImageResource(R.drawable.blackbackground);
+            }
+
+            int[] textViewIds = {
+                    R.id.editProfile_textName, R.id.editProfile_textSurname, R.id.editProfile_textAddress,
+                    R.id.editProfile_textCity, R.id.editProfile_textZip, R.id.editProfile_textBloodGroup
+            };
+
+            for (int id : textViewIds) {
+                ((android.widget.TextView) findViewById(id)).setTextColor(whiteColor);
+            }
+
+            ImageView icon = findViewById(R.id.editProfile_img);
+            icon.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
+        }
+
         homeButtonEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(EditProfileActivity.this, MainMenuActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        voiceEditProfile_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int REQUEST_SPEECH_RECOGNIZER = 3000;
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
             }
         });
 
