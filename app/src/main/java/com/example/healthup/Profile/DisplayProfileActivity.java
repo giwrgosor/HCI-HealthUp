@@ -1,11 +1,13 @@
 package com.example.healthup.Profile;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -81,6 +83,28 @@ public class DisplayProfileActivity extends AppCompatActivity {
         bloodFactor_txt.setText(user.getBloodRhFactor());
 
         edit_btn = findViewById(R.id.editUserProfile_btn);
+
+        if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
+                == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+
+            int whiteColor = getResources().getColor(android.R.color.white);
+            ImageView background = findViewById(R.id.displayProfileBackground);
+            if (background != null) {
+                background.setImageResource(R.drawable.blackbackground);
+            }
+
+            int[] textViewIds = {
+                    R.id.displayProfileTextName, R.id.displayProfileTextSurname, R.id.displayProfileTextAddress,
+                    R.id.displayProfileTextCity, R.id.displayProfileTextZip, R.id.displayProfileScreenBlood
+            };
+
+            for (int id : textViewIds) {
+                ((android.widget.TextView) findViewById(id)).setTextColor(whiteColor);
+            }
+
+            ImageView icon = findViewById(R.id.displayProfileImg);
+            icon.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
+        }
 
         homeButtonDisplayProfile.setOnClickListener(new View.OnClickListener() {
             @Override
