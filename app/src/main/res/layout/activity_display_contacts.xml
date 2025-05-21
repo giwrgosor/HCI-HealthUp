@@ -31,7 +31,7 @@
         app:srcCompat="@drawable/imagebasic" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/displayIconPerson"
         android:layout_width="288dp"
         android:layout_height="245dp"
         android:layout_marginStart="60dp"

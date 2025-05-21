@@ -1,6 +1,7 @@
 package com.example.healthup.Contacts;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -9,10 +10,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.example.healthup.Locations.EditLocationActivity;
 import com.example.healthup.MainActivity;
@@ -33,7 +38,13 @@ public class EditContactsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_edit_contacts);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         editName = findViewById(R.id.editNameContact);
         editPhone = findViewById(R.id.editPhoneContact);
@@ -58,6 +69,30 @@ public class EditContactsActivity extends AppCompatActivity {
         }
 
         contactsDAO = new ContactsMemoryDAO();
+
+        if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
+                == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+
+            int whiteColor = getResources().getColor(android.R.color.white);
+            ImageView background = findViewById(R.id.imageView2);
+            if (background != null) {
+                background.setImageResource(R.drawable.blackbackground);
+            }
+
+            int[] textViewIds = {
+                    R.id.textView2, R.id.textView3
+            };
+
+            for (int id : textViewIds) {
+                ((android.widget.TextView) findViewById(id)).setTextColor(whiteColor);
+            }
+
+            int checkboxId = R.id.emergencyEditCheckBox;
+            ((android.widget.CheckBox) findViewById(checkboxId)).setTextColor(whiteColor);
+
+            ImageView icon = findViewById(R.id.editIconPerson);
+            icon.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
+        }
 
         editPhone.addTextChangedListener(new TextWatcher() {
             private String current = "";

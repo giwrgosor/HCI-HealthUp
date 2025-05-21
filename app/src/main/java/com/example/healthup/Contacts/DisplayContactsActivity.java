@@ -1,10 +1,12 @@
 package com.example.healthup.Contacts;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 
 import android.widget.CheckBox;
@@ -14,6 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.example.healthup.MainMenuActivity;
 import com.example.healthup.MemoryDAO.LocationMemoryDAO;
@@ -38,7 +43,13 @@ public class DisplayContactsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_display_contacts);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         nameTextView = findViewById(R.id.nameDisplayContact);
         phoneTextView = findViewById(R.id.phoneDisplayContact);
@@ -74,6 +85,30 @@ public class DisplayContactsActivity extends AppCompatActivity {
             emergencyCheckBox.setChecked(false);
 //            emergencyCheckBox.setEnabled(false);
             emergencyCheckBox.setClickable(false);
+        }
+
+        if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
+                == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+
+            int whiteColor = getResources().getColor(android.R.color.white);
+            ImageView background = findViewById(R.id.imageView2);
+            if (background != null) {
+                background.setImageResource(R.drawable.blackbackground);
+            }
+
+            int[] textViewIds = {
+                    R.id.textView2, R.id.textView3
+            };
+
+            for (int id : textViewIds) {
+                ((android.widget.TextView) findViewById(id)).setTextColor(whiteColor);
+            }
+
+            int checkboxId = R.id.emergencyDisplayCheckBox;
+            ((android.widget.CheckBox) findViewById(checkboxId)).setTextColor(whiteColor);
+
+            ImageView icon = findViewById(R.id.displayIconPerson);
+            icon.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
         }
 
         btn_homeDisplayContact.setOnClickListener(new View.OnClickListener() {

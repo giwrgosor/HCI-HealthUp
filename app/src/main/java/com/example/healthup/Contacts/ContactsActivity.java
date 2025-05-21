@@ -50,7 +50,7 @@ public class ContactsActivity extends AppCompatActivity {
         if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
                 == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
 
-            ImageView background = findViewById(R.id.imageView);
+            ImageView background = findViewById(R.id.contactsBackground);
             if (background != null) {
                 background.setImageResource(R.drawable.blackbackground);
             }

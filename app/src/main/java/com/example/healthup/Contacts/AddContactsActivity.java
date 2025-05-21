@@ -1,5 +1,6 @@
 package com.example.healthup.Contacts;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
@@ -12,7 +13,11 @@ import android.widget.Toast;
 import android.content.Intent;
 import android.text.TextWatcher;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.example.healthup.MainMenuActivity;
 import com.example.healthup.MemoryDAO.ContactsMemoryDAO;
@@ -36,7 +41,13 @@ public class AddContactsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_add_contacts);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         nameContactText = findViewById(R.id.completedNameContact);
         phoneContactText = findViewById(R.id.completedPhoneContact);
@@ -78,6 +89,30 @@ public class AddContactsActivity extends AppCompatActivity {
                 isFormatting = false;
             }
         });
+
+        if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
+                == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+
+            int whiteColor = getResources().getColor(android.R.color.white);
+            ImageView background = findViewById(R.id.imageView2);
+            if (background != null) {
+                background.setImageResource(R.drawable.blackbackground);
+            }
+
+            int[] textViewIds = {
+                    R.id.textView2, R.id.textView3
+            };
+
+            for (int id : textViewIds) {
+                ((android.widget.TextView) findViewById(id)).setTextColor(whiteColor);
+            }
+
+            int checkboxId = R.id.emergencyCheckBox;
+            ((android.widget.CheckBox) findViewById(checkboxId)).setTextColor(whiteColor);
+
+            ImageView icon = findViewById(R.id.addContactBackground);
+            icon.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
+        }
 
         addContactBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -33,7 +33,7 @@ public class AnimationActivity extends AppCompatActivity {
             return insets;
         });
 
-        ImageView imageView = findViewById(R.id.imageView);
+        ImageView imageView = findViewById(R.id.contactsBackground);
 
         ObjectAnimator scaleUp = ObjectAnimator.ofFloat(imageView, View.SCALE_X, 1f, 1.5f);
         scaleUp.setDuration(1000);

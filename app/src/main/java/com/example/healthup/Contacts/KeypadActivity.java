@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,15 @@ public class KeypadActivity extends AppCompatActivity {
         call = findViewById(R.id.keypadCall);
         backspace = findViewById(R.id.keypadBackspace);
         btn_homeKeypad = findViewById(R.id.homeButtonKeypad);
+
+        if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
+                == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+
+            ImageView background = findViewById(R.id.editProfileBackground);
+            if (background != null) {
+                background.setImageResource(R.drawable.blackbackground);
+            }
+        }
 
         btn_homeKeypad.setOnClickListener(new View.OnClickListener() {
             @Override
