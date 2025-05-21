@@ -4,12 +4,14 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.PorterDuff;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,6 +96,27 @@ public class UserSosInfoActivity extends AppCompatActivity {
             getLastLocationAndSendSms();
         } else {
             requestPermissions();
+        }
+
+        if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
+                == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+
+            int whiteColor = getResources().getColor(android.R.color.white);
+            ImageView background = findViewById(R.id.emergencyProfileBackground);
+            if (background != null) {
+                background.setImageResource(R.drawable.blackbackground);
+            }
+
+            int[] textViewIds = {
+                    R.id.emergenyNameSurname, R.id.emergencyAddress, R.id.emergencyCity, R.id.pillsTitle
+            };
+
+            for (int id : textViewIds) {
+                ((android.widget.TextView) findViewById(id)).setTextColor(whiteColor);
+            }
+
+            ImageView icon = findViewById(R.id.emergencyProfileImg);
+            icon.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
         }
 
     }
