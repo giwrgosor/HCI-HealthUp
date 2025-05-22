@@ -8,7 +8,7 @@
     tools:context=".Locations.LocationsActivity">
 
     <ImageView
-        android:id="@+id/imageView6"
+        android:id="@+id/locationsBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
@@ -51,6 +51,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/locationBanner" />
+
+    <ImageButton
+        android:id="@+id/voiceRecLocations"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="Voice Recognition"
+        android:src="@drawable/ic_microphone"
+        android:scaleType="centerCrop"
+        android:padding="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
         android:id="@+id/locationsListView"

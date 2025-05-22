@@ -2,8 +2,10 @@ package com.example.healthup.Locations;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -34,6 +36,7 @@ public class ViewLocationActivity extends AppCompatActivity {
     private ImageButton homeButton;
     private Location location;
     private Context context = this;
+    private ImageButton voiceViewLocation_btn;
 
 
     @Override
@@ -63,6 +66,42 @@ public class ViewLocationActivity extends AppCompatActivity {
         zipcode_txt = findViewById(R.id.ViewLocationDisplayZipCode);
         city_txt = findViewById(R.id.ViewLocationDisplayCity);
         homeButton = findViewById(R.id.homeButtonViewLocation);
+
+        voiceViewLocation_btn = findViewById(R.id.voiceRecViewLocation);
+
+        if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
+                == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+
+            int whiteColor = getResources().getColor(android.R.color.white);
+            ImageView background = findViewById(R.id.ViewLocationsBackground);
+            if (background != null) {
+                background.setImageResource(R.drawable.locations_dark_screen);
+            }
+
+            int[] textViewIds = {
+                    R.id.LocationViewName, R.id.LocationViewAddress, R.id.LocationViewZipCode,
+                    R.id.LocationViewCity
+            };
+
+            for (int id : textViewIds) {
+                ((android.widget.TextView) findViewById(id)).setTextColor(whiteColor);
+            }
+
+            ImageView icon = findViewById(R.id.imageView4);
+            icon.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
+        }
+
+
+        voiceViewLocation_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int REQUEST_SPEECH_RECOGNIZER = 3000;
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
+            }
+        });
 
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override

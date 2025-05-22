@@ -1,13 +1,16 @@
 package com.example.healthup.Locations;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -48,6 +51,8 @@ public class EditLocationActivity extends AppCompatActivity {
         EditText city_edt = findViewById(R.id.editLocationCity);
         ImageButton homeButtonEditLocation = findViewById(R.id.homeButtonEditLocation);
 
+        ImageButton voiceViewLocation_btn = findViewById(R.id.voiceRecEditLocation);
+
         if(location.getId() == 1){
             name_edt.setFocusable(false);
             name_edt.setClickable(false);
@@ -65,6 +70,39 @@ public class EditLocationActivity extends AppCompatActivity {
         city_edt.setText(location.getCity());
 
         Button save = findViewById(R.id.editLocationSave);
+
+        if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
+                == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+
+            int whiteColor = getResources().getColor(android.R.color.white);
+            ImageView background = findViewById(R.id.EditLocationsBackground);
+            if (background != null) {
+                background.setImageResource(R.drawable.locations_dark_screen);
+            }
+
+            int[] textViewIds = {
+                    R.id.LocationEditName, R.id.LocationEditAddress, R.id.LocationEditZipCode,
+                    R.id.LocationEditCity
+            };
+
+            for (int id : textViewIds) {
+                ((android.widget.TextView) findViewById(id)).setTextColor(whiteColor);
+            }
+
+            ImageView icon = findViewById(R.id.editImageView4);
+            icon.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
+        }
+
+        voiceViewLocation_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int REQUEST_SPEECH_RECOGNIZER = 3000;
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
+            }
+        });
 
         homeButtonEditLocation.setOnClickListener(new View.OnClickListener() {
             @Override

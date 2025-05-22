@@ -2,6 +2,7 @@ package com.example.healthup.Locations;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -25,6 +26,7 @@ public class LocationsActivity extends AppCompatActivity {
     private ListView locationsListView;
     private ImageButton homeFromLocations;
     private LocationsListViewAdapter adapter;
+    private ImageButton voiceLocations_btn;
 
     @Override
     protected void onResume() {
@@ -46,6 +48,27 @@ public class LocationsActivity extends AppCompatActivity {
 
         locationsListView = (ListView) findViewById(R.id.locationsListView);
         homeFromLocations = findViewById(R.id.homeButtonLocations);
+        voiceLocations_btn = findViewById(R.id.voiceRecLocations);
+
+        if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
+                == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+
+            ImageView background = findViewById(R.id.locationsBackground);
+            if (background != null) {
+                background.setImageResource(R.drawable.locations_dark_screen);
+            }
+        }
+
+        voiceLocations_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int REQUEST_SPEECH_RECOGNIZER = 3000;
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
+            }
+        });
 
         homeFromLocations.setOnClickListener(new View.OnClickListener() {
             @Override
