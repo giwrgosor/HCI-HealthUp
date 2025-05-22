@@ -72,7 +72,7 @@
         <TextView
             android:id="@+id/weather_temperature"
             android:layout_width="match_parent"
-            android:layout_height="38dp"
+            android:layout_height="43dp"
             android:gravity="center"
             android:text="--°C"
             android:textColor="@color/blue"
@@ -83,7 +83,7 @@
     <TextView
         android:id="@+id/date_text"
         android:layout_width="198dp"
-        android:layout_height="45dp"
+        android:layout_height="55dp"
         android:layout_marginTop="60dp"
         android:gravity="center"
         android:text="Τρίτη 8 Απριλίου"

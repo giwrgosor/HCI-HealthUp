@@ -54,7 +54,7 @@ public class ContactsActivity extends AppCompatActivity {
 
             ImageView background = findViewById(R.id.contactsBackground);
             if (background != null) {
-                background.setImageResource(R.drawable.blackbackground);
+                background.setImageResource(R.drawable.contacts_dark_screen);
             }
         }
 

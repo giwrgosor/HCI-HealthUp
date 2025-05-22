@@ -44,7 +44,7 @@ public class KeypadActivity extends AppCompatActivity {
 
             ImageView background = findViewById(R.id.editProfileBackground);
             if (background != null) {
-                background.setImageResource(R.drawable.blackbackground);
+                background.setImageResource(R.drawable.contacts_dark_screen);
             }
         }
 

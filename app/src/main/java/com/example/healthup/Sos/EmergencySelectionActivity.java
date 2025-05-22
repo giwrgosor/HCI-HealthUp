@@ -52,7 +52,7 @@ public class EmergencySelectionActivity extends AppCompatActivity {
             int whiteColor = getResources().getColor(android.R.color.white);
             ImageView background = findViewById(R.id.emergencyProfileBackground);
             if (background != null) {
-                background.setImageResource(R.drawable.blackbackground);
+                background.setImageResource(R.drawable.sos_dark_screen);
             }
 
         }

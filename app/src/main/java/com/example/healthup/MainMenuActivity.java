@@ -91,7 +91,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
             ImageView background = findViewById(R.id.background);
             if (background != null) {
-                background.setImageResource(R.drawable.blackbackground);
+                background.setImageResource(R.drawable.basic_dark_screen);
             }
 
             int[] textViewIds = {

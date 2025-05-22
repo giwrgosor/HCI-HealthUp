@@ -96,7 +96,7 @@ public class DisplayContactsActivity extends AppCompatActivity {
             int whiteColor = getResources().getColor(android.R.color.white);
             ImageView background = findViewById(R.id.imageView2);
             if (background != null) {
-                background.setImageResource(R.drawable.blackbackground);
+                background.setImageResource(R.drawable.contacts_dark_screen);
             }
 
             int[] textViewIds = {
