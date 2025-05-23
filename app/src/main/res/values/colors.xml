@@ -14,10 +14,17 @@
     <color name="colorSlot5">#009688</color>  <!-- Σμαραγδί -->
     <color name="colorSlot6">#9C27B0</color>  <!-- Μωβ -->
 
-    <!-- Φιλικά χρώματα για αχρωματοψία -->
-    <color name="colorPrimary">#0072B2</color> <!-- μπλε -->
+
+    <color name="colorPrimary">#0072B2</color>
     <color name="colorPrimaryDark">#005288</color>
-    <color name="colorAccent">#D55E00</color> <!-- πορτοκαλί -->
+    <color name="colorAccent">#D55E00</color>
     <color name="backgroundColor">#FFFFFF</color>
     <color name="textColor">#000000</color>
+
+    <color name="slot1">#33CCD3</color>
+    <color name="slot2">#370202</color>
+    <color name="slot3">#D8FF5722</color>
+    <color name="slot4">#5EF267</color>
+    <color name="slot5">#FFEB3B</color>
+    <color name="slot6">#F478C0</color>
 </resources>

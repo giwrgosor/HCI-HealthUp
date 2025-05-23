@@ -7,8 +7,10 @@ import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -34,6 +36,7 @@ public class EmergencySelectionActivity extends AppCompatActivity {
     private LinearLayout fire_btn;
     private EmergencyCallTracker callTracker;
     private ImageButton homeButtonEmergency;
+    private ImageButton voiceEmergencySelection_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +70,24 @@ public class EmergencySelectionActivity extends AppCompatActivity {
         fire_btn = findViewById(R.id.firedepartment_btn);
         homeButtonEmergency = findViewById(R.id.homeButtonEmergency);
 
+        voiceEmergencySelection_btn = findViewById(R.id.voiceRecEmergencySelection);
+
         police_btn.setOnClickListener(v -> showConfirmationDialog("Αστυνομία","tel:100"));
         ambulance_btn.setOnClickListener(v -> showConfirmationDialog("ΕΚΑΒ","tel:166"));
         fire_btn.setOnClickListener(v -> showConfirmationDialog("Πυροσβεστική","tel:199"));
         homeButtonEmergency.setOnClickListener(v -> startActivity(new Intent(EmergencySelectionActivity.this, MainMenuActivity.class)));
+
+        voiceEmergencySelection_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int REQUEST_SPEECH_RECOGNIZER = 3000;
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
+            }
+        });
+
     }
 
     private void showConfirmationDialog(String serviceName, String phoneNumber) {

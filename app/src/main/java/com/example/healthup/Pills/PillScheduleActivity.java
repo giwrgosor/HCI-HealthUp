@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
@@ -31,6 +32,7 @@ public class PillScheduleActivity extends AppCompatActivity {
     private LinearLayout scheduleLayout;
     private PillsDAO pillDAO;
     private TextView dayTextView;
+    private ImageButton voicePillSchedule_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,38 @@ public class PillScheduleActivity extends AppCompatActivity {
 
         dayTextView = findViewById(R.id.dayPill);
         pillDAO = new PillsMemoryDAO();
+
+        voicePillSchedule_btn = findViewById(R.id.voiceRecPillSchedule);
+
+        if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
+                == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+
+            int whiteColor = getResources().getColor(android.R.color.white);
+            ImageView background = findViewById(R.id.imageView2);
+
+            if (background != null) {
+                background.setImageResource(R.drawable.pills_dark_screen);
+            }
+
+            int[] textViewIds = {
+                    R.id.dayPill
+            };
+
+            for (int id : textViewIds) {
+                ((android.widget.TextView) findViewById(id)).setTextColor(whiteColor);
+            }
+        }
+
+        voicePillSchedule_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int REQUEST_SPEECH_RECOGNIZER = 3000;
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
+            }
+        });
 
         btn_displayPill.setOnClickListener(view -> {
             Intent intent = new Intent(PillScheduleActivity.this, DisplayPillsActivity.class);
@@ -114,7 +148,26 @@ public class PillScheduleActivity extends AppCompatActivity {
                     getResources().getColor(R.color.colorSlot6)
             };
 
-            slotTitle.setTextColor(slotColors[i]);
+            int[] darkSlotColors = {
+                    getResources().getColor(R.color.slot1),
+                    getResources().getColor(R.color.slot2),
+                    getResources().getColor(R.color.slot3),
+                    getResources().getColor(R.color.slot4),
+                    getResources().getColor(R.color.slot5),
+                    getResources().getColor(R.color.slot6)
+            };
+
+//            slotTitle.setTextColor(slotColors[i]);
+
+            int currentNightMode = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
+
+            if (currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+                slotTitle.setTextColor(darkSlotColors[i]);
+            } else {
+                slotTitle.setTextColor(slotColors[i]);
+            }
+
+
             slotTitle.setPadding(0, 24, 0, 8);
             slotTitle.setTypeface(null, Typeface.BOLD);
 
@@ -152,7 +205,16 @@ public class PillScheduleActivity extends AppCompatActivity {
 
                         TextView pillName = new TextView(this);
                         pillName.setText(pill.getName());
-                        pillName.setTextColor(getResources().getColor(R.color.black));
+//                        pillName.setTextColor(getResources().getColor(R.color.black));
+
+                        int currentNightMode1 = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
+                        if (currentNightMode1 == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+                            pillName.setTextColor(getResources().getColor(android.R.color.white));
+                        } else {
+                            pillName.setTextColor(getResources().getColor(R.color.black));
+                        }
+
+
                         pillName.setLayoutParams(new LinearLayout.LayoutParams(
                                 0,
                                 LinearLayout.LayoutParams.WRAP_CONTENT,
