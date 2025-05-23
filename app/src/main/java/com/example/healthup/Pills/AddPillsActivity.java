@@ -1,7 +1,9 @@
 package com.example.healthup.Pills;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -35,6 +37,7 @@ public class AddPillsActivity extends AppCompatActivity {
     private final PillsDAO pillsDAO = new PillsMemoryDAO();
     private Button btn_addPill;
     private ImageButton btn_homePill;
+    private ImageButton voiceAddPills_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +56,43 @@ public class AddPillsActivity extends AppCompatActivity {
         btn_addPill = findViewById(R.id.addPillButton);
         btn_homePill = findViewById(R.id.homePill);
 
+        voiceAddPills_btn = findViewById(R.id.voiceRecAddPills);
+
         setupDayButtons();
         updateDayButtonColors();
+
+        if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
+                == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+
+            int whiteColor = getResources().getColor(android.R.color.white);
+            ImageView background = findViewById(R.id.imageView2);
+            if (background != null) {
+                background.setImageResource(R.drawable.pills_dark_screen);
+            }
+
+            int[] textViewIds = {
+                    R.id.textView2, R.id.textView4, R.id.beforeBreakfastTxt, R.id.afterBreakfastTxt,
+                    R.id.middayTxt, R.id.afternoonTxt, R.id.beforeDinnerTxt, R.id.afterDinnerTxt
+            };
+
+            for (int id : textViewIds) {
+                ((android.widget.TextView) findViewById(id)).setTextColor(whiteColor);
+            }
+
+            ImageView icon = findViewById(R.id.imageView4);
+            icon.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
+        }
+
+        voiceAddPills_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int REQUEST_SPEECH_RECOGNIZER = 3000;
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
+            }
+        });
 
         btn_addPill.setOnClickListener(new View.OnClickListener() {
             @Override
