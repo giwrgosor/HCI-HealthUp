@@ -3,6 +3,7 @@ package com.example.healthup.Pills;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.healthup.R;
@@ -57,6 +59,15 @@ public class PillsRecyclerViewAdapter extends RecyclerView.Adapter<PillsRecycler
     public void onBindViewHolder(@NonNull PillsRecyclerViewAdapter.ViewHolder holder, int position) {
         Pill pill = pills.get(position);
         holder.pillName.setText(pill.getName());
+
+        int nightModeFlags = activity.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+
+        if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+            holder.pillName.setTextColor(ContextCompat.getColor(activity, android.R.color.white));
+        } else {
+            holder.pillName.setTextColor(ContextCompat.getColor(activity, android.R.color.black));
+        }
+
 
         holder.pillListEdit.setOnClickListener(v -> {
         });

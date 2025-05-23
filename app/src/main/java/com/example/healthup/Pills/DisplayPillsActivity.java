@@ -1,12 +1,18 @@
 package com.example.healthup.Pills;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,11 +36,18 @@ public class DisplayPillsActivity extends AppCompatActivity {
 
     private PillsDAO pillsDAO;
     private Pill pill;
+    private ImageButton voiceDisplayPills_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_pills);
+        EdgeToEdge.enable(this);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
         btn_addPill = findViewById(R.id.addPillIcon);
         btn_homePill = findViewById(R.id.homeViewPill);
@@ -48,11 +61,36 @@ public class DisplayPillsActivity extends AppCompatActivity {
         adapter = new PillsRecyclerViewAdapter(this, pillList, pillsDAO);
 
         recyclerView.setAdapter(adapter);
+        voiceDisplayPills_btn = findViewById(R.id.voiceRecDisplayPills);
+
 
         int spacingPx = 32;
         int grayColor = getResources().getColor(android.R.color.darker_gray);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, grayColor, spacingPx));
 
+        if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
+                == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+
+            int whiteColor = getResources().getColor(android.R.color.white);
+            ImageView background = findViewById(R.id.imageView2);
+            if (background != null) {
+                background.setImageResource(R.drawable.pills_dark_screen);
+            }
+
+            ImageView icon = findViewById(R.id.imageView4);
+            icon.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
+        }
+
+        voiceDisplayPills_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int REQUEST_SPEECH_RECOGNIZER = 3000;
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
+            }
+        });
 
         btn_addPill.setOnClickListener(new View.OnClickListener() {
             @Override
