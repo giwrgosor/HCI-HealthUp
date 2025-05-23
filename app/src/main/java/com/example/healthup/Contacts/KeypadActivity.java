@@ -1,6 +1,7 @@
 package com.example.healthup.Contacts;
 
 import android.content.Intent;
+import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -19,12 +20,17 @@ import com.example.healthup.MainMenuActivity;
 import com.example.healthup.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class KeypadActivity extends AppCompatActivity {
 
     private TextView numberDisplay;
     private FloatingActionButton call, backspace;
     private ImageButton btn_homeKeypad;
     private ImageButton voiceKeypad_btn;
+    private SoundPool soundPool;
+    private Map<String, Integer> soundMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +44,20 @@ public class KeypadActivity extends AppCompatActivity {
         btn_homeKeypad = findViewById(R.id.homeButtonKeypad);
 
         voiceKeypad_btn = findViewById(R.id.voiceRecKeypad);
+
+        soundPool = new SoundPool.Builder().setMaxStreams(12).build();
+        soundMap.put("0", soundPool.load(this, R.raw.number0, 1));
+        soundMap.put("1", soundPool.load(this, R.raw.number1, 1));
+        soundMap.put("2", soundPool.load(this, R.raw.number2, 1));
+        soundMap.put("3", soundPool.load(this, R.raw.number3, 1));
+        soundMap.put("4", soundPool.load(this, R.raw.number4, 1));
+        soundMap.put("5", soundPool.load(this, R.raw.number5, 1));
+        soundMap.put("6", soundPool.load(this, R.raw.number6, 1));
+        soundMap.put("7", soundPool.load(this, R.raw.number7, 1));
+        soundMap.put("8", soundPool.load(this, R.raw.number8, 1));
+        soundMap.put("9", soundPool.load(this, R.raw.number9, 1));
+        soundMap.put("*", soundPool.load(this, R.raw.number_star, 1));
+        soundMap.put("#", soundPool.load(this, R.raw.number_pound, 1));
 
         if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
                 == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
@@ -93,6 +113,7 @@ public class KeypadActivity extends AppCompatActivity {
         findViewById(R.id.btn9).setOnClickListener(onKeyClick("9"));
         findViewById(R.id.btn0).setOnClickListener(onKeyClick("0"));
         findViewById(R.id.btnHash).setOnClickListener(onKeyClick("#"));
+        findViewById(R.id.btnStar).setOnClickListener(onKeyClick("*"));
 
         findViewById(R.id.btnStar).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +148,11 @@ public class KeypadActivity extends AppCompatActivity {
 
                 currentRaw += digit;
                 numberDisplay.setText(formatPhoneNumber(currentRaw));
+
+                Integer sound = soundMap.get(digit);
+                if (sound != null) {
+                    soundPool.play(sound, 1, 1, 0, 0, 1);
+                }
             }
         };
     }
@@ -138,6 +164,15 @@ public class KeypadActivity extends AppCompatActivity {
             return digits.substring(0, 3) + " " + digits.substring(3);
         } else {
             return digits.substring(0, 3) + " " + digits.substring(3, 6) + " " + digits.substring(6);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (soundPool != null) {
+            soundPool.release();
+            soundPool = null;
         }
     }
 
