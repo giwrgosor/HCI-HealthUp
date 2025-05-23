@@ -1,7 +1,9 @@
 package com.example.healthup.Pills;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -32,6 +34,7 @@ public class EditPillsActivity extends AppCompatActivity {
     private Button btn_saveChanges;
     private Pill pill;
     private ImageButton btn_homePill;
+    private ImageButton voiceEditPills_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,8 @@ public class EditPillsActivity extends AppCompatActivity {
 
         btn_saveChanges = findViewById(R.id.savePillButton);
         btn_homePill = findViewById(R.id.homeEditPills);
+
+        voiceEditPills_btn = findViewById(R.id.voiceRecEditPills);
 
         setupDayButtons();
 
@@ -70,6 +75,28 @@ public class EditPillsActivity extends AppCompatActivity {
         loadScheduleForSelectedDay();
         updateDayButtonColors();
 
+        if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
+                == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
+
+            int whiteColor = getResources().getColor(android.R.color.white);
+            ImageView background = findViewById(R.id.imageView2);
+            if (background != null) {
+                background.setImageResource(R.drawable.pills_dark_screen);
+            }
+
+            int[] textViewIds = {
+                    R.id.textView2, R.id.textView4, R.id.beforeBreakfastTxt, R.id.afterBreakfastTxt,
+                    R.id.middayTxt, R.id.afternoonTxt, R.id.beforeDinnerTxt, R.id.afterDinnerTxt
+            };
+
+            for (int id : textViewIds) {
+                ((android.widget.TextView) findViewById(id)).setTextColor(whiteColor);
+            }
+
+            ImageView icon = findViewById(R.id.imageView4);
+            icon.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
+        }
+
         btn_saveChanges.setOnClickListener(view -> saveChanges());
 
         btn_homePill.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +104,17 @@ public class EditPillsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(EditPillsActivity.this, MainMenuActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        voiceEditPills_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int REQUEST_SPEECH_RECOGNIZER = 3000;
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
             }
         });
     }
