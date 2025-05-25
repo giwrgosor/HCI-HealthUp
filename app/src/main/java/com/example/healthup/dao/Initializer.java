@@ -2,6 +2,7 @@ package com.example.healthup.dao;
 
 import com.example.healthup.MemoryDAO.UserMemoryDAO;
 import com.example.healthup.domain.Contact;
+import com.example.healthup.domain.Location;
 import com.example.healthup.domain.Pill;
 
 public abstract class Initializer {
@@ -18,6 +19,10 @@ public abstract class Initializer {
 
 //        ExampleDAO exampleDAO = getExampleDAO();
 //        exampleDAO.save(new Example());
+
+        LocationDAO locationDAO = getLocationDAO();
+        locationDAO.save(new Location("Location", 37.984472, 23.752042, "Μιχαλακοπούλου 114", "Αθήνα", "11527"));
+        locationDAO.save(new Location("Hospital", 38.011428, 23.680210, "Θηβών 372", "Περιστέρι", "12135"));
 
         ContactsDAO contactsDAO = getContactsDAO();
         contactsDAO.save(new Contact("John", "6907777777", false));
@@ -53,7 +58,7 @@ public abstract class Initializer {
         pillDAO.save(legofer);
 
         UserDAO userDAO = new UserMemoryDAO();
-        userDAO.setUrl("https://5919-34-118-251-207.ngrok-free.app");
+        userDAO.setUrl("https://bd4c-104-196-110-215.ngrok-free.app");
 
     }
 }
