@@ -36,11 +36,17 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.healthup.Contacts.ContactsActivity;
 import com.example.healthup.Locations.LocationsActivity;
 import com.example.healthup.MemoryDAO.LocationMemoryDAO;
+import com.example.healthup.MemoryDAO.UserMemoryDAO;
 import com.example.healthup.Pills.PillScheduleActivity;
 import com.example.healthup.Profile.DisplayProfileActivity;
 import com.example.healthup.Sos.EmergencySelectionActivity;
 import com.example.healthup.dao.LocationDAO;
+import com.example.healthup.dao.UserDAO;
 import com.example.healthup.domain.FetchWeatherForecast;
+import com.example.healthup.domain.HttpRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -286,20 +292,81 @@ public class MainMenuActivity extends AppCompatActivity {
         recreate();
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         int REQUEST_SPEECH_RECOGNIZER = 3000;
-        super.onActivityResult(requestCode, resultCode, data); Log.i("DEMO-REQUESTCODE",
-                Integer.toString(requestCode)); Log.i("DEMO-RESULTCODE", Integer.toString(resultCode));
-        if (requestCode == REQUEST_SPEECH_RECOGNIZER && resultCode == Activity.RESULT_OK && data != null){
-            ArrayList<String> text = data
-                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-            mAnswer = text.get(0);
-            Log.i("DEMO-ANSWER", text.get(0));
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (requestCode == REQUEST_SPEECH_RECOGNIZER && resultCode == RESULT_OK && data != null) {
+            ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            String voiceText = text.get(0);
 
-        }
-        else{
-            System.out.println("Recognizer API error");
+            UserDAO userDAO = new UserMemoryDAO();
+            String url = userDAO.getUrl() + "/mainscreen";
+
+            try {
+                JSONObject json = new JSONObject();
+                json.put("text", voiceText);
+
+                HttpRequest.sendPostRequest(url, json.toString(), new HttpRequest.ResponseListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject json = new JSONObject(response);
+                            String action = json.getString("action");
+
+                            if (action.equals("sos")) {
+                                Intent intent = new Intent(MainMenuActivity.this, EmergencySelectionActivity.class);
+                                startActivity(intent);
+                            } else if (action.equals("return_home")) {
+                                LocationDAO locationDAO = new LocationMemoryDAO();
+                                com.example.healthup.domain.Location location = locationDAO.findById(1);
+                                String uri = "https://www.google.com/maps/dir/?api=1"
+                                        + "&destination=" + location.getLat() + "," + location.getLon()
+                                        + "&travelmode=driving";
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                                intent.setPackage("com.google.android.apps.maps");
+                                if (intent.resolveActivity(getPackageManager()) != null) {
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(MainMenuActivity.this, "Το Google Maps δεν είναι εγκατεστημένο", Toast.LENGTH_SHORT).show();
+                                }
+                            } else if (action.equals("locations")) {
+                                Intent intent = new Intent(MainMenuActivity.this, LocationsActivity.class);
+                                startActivity(intent);
+                            } else if (action.equals("contacts")) {
+                                Intent intent = new Intent(MainMenuActivity.this, ContactsActivity.class);
+                                startActivity(intent);
+                            } else if (action.equals("pills")) {
+                                Intent intent = new Intent(MainMenuActivity.this, PillScheduleActivity.class);
+                                startActivity(intent);
+                            } else if (action.equals("profile")) {
+                                Intent intent = new Intent(MainMenuActivity.this, DisplayProfileActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(MainMenuActivity.this, "Δεν αναγνωρίστηκε η οθόνη.", Toast.LENGTH_SHORT).show();
+                            }
+
+                        } catch (JSONException e) {
+                            Log.e("HTTP_RESPONSE", "JSON parsing error: " + e.getMessage());
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        Log.e("HTTP_ERROR", error);
+                        Toast.makeText(MainMenuActivity.this, "Σφάλμα κατά την αποστολή του αιτήματος", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            Toast.makeText(MainMenuActivity.this, "Σφάλμα αναγνώρισης φωνής", Toast.LENGTH_SHORT).show();
         }
     }
+
 }
