@@ -157,17 +157,17 @@ public class AddContactsActivity extends AppCompatActivity {
 
 
                 if (name.isEmpty() && phone.isEmpty()) {
-                    Toast.makeText(AddContactsActivity.this, "Συμπληρώστε τα πεδία!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddContactsActivity.this, "Please fill all the fields!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (name.isEmpty()) {
-                    Toast.makeText(AddContactsActivity.this, "Συμπληρώστε το όνομα!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddContactsActivity.this, "Please enter your name!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
                 if (phone.isEmpty()) {
-                    Toast.makeText(AddContactsActivity.this, "Συμπληρώστε το τηλέφωνο!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddContactsActivity.this, "Please enter your phone!", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -175,7 +175,7 @@ public class AddContactsActivity extends AppCompatActivity {
                 for (Contact existingContact : currentContacts) {
                     String existingCleanedPhone = existingContact.getPhone().replaceAll("\\D", "");
                     if (existingCleanedPhone.equals(cleanedPhone)) {
-                        Toast.makeText(AddContactsActivity.this, "Αυτός ο αριθμός υπάρχει ήδη!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddContactsActivity.this, "This phone number already exists!", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
@@ -185,13 +185,13 @@ public class AddContactsActivity extends AppCompatActivity {
                     Contact newContact = new Contact(name, phone, isEmergency);
                     contactsDAO.save(newContact);
 
-                    Toast.makeText(AddContactsActivity.this, "Η επαφή προστέθηκε!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddContactsActivity.this, "Contact added successfully!", Toast.LENGTH_SHORT).show();
 
                     Intent intent = new Intent(AddContactsActivity.this, ContactsActivity.class);
                     startActivity(intent);
                     finish();
                 } else {
-                    Toast.makeText(AddContactsActivity.this, "Λάθος τηλέφωνο: Πρέπει να έχει 10 ψηφία.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddContactsActivity.this, "Invalid phone number: The phone number must have 10 digits.", Toast.LENGTH_SHORT).show();
                 }
 
             }
