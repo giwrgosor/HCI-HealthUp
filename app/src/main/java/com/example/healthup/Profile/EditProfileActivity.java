@@ -50,7 +50,6 @@ public class EditProfileActivity extends AppCompatActivity {
     private Button saveBtn;
     private Location location;
     private ImageButton homeButtonEditProfile;
-    private ImageButton voiceEditProfile_btn;
 
 
     @Override
@@ -76,8 +75,6 @@ public class EditProfileActivity extends AppCompatActivity {
         bloodTypeSpinner = findViewById(R.id.editProfile_spinnerBloodType);
         rhFactorSpinner = findViewById(R.id.editProfile_spinnerRhFactor);
         homeButtonEditProfile = findViewById(R.id.homeButtonEditProfile);
-
-        voiceEditProfile_btn = findViewById(R.id.voiceRecEditProfile);
 
         ArrayAdapter<String> bloodTypeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, bloodTypes);
         bloodTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
