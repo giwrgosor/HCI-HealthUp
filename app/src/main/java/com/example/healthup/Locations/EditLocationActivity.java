@@ -1,11 +1,13 @@
 package com.example.healthup.Locations;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,15 +24,28 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.healthup.MainActivity;
 import com.example.healthup.MainMenuActivity;
 import com.example.healthup.MemoryDAO.LocationMemoryDAO;
+import com.example.healthup.MemoryDAO.UserMemoryDAO;
 import com.example.healthup.R;
 import com.example.healthup.dao.LocationDAO;
+import com.example.healthup.dao.UserDAO;
+import com.example.healthup.domain.HttpRequest;
 import com.example.healthup.domain.Location;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class EditLocationActivity extends AppCompatActivity {
+    private EditText name_edt;
+    private EditText address_edt;
+    private EditText zip_edt;
+    private EditText city_edt;
+    private Location location;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +58,12 @@ public class EditLocationActivity extends AppCompatActivity {
             return insets;
         });
 
-        Location location = (Location) getIntent().getExtras().get("Location");
+        location = (Location) getIntent().getExtras().get("Location");
 
-        EditText name_edt = findViewById(R.id.editLocationName);
-        EditText address_edt = findViewById(R.id.editLocationAddress);
-        EditText zip_edt = findViewById(R.id.editLocationZipCode);
-        EditText city_edt = findViewById(R.id.editLocationCity);
+        name_edt = findViewById(R.id.editLocationName);
+        address_edt = findViewById(R.id.editLocationAddress);
+        zip_edt = findViewById(R.id.editLocationZipCode);
+        city_edt = findViewById(R.id.editLocationCity);
         ImageButton homeButtonEditLocation = findViewById(R.id.homeButtonEditLocation);
 
         ImageButton voiceViewLocation_btn = findViewById(R.id.voiceRecEditLocation);
@@ -155,5 +170,86 @@ public class EditLocationActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        int REQUEST_SPEECH_RECOGNIZER = 3000;
+        super.onActivityResult(requestCode, resultCode, data); Log.i("DEMO-REQUESTCODE",
+                Integer.toString(requestCode)); Log.i("DEMO-RESULTCODE", Integer.toString(resultCode));
+
+        if (requestCode == REQUEST_SPEECH_RECOGNIZER && resultCode == Activity.RESULT_OK && data != null) {
+            ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            String voiceText = text.get(0);
+
+            UserDAO userDAO = new UserMemoryDAO();
+            String url = userDAO.getUrl() + "/editlocation";
+
+            try {
+                JSONObject json = new JSONObject();
+                json.put("text", voiceText);
+
+                HttpRequest.sendPostRequest(url, json.toString(), new HttpRequest.ResponseListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject json = new JSONObject(response);
+
+                            String action = json.getString("action");
+
+                            if (action.equals("edit")) {
+
+                                if (json.has("name")) {
+                                    String name = json.getString("name");
+                                    if (!name.equals("null") && !name.equals(location.getName())) {
+                                        name_edt.setText(name);
+                                    }
+                                }
+
+                                if (json.has("address")) {
+                                    String address = json.getString("address");
+                                    if (!address.equals("null") && !address.equals(location.getStreet())) {
+                                        address_edt.setText(address);
+                                    }
+                                }
+
+                                if (json.has("zip")) {
+                                    String zip = json.getString("zip");
+                                    if (!zip.equals("null") && !zip.equals(location.getZipcode())) {
+                                        zip_edt.setText(zip);
+                                    }
+                                }
+
+                                if (json.has("city")) {
+                                    String city = json.getString("city");
+                                    if (!city.equals("null") && !city.equals(location.getCity())) {
+                                        city_edt.setText(city);
+                                    }
+                                }
+                            }
+
+                            if (action.equals("menu")){
+                                Intent intent = new Intent(EditLocationActivity.this, MainMenuActivity.class);
+                                startActivity(intent);
+                            }
+
+
+                        } catch (JSONException e) {
+                            android.util.Log.e("HTTP_RESPONSE", "JSON parsing error: " + e.getMessage());
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        android.util.Log.e("Error", error);
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Recognizer API error");
+        }
     }
 }

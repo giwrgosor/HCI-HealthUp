@@ -159,9 +159,6 @@ public class ContactsActivity extends AppCompatActivity {
                             Log.d("ResponseContacts", response);
                             switch (action){
                                 case "call":
-                                        if(name){
-
-                                        }
                                     break;
                                 case "view":
 
