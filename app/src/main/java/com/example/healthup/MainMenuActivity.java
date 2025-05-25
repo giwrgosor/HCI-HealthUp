@@ -73,21 +73,18 @@ public class MainMenuActivity extends AppCompatActivity {
         weatherIcon = findViewById(R.id.weather_icon);
         weatherTempText = findViewById(R.id.weather_temperature);
         voice_btn = findViewById(R.id.voiceRecMain);
-
-        ImageButton menuBtn = findViewById(R.id.mainMenuButton);
-        ImageButton voiceBtn = findViewById(R.id.voiceRecMain);
+        menuButton = findViewById(R.id.mainMenuButton);
 
         int blackColor = ContextCompat.getColor(this, android.R.color.black);
-        menuBtn.setColorFilter(blackColor, PorterDuff.Mode.SRC_IN);
-        voiceBtn.setColorFilter(blackColor, PorterDuff.Mode.SRC_IN);
+        menuButton.setColorFilter(blackColor, PorterDuff.Mode.SRC_IN);
+        voice_btn.setColorFilter(blackColor, PorterDuff.Mode.SRC_IN);
 
         if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK) == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
             int whiteColor = getResources().getColor(android.R.color.white);
 
             TextView dateText = findViewById(R.id.date_text);
-            TextView weatherTemp = findViewById(R.id.weather_temperature);
             dateText.setTextColor(whiteColor);
-            weatherTemp.setTextColor(whiteColor);
+            weatherTempText.setTextColor(whiteColor);
 
             ImageView background = findViewById(R.id.background);
             if (background != null) {
@@ -115,13 +112,12 @@ public class MainMenuActivity extends AppCompatActivity {
                 }
             }
 
-            menuBtn.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
-            voiceBtn.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
+            menuButton.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
+            voice_btn.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
         }
 
-        menuButton = findViewById(R.id.mainMenuButton);
         menuButton.setOnClickListener(v -> {
-            PopupMenu popupMenu = new PopupMenu(MainMenuActivity.this, menuButton);
+            PopupMenu popupMenu = new PopupMenu(MainMenuActivity.this, this.menuButton);
             popupMenu.getMenuInflater().inflate(R.menu.settings_menu, popupMenu.getMenu());
             popupMenu.setOnMenuItemClickListener(item -> {
                 int id = item.getItemId();
@@ -137,7 +133,7 @@ public class MainMenuActivity extends AppCompatActivity {
             popupMenu.show();
         });
 
-        voice_btn.setOnClickListener(new View.OnClickListener() {
+        this.voice_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int REQUEST_SPEECH_RECOGNIZER = 3000;

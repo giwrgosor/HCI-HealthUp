@@ -5,6 +5,7 @@ import com.example.healthup.domain.User;
 
 public class UserMemoryDAO implements UserDAO {
     private static User user = new User(null,null,null,null,null,null,null);
+    private static String url = "";
 
     @Override
     public void editUser(User newUser) {
@@ -22,5 +23,15 @@ public class UserMemoryDAO implements UserDAO {
     @Override
     public User getUser() {
         return user;
+    }
+
+    @Override
+    public String getUrl() {
+        return url;
+    }
+
+    @Override
+    public void setUrl(String newUrl) {
+        url = newUrl;
     }
 }

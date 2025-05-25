@@ -1,7 +1,7 @@
 package com.example.healthup.dao;
 
+import com.example.healthup.MemoryDAO.UserMemoryDAO;
 import com.example.healthup.domain.Contact;
-import com.example.healthup.domain.Location;
 import com.example.healthup.domain.Pill;
 
 public abstract class Initializer {
@@ -52,6 +52,9 @@ public abstract class Initializer {
         legofer.setScheduleForDay("ΠΑΡ", new boolean[]{false, false, true, false, true, false});
         legofer.setScheduleForDay("ΣΑΒ", new boolean[]{false, false, true, false, true, false});
         pillDAO.save(legofer);
+
+        UserDAO userDAO = new UserMemoryDAO();
+        userDAO.setUrl("https://5919-34-118-251-207.ngrok-free.app");
 
     }
 }

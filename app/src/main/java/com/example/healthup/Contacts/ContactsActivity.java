@@ -1,10 +1,11 @@
 package com.example.healthup.Contacts;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -18,12 +19,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.healthup.MainMenuActivity;
 import com.example.healthup.MemoryDAO.ContactsMemoryDAO;
+import com.example.healthup.MemoryDAO.UserMemoryDAO;
 import com.example.healthup.R;
 import com.example.healthup.dao.ContactsDAO;
+import com.example.healthup.dao.UserDAO;
 import com.example.healthup.domain.Contact;
+import com.example.healthup.domain.HttpRequest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ContactsActivity extends AppCompatActivity {
 
@@ -37,6 +45,7 @@ public class ContactsActivity extends AppCompatActivity {
 
     private ContactsDAO contactsDAO;
     private ImageButton voiceContacts_btn;
+    private String voiceText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +127,74 @@ public class ContactsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                 Intent data) {
+        int REQUEST_SPEECH_RECOGNIZER = 3000;
+        super.onActivityResult(requestCode, resultCode, data); Log.i("DEMO-REQUESTCODE",
+                Integer.toString(requestCode)); Log.i("DEMO-RESULTCODE", Integer.toString(resultCode));
+        if (requestCode == REQUEST_SPEECH_RECOGNIZER && resultCode == Activity.RESULT_OK && data != null){
+            ArrayList<String> text = data
+                    .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            voiceText = text.get(0);
+
+            UserDAO userDAO = new UserMemoryDAO();
+            String url = userDAO.getUrl() + "/contacts";
+
+            try {
+                JSONObject json = new JSONObject();
+                json.put("text", voiceText);
+
+                HttpRequest.sendPostRequest(url, json.toString(), new HttpRequest.ResponseListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject json = new JSONObject(response);
+
+                            String action = json.getString("action");
+                            String name = json.getString("name");
+                            String phone = json.getString("phone");
+                            Log.d("ResponseContacts", response);
+                            switch (action){
+                                case "call":
+                                        if(name){
+
+                                        }
+                                    break;
+                                case "view":
+
+                                    break;
+                                case "dial":
+
+                                    break;
+                                case "add":
+
+                                    break;
+                                default:
+
+                            }
+                        }catch(JSONException e){
+                            Log.e("HTTP_RESPONSE", "JSON parsing error: " + e.getMessage());
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        Log.e("Error", error);
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+        }
+        else{
+            System.out.println("Recognizer API error");
+        }
     }
 
     @Override
