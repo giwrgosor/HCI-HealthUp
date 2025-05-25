@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:text="Τηλέφωνο"
+        android:text="Keypad"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -157,7 +157,7 @@
             android:id="@+id/btnStar"
             style="@style/KeypadButton"
             android:background="@drawable/keypad_button_bg"
-            android:text="*" />
+            android:text="CLEAR" />
 
         <TextView
             android:id="@+id/btn0"

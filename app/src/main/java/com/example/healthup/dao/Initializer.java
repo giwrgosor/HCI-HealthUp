@@ -20,11 +20,10 @@ public abstract class Initializer {
 //        exampleDAO.save(new Example());
 
         ContactsDAO contactsDAO = getContactsDAO();
-        contactsDAO.save(new Contact("Γιάννης", "6907777777", false));
-        contactsDAO.save(new Contact("Μαρία", "6907777771", false));
-        contactsDAO.save(new Contact("Νίκος", "6907777772", true));
-        contactsDAO.save(new Contact("Ελένη", "6907777774", false));
-        contactsDAO.save(new Contact("Γιώργος", "6907777776", false));
+        contactsDAO.save(new Contact("John", "6907777777", false));
+        contactsDAO.save(new Contact("Helen", "6907777771", false));
+        contactsDAO.save(new Contact("Nick", "6907777772", true));
+        contactsDAO.save(new Contact("George", "6907777776", false));
 
         PillsDAO pillDAO = getPillsDAO();
         Pill depon = new Pill("Depon");
