@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 100) {
             for (int i = 0; i < permissions.length; i++) {
                 if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Παρακαλώ, αποδεχτείτε όλους τους όρους για να συνεχίσετε με την αποθήκευση.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Please give all the permissions to the app in order to continue.", Toast.LENGTH_SHORT).show();
                     break;
                 }
             }
@@ -209,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
         startName_edt = findViewById(R.id.startName_edt);
         voice_btn = findViewById(R.id.voiceRec);
 
-        String[] bloodTypes = {"Τύπος","A", "B", "AB", "O"};
+        String[] bloodTypes = {"Type","A", "B", "AB", "O"};
         String[] rhFactors = {"Rh","+", "-"};
 
         ArrayAdapter<String> bloodTypeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, bloodTypes);
@@ -232,19 +232,19 @@ public class MainActivity extends AppCompatActivity {
             bloodType = spinnerBloodType.getSelectedItem().toString();
             bloodRhFactor = spinnerRhFactor.getSelectedItem().toString();
             if (name.isEmpty()) {
-                Toast.makeText(MainActivity.this,"Παρακαλώ συμπληρώστε το όνομα σας.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this,"Please enter your name.",Toast.LENGTH_SHORT).show();
             } else if (surname.isEmpty()) {
-                Toast.makeText(MainActivity.this,"Παρακαλώ συμπληρώστε το επώνυμο σας.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this,"Please enter your surname.",Toast.LENGTH_SHORT).show();
             } else if (address.isEmpty()) {
-                Toast.makeText(MainActivity.this,"Παρακαλώ συμπληρώστε τη διεύθυνση σας.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this,"Please enter your address.",Toast.LENGTH_SHORT).show();
             } else if (city.isEmpty()) {
-                Toast.makeText(MainActivity.this,"Παρακαλώ συμπληρώστε τη πόλη σας.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this,"Please enter the city of your home.",Toast.LENGTH_SHORT).show();
             } else if (zipcode.isEmpty()) {
-                Toast.makeText(MainActivity.this,"Παρακαλώ συμπληρώστε το ταχ. κωδ. σας.",Toast.LENGTH_SHORT).show();
-            }else if (bloodType.equals("Τύπος")) {
-                Toast.makeText(MainActivity.this,"Παρακαλώ συμπληρώστε τον τύπο αίματος σας.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this,"Please enter your zipcode.",Toast.LENGTH_SHORT).show();
+            }else if (bloodType.equals("Type")) {
+                Toast.makeText(MainActivity.this,"Please enter your blood type.",Toast.LENGTH_SHORT).show();
             }else if (bloodRhFactor.equals("Rh")) {
-                Toast.makeText(MainActivity.this,"Παρακαλώ συμπληρώστε τον παράγοντα Rh του αίματος σας.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this,"Please enter the Rh team of your blood type.",Toast.LENGTH_SHORT).show();
             }else{
                 Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
                 String addressStr = address + ", " + city + ", " + zipcode;
@@ -254,10 +254,10 @@ public class MainActivity extends AppCompatActivity {
                         Address geoaddress = addresses.get(0);
                         double latitude = geoaddress.getLatitude();
                         double longitude = geoaddress.getLongitude();
-                        location = new Location("Σπίτι",latitude,longitude,address,city,zipcode);
+                        location = new Location("Home",latitude,longitude,address,city,zipcode);
                         fieldsError = false;
                     } else {
-                        Toast.makeText(MainActivity.this,"Δεν βρέθηκε η τοποθεσία. Βεβαιωθείτε ότι εισάγατε σωστά τα στοιχεία της τοποθεσίας!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this,"We could not find your location. Please make sure that you have entered the correct address!", Toast.LENGTH_SHORT).show();
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
