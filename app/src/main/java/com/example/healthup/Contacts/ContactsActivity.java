@@ -2,12 +2,14 @@ package com.example.healthup.Contacts;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -106,8 +108,8 @@ public class ContactsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int REQUEST_SPEECH_RECOGNIZER = 3000;
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "en-US");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"What would you like to do?");
                 startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
             }
         });
@@ -130,8 +132,7 @@ public class ContactsActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode,
-                                 Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         int REQUEST_SPEECH_RECOGNIZER = 3000;
         super.onActivityResult(requestCode, resultCode, data); Log.i("DEMO-REQUESTCODE",
                 Integer.toString(requestCode)); Log.i("DEMO-RESULTCODE", Integer.toString(resultCode));
@@ -155,22 +156,106 @@ public class ContactsActivity extends AppCompatActivity {
 
                             String action = json.getString("action");
                             String name = json.getString("name");
+                            name = name.equals("null")? "" : name;
                             String phone = json.getString("phone");
+                            phone = phone.equals("null")? "" : phone;
                             Log.d("ResponseContacts", response);
                             switch (action){
                                 case "call":
+                                    if(!name.isEmpty() && !phone.isEmpty()){
+//                                      Klhsh me bash to onoma kai thl
+                                        Contact foundC = contactsDAO.findByPhoneAndName(name,phone);
+                                        if(foundC == null){
+                                          handleError("No contact exists with the name and phone that you provided");
+                                        }else{
+                                            Intent intent = new Intent(Intent.ACTION_CALL);  // ACTION_CALL
+                                            intent.setData(Uri.parse("tel:" + foundC.getPhone()));
+                                            startActivity(intent);
+                                        }
+                                    }else if(!name.isEmpty() && phone.isEmpty()){
+//                                      Klhsh me onoma
+                                        Contact foundC = contactsDAO.findByName(name);
+                                        if(foundC == null){
+                                            handleError("No contact exists with the name that you provided");
+                                        }else{
+                                            Intent intent = new Intent(Intent.ACTION_CALL);  // ACTION_CALL
+                                            intent.setData(Uri.parse("tel:" + foundC.getPhone()));
+                                            startActivity(intent);
+                                        }
+                                    }else if(name.isEmpty() && !phone.isEmpty()){
+//                                      Dial ton arithmo
+                                        Intent intent = new Intent(ContactsActivity.this,KeypadActivity.class);
+                                        intent.putExtra("phone",phone);
+                                        startActivity(intent);
+                                    }else{
+                                        handleError("We couldnt understand your request. If you want to make a call, say the name or the phone of the person that you want to call");
+                                    }
                                     break;
                                 case "view":
-
+                                    if(!name.isEmpty() && !phone.isEmpty()){
+//                                      View me bash to onoma kai thl
+                                        Contact foundC = contactsDAO.findByPhoneAndName(name,phone);
+                                        if(foundC == null){
+                                            handleError("No contact exists with the name and phone that you provided");
+                                        }else{
+                                            Intent intent = new Intent(ContactsActivity.this, DisplayContactsActivity.class);
+                                            intent.putExtra("name", foundC.getName());
+                                            intent.putExtra("phone", foundC.getPhone());
+                                            intent.putExtra("emergency", foundC.isEmergency());
+                                            startActivity(intent);
+                                        }
+                                    }else if(!name.isEmpty() && phone.isEmpty()){
+//                                      View me onoma
+                                        Contact foundC = contactsDAO.findByName(name);
+                                        if(foundC == null){
+                                            handleError("No contact exists with the name that you provided");
+                                        }else{
+                                            Intent intent = new Intent(ContactsActivity.this, DisplayContactsActivity.class);
+                                            intent.putExtra("name", foundC.getName());
+                                            intent.putExtra("phone", foundC.getPhone());
+                                            intent.putExtra("emergency", foundC.isEmergency());
+                                            startActivity(intent);
+                                        }
+                                    }else if(name.isEmpty() && !phone.isEmpty()){
+//                                      View me arithmo
+                                        Contact foundC = contactsDAO.findByPhone(phone);
+                                        if(foundC == null){
+                                            handleError("No contact exists with the name and phone that you provided");
+                                        }else {
+                                            Intent intent = new Intent(ContactsActivity.this, DisplayContactsActivity.class);
+                                            intent.putExtra("name", foundC.getName());
+                                            intent.putExtra("phone", foundC.getPhone());
+                                            intent.putExtra("emergency", foundC.isEmergency());
+                                            startActivity(intent);
+                                        }
+                                    }else{
+                                        handleError("We couldnt understand your request. If you want to view a contact, say the name or the phone of the contact you want");
+                                    }
                                     break;
                                 case "dial":
-
+                                    if(!phone.isEmpty()){
+                                        Intent intent = new Intent(ContactsActivity.this,KeypadActivity.class);
+                                        intent.putExtra("phone",phone);
+                                        startActivity(intent);
+                                    }else if(name.isEmpty()){
+                                        Intent intent = new Intent(ContactsActivity.this,KeypadActivity.class);
+                                        startActivity(intent);
+                                    } else{
+                                        handleError("We couldnt understand your request. If you want to dial a phone, say the phone you want to dial");
+                                    }
                                     break;
                                 case "add":
-
+                                    Intent intent = new Intent(ContactsActivity.this, AddContactsActivity.class);
+                                    if (!phone.isEmpty()) {
+                                        intent.putExtra("phone", phone);
+                                    }
+                                    if (!name.isEmpty()) {
+                                        intent.putExtra("name", name);
+                                    }
+                                    startActivity(intent);
                                     break;
                                 default:
-
+                                    handleError("We couldnt understand your request. Please try again!");
                             }
                         }catch(JSONException e){
                             Log.e("HTTP_RESPONSE", "JSON parsing error: " + e.getMessage());
@@ -187,7 +272,6 @@ public class ContactsActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-
         }
         else{
             System.out.println("Recognizer API error");
@@ -201,6 +285,10 @@ public class ContactsActivity extends AppCompatActivity {
         contactList.addAll(contactsDAO.findAll());
         adapter.sortContacts(contactList);
         adapter.notifyDataSetChanged();
+    }
+
+    public void handleError(String msg){
+        Toast.makeText(ContactsActivity.this,msg, Toast.LENGTH_LONG).show();
     }
 
 }

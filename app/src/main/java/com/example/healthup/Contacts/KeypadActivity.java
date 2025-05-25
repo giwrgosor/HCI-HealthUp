@@ -1,10 +1,12 @@
 package com.example.healthup.Contacts;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -17,9 +19,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.healthup.MainActivity;
 import com.example.healthup.MainMenuActivity;
+import com.example.healthup.MemoryDAO.UserMemoryDAO;
 import com.example.healthup.R;
+import com.example.healthup.dao.UserDAO;
+import com.example.healthup.domain.HttpRequest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,6 +40,7 @@ public class KeypadActivity extends AppCompatActivity {
     private ImageButton voiceKeypad_btn;
     private SoundPool soundPool;
     private Map<String, Integer> soundMap = new HashMap<>();
+    private String voiceText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +49,9 @@ public class KeypadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_keypad);
 
         numberDisplay = findViewById(R.id.numberDisplay);
+        if(getIntent().hasExtra("phone")){
+            numberDisplay.setText(getIntent().getStringExtra("phone"));
+        }
         call = findViewById(R.id.keypadCall);
         backspace = findViewById(R.id.keypadBackspace);
         btn_homeKeypad = findViewById(R.id.homeButtonKeypad);
@@ -81,8 +94,8 @@ public class KeypadActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int REQUEST_SPEECH_RECOGNIZER = 3000;
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "en-US");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Say the number you want to call.");
                 startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
             }
         });
@@ -131,7 +144,7 @@ public class KeypadActivity extends AppCompatActivity {
                     callIntent.setData(Uri.parse("tel:" + phone));
                     startActivity(callIntent);
                 } else {
-                    Toast.makeText(KeypadActivity.this, "Παρακαλώ συμπληρώστε το τηλέφωνο που θέλετε να καλέσετε.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(KeypadActivity.this, "Please enter the phone you want to call.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -173,6 +186,23 @@ public class KeypadActivity extends AppCompatActivity {
         if (soundPool != null) {
             soundPool.release();
             soundPool = null;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        int REQUEST_SPEECH_RECOGNIZER = 3000;
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("DEMO-REQUESTCODE",
+                Integer.toString(requestCode));
+        Log.i("DEMO-RESULTCODE", Integer.toString(resultCode));
+        if (requestCode == REQUEST_SPEECH_RECOGNIZER && resultCode == Activity.RESULT_OK && data != null) {
+            ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            voiceText = text.get(0);
+            String cleanedNumber = voiceText.replaceAll("[\\s-]", "");
+            numberDisplay.setText(cleanedNumber);
+        } else {
+            System.out.println("Recognizer API error");
         }
     }
 

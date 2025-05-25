@@ -11,10 +11,10 @@
         android:id="@+id/pillName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Όνομα Χαπιού"
+        android:text="Pill Name"
+        android:textColor="@color/black"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@color/black" />
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/pillFrequency"

@@ -1,10 +1,12 @@
 package com.example.healthup.Contacts;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -23,14 +25,22 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.healthup.MainMenuActivity;
 import com.example.healthup.MemoryDAO.LocationMemoryDAO;
+import com.example.healthup.MemoryDAO.UserMemoryDAO;
 import com.example.healthup.R;
 import com.example.healthup.dao.LocationDAO;
+import com.example.healthup.dao.UserDAO;
 import com.example.healthup.domain.Contact;
 
 import com.example.healthup.MemoryDAO.ContactsMemoryDAO;
 import com.example.healthup.dao.ContactsDAO;
+import com.example.healthup.domain.HttpRequest;
 import com.example.healthup.domain.Location;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 
 public class DisplayContactsActivity extends AppCompatActivity {
@@ -40,6 +50,9 @@ public class DisplayContactsActivity extends AppCompatActivity {
     private  TextView nameTextView, phoneTextView;
     private CheckBox emergencyCheckBox;
     private ImageButton voiceDisplayContacts_btn;
+    private String voiceText;
+    private String phone;
+    private ContactsDAO contactsDAO;
 
 
     @Override
@@ -63,13 +76,13 @@ public class DisplayContactsActivity extends AppCompatActivity {
         emergencyCheckBox = findViewById(R.id.emergencyDisplayCheckBox);
         voiceDisplayContacts_btn = findViewById(R.id.voiceRecDisplayContacts);
 
-        ContactsDAO contactsDAO = new ContactsMemoryDAO();
+        contactsDAO = new ContactsMemoryDAO();
 
         String name = getIntent().getStringExtra("name");
-        String phone = getIntent().getStringExtra("phone");
+        phone = getIntent().getStringExtra("phone");
         Boolean emergency = getIntent().getBooleanExtra("emergency", false);
 
-        this.contact = new Contact(name, phone, emergency);
+        contact = contactsDAO.findByPhoneAndName(name, phone);
 
         if (name != null) {
             nameTextView.setText(name);
@@ -119,8 +132,8 @@ public class DisplayContactsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int REQUEST_SPEECH_RECOGNIZER = 3000;
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "en-US");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Say the action you want to do.");
                 startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
             }
         });
@@ -139,7 +152,7 @@ public class DisplayContactsActivity extends AppCompatActivity {
                 callIntent.setData(Uri.parse("tel:" + phone));
                 startActivity(callIntent);
             } else {
-                Toast.makeText(this, "Το τηλέφωνο δεν είναι διαθέσιμο", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "The phone is not available", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -167,19 +180,19 @@ public class DisplayContactsActivity extends AppCompatActivity {
 
         btn_deleteDisplayContact.setOnClickListener(view -> {
             new AlertDialog.Builder(this)
-                    .setTitle("Επιβεβαίωση διαγραφής")
-                    .setMessage("Είστε σίγουρος ότι θέλετε να διαγράψετε την επαφή \"" + name + "\";")
-                    .setPositiveButton("Ναι", (dialog, which) -> {
+                    .setTitle("Delete Confrimation")
+                    .setMessage("Are you sure you want to delete the contact \"" + name + "\";")
+                    .setPositiveButton("Yes", (dialog, which) -> {
                         if (name != null && phone != null) {
                             Contact contactToDelete = new Contact(name, phone);
                             contactsDAO.delete(contactToDelete);
-                            Toast.makeText(this, "Η επαφή διαγράφηκε", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Contact deleted!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(this, ContactsActivity.class);
                             startActivity(intent);
                             finish();
                         }
                     })
-                    .setNegativeButton("Όχι", null)
+                    .setNegativeButton("No", null)
                     .show();
         });
 
@@ -199,21 +212,83 @@ public class DisplayContactsActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        int REQUEST_SPEECH_RECOGNIZER = 3000;
         super.onActivityResult(requestCode, resultCode, data);
+        Log.i("DEMO-REQUESTCODE",
+                Integer.toString(requestCode));
+        Log.i("DEMO-RESULTCODE", Integer.toString(resultCode));
+        if (requestCode == REQUEST_SPEECH_RECOGNIZER && resultCode == Activity.RESULT_OK && data != null) {
+            ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            voiceText = text.get(0);
 
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
-            String updatedName = data.getStringExtra("name");
-            String updatedPhone = data.getStringExtra("phone");
-            boolean updatedEmergency = data.getBooleanExtra("emergency", false);
-            int updatedId = data.getIntExtra("id", contact.getId());
+            UserDAO userDAO = new UserMemoryDAO();
+            String url = userDAO.getUrl() + "/viewcontact";
 
-            contact = new Contact(updatedId, updatedName, updatedPhone, updatedEmergency);
+            try {
+                JSONObject json = new JSONObject();
+                json.put("text", voiceText);
 
-            nameTextView.setText(updatedName);
-            phoneTextView.setText(Contact.formatPhoneNumber(updatedPhone));
-            emergencyCheckBox.setChecked(updatedEmergency);
+                HttpRequest.sendPostRequest(url, json.toString(), new HttpRequest.ResponseListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject json = new JSONObject(response);
+                            String action = json.getString("action");
+                            action = action.equals("null") ? "" : action;
+                            Log.d("ResponseContacts", response);
+                            if(action.equalsIgnoreCase("call")){
+                                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                                callIntent.setData(Uri.parse("tel:" + phone));
+                                startActivity(callIntent);
+                            }else if(action.equalsIgnoreCase("edit")){
+                                Intent intent = new Intent(DisplayContactsActivity.this, EditContactsActivity.class);
+                                intent.putExtra("id", contact.getId());
+                                intent.putExtra("name", contact.getName());
+                                intent.putExtra("phone", contact.getPhone());
+                                intent.putExtra("emergency", contact.isEmergency());
+                                startActivity(intent);
+                            }else if(action.equalsIgnoreCase("delete")){
+                                new AlertDialog.Builder(DisplayContactsActivity.this)
+                                        .setTitle("Delete Confrimation")
+                                        .setMessage("Are you sure you want to delete the contact \"" + contact.getName() + "\";")
+                                        .setPositiveButton("Yes", (dialog, which) -> {
+                                            if (contact.getName() != null && phone != null) {
+                                                Contact contactToDelete = new Contact(contact.getName(), phone);
+                                                contactsDAO.delete(contactToDelete);
+                                                Toast.makeText(DisplayContactsActivity.this, "Contact deleted!", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(DisplayContactsActivity.this, ContactsActivity.class);
+                                                startActivity(intent);
+                                                finish();
+                                            }
+                                        })
+                                        .setNegativeButton("No", null)
+                                        .show();
+                            }else{
+                                handleError("We could not understand your request. Please try again.");
+                            }
+                        } catch (JSONException e) {
+                            Log.e("HTTP_RESPONSE", "JSON parsing error: " + e.getMessage());
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        Log.e("Error", error);
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            System.out.println("Recognizer API error");
         }
+    }
+
+    public void handleError(String msg){
+        Toast.makeText(DisplayContactsActivity.this,msg, Toast.LENGTH_LONG).show();
     }
 
 }

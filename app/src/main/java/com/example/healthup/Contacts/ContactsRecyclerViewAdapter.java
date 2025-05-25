@@ -58,7 +58,7 @@ public class ContactsRecyclerViewAdapter extends RecyclerView.Adapter<ContactsRe
 
         Contact contact = contacts.get(position);
         holder.contactName.setText(contact.getName());
-        holder.contactPhone.setText("Κινητό: " + contact.formatPhoneNumber(contact.getPhone()));
+        holder.contactPhone.setText("Phone: " + contact.formatPhoneNumber(contact.getPhone()));
 
         int[] colors = {
                 Color.parseColor("#BDBDBD"), // Γκρι
@@ -116,7 +116,7 @@ public class ContactsRecyclerViewAdapter extends RecyclerView.Adapter<ContactsRe
 
         holder.callIcon.setOnClickListener(v -> {
 
-            Intent intent = new Intent(Intent.ACTION_DIAL);  // ACTION_CALL
+            Intent intent = new Intent(Intent.ACTION_CALL);  // ACTION_CALL
             intent.setData(Uri.parse("tel:" + contact.getPhone()));
             v.getContext().startActivity(intent);
         });

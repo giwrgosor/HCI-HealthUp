@@ -38,4 +38,33 @@ public class ContactsMemoryDAO implements ContactsDAO {
         return null;
     }
 
+    @Override
+    public Contact findByPhone(String phone) {
+        for(Contact c : contacts){
+            if(c.getPhone().equals(phone)){
+                return c;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Contact findByName(String name) {
+        for(Contact c : contacts){
+            if(c.getName().equalsIgnoreCase(name)){
+                return c;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Contact findByPhoneAndName(String name, String phone) {
+        for(Contact c : contacts){
+            if(c.getName().equalsIgnoreCase(name) && c.getPhone().equals(phone)){
+                return c;
+            }
+        }
+        return null;
+    }
 }

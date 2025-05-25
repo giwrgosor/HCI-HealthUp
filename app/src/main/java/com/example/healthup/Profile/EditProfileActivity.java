@@ -64,7 +64,7 @@ public class EditProfileActivity extends AppCompatActivity {
             return insets;
         });
 
-        String[] bloodTypes = {"Τύπος","A", "B", "AB", "O"};
+        String[] bloodTypes = {"Type","A", "B", "AB", "O"};
         String[] rhFactors = {"Rh","+", "-"};
 
         nameOfEdt = findViewById(R.id.editProfile_name_edt);
@@ -129,16 +129,6 @@ public class EditProfileActivity extends AppCompatActivity {
             }
         });
 
-        voiceEditProfile_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int REQUEST_SPEECH_RECOGNIZER = 3000;
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
-                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
-            }
-        });
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,19 +144,19 @@ public class EditProfileActivity extends AppCompatActivity {
                 String bloodRhFactor = rhFactorSpinner.getSelectedItem().toString();
 
                 if (name.isEmpty()) {
-                    Toast.makeText(EditProfileActivity.this, "Παρακαλώ συμπληρώστε το όνομα σας.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProfileActivity.this, "Please enter your name.", Toast.LENGTH_SHORT).show();
                 } else if (surname.isEmpty()) {
-                    Toast.makeText(EditProfileActivity.this, "Παρακαλώ συμπληρώστε το επώνυμο σας.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProfileActivity.this, "Please enter your surname.", Toast.LENGTH_SHORT).show();
                 } else if (address.isEmpty()) {
-                    Toast.makeText(EditProfileActivity.this, "Παρακαλώ συμπληρώστε τη διεύθυνση σας.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProfileActivity.this, "Please enter your address.", Toast.LENGTH_SHORT).show();
                 } else if (city.isEmpty()) {
-                    Toast.makeText(EditProfileActivity.this, "Παρακαλώ συμπληρώστε τη πόλη σας.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProfileActivity.this, "Please enter the city.", Toast.LENGTH_SHORT).show();
                 } else if (zipcode.isEmpty()) {
-                    Toast.makeText(EditProfileActivity.this, "Παρακαλώ συμπληρώστε το ταχ. κωδ. σας.", Toast.LENGTH_SHORT).show();
-                } else if (bloodType.equals("Τύπος")) {
-                    Toast.makeText(EditProfileActivity.this, "Παρακαλώ συμπληρώστε τον τύπο αίματος σας.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProfileActivity.this, "Please enter your zipcode.", Toast.LENGTH_SHORT).show();
+                } else if (bloodType.equals("Type")) {
+                    Toast.makeText(EditProfileActivity.this, "Please enter your blood type.", Toast.LENGTH_SHORT).show();
                 } else if (bloodRhFactor.equals("Rh")) {
-                    Toast.makeText(EditProfileActivity.this, "Παρακαλώ συμπληρώστε τον παράγοντα Rh του αίματος σας.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditProfileActivity.this, "Please enter your blood Rh team.", Toast.LENGTH_SHORT).show();
                 } else {
                     Geocoder geocoder = new Geocoder(EditProfileActivity.this, Locale.getDefault());
                     String addressStr = address + ", " + city + ", " + zipcode;
@@ -178,10 +168,10 @@ public class EditProfileActivity extends AppCompatActivity {
                             double latitude = geoAddress.getLatitude();
                             double longitude = geoAddress.getLongitude();
 
-                            location = new Location("Σπίτι", latitude, longitude, address, city, zipcode);
+                            location = new Location("Home", latitude, longitude, address, city, zipcode);
                             fieldsError = false;
                         } else {
-                            Toast.makeText(EditProfileActivity.this, "Δεν βρέθηκε η τοποθεσία. Βεβαιωθείτε ότι εισάγατε σωστά τα στοιχεία της τοποθεσίας!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditProfileActivity.this, "The location could not be found. Please malke sure you entered the correct values.", Toast.LENGTH_SHORT).show();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -194,7 +184,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     LocationDAO locationDAO = new LocationMemoryDAO();
                     Location oldLocation = locationDAO.findById(1);
                     locationDAO.editLocation(oldLocation, location);
-                    Toast.makeText(EditProfileActivity.this,"Το προφίλ σας ενημερώθηκε με επιτυχία!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditProfileActivity.this,"Your profile has been successfully updated!", Toast.LENGTH_LONG).show();
                     finish();
                 }
 
