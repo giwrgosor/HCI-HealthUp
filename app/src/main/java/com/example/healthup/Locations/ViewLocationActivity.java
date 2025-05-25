@@ -22,10 +22,18 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.healthup.MainMenuActivity;
 import com.example.healthup.MemoryDAO.LocationMemoryDAO;
+import com.example.healthup.MemoryDAO.UserMemoryDAO;
 import com.example.healthup.R;
 import com.example.healthup.dao.LocationDAO;
+import com.example.healthup.dao.UserDAO;
+import com.example.healthup.domain.HttpRequest;
 import com.example.healthup.domain.Location;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class ViewLocationActivity extends AppCompatActivity {
 
@@ -113,6 +121,12 @@ public class ViewLocationActivity extends AppCompatActivity {
 
         location = (Location) getIntent().getExtras().get("Location");
 
+        if (location == null) {
+            Toast.makeText(this, "Location not found.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
         name_txt.setText(location.getName());
         address_txt.setText(location.getStreet());
         zipcode_txt.setText(location.getZipcode());
@@ -171,4 +185,91 @@ public class ViewLocationActivity extends AppCompatActivity {
         });
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        int REQUEST_SPEECH_RECOGNIZER = 3000;
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_SPEECH_RECOGNIZER && resultCode == RESULT_OK && data != null) {
+            ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            String voiceText = text.get(0);
+
+            UserDAO userDAO = new UserMemoryDAO();
+            String url = userDAO.getUrl() + "/viewlocation";
+
+            try {
+                JSONObject json = new JSONObject();
+                json.put("text", voiceText);
+
+                HttpRequest.sendPostRequest(url, json.toString(), new HttpRequest.ResponseListener() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject json = new JSONObject(response);
+                            String action = json.getString("action");
+
+                            if (action.equals("edit")) {
+                                Intent intent = new Intent(ViewLocationActivity.this, EditLocationActivity.class);
+                                intent.putExtra("Location", location);
+                                startActivity(intent);
+                            } else if (action.equals("goto")) {
+                                String uri = "https://www.google.com/maps/dir/?api=1"
+                                        + "&destination=" + location.getLat() + "," + location.getLon()
+                                        + "&travelmode=driving";
+
+                                Intent mapsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                                mapsIntent.setPackage("com.google.android.apps.maps");
+
+                                if (mapsIntent.resolveActivity(getPackageManager()) != null) {
+                                    startActivity(mapsIntent);
+                                } else {
+                                    Toast.makeText(context, "Το Google Maps δεν είναι εγκατεστημένο", Toast.LENGTH_SHORT).show();
+                                }
+                            } else if (action.equals("delete")) {
+                                if (location.getId() == 1) {
+                                    Toast.makeText(context, "Δεν επιτρέπεται η διαγραφή της τοποθεσίας \"ΣΠΙΤΙ\", αλλά μόνο η επεξεργασία της!", Toast.LENGTH_LONG).show();
+                                } else {
+                                    new AlertDialog.Builder(context)
+                                            .setTitle("Επιβεβαίωση Διαγραφής")
+                                            .setMessage("Θέλετε σίγουρα να διαγράψετε την τοποθεσία " + location.getName() + ";")
+                                            .setPositiveButton("Ναι", (dialog, which) -> {
+                                                LocationDAO locationDAO = new LocationMemoryDAO();
+                                                locationDAO.delete(location);
+                                                Toast.makeText(context, "Η τοποθεσία διαγράφηκε!", Toast.LENGTH_SHORT).show();
+                                                finish();
+                                            })
+                                            .setNegativeButton("Όχι", (dialog, which) -> dialog.dismiss())
+                                            .show();
+                                }
+                            } else if (action.equals("menu")) {
+                                Intent intent = new Intent(ViewLocationActivity.this, MainMenuActivity.class);
+                                startActivity(intent);
+                            }
+                            else {
+                                Toast.makeText(context, "Δεν αναγνωρίστηκε ενέργεια.", Toast.LENGTH_SHORT).show();
+                            }
+
+                        } catch (JSONException e) {
+                            Log.e("HTTP_RESPONSE", "JSON parsing error: " + e.getMessage());
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        Log.e("HTTP_ERROR", error);
+                        Toast.makeText(context, "Σφάλμα κατά την αποστολή του αιτήματος", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(context, "Σφάλμα αναγνώρισης φωνής", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 }
