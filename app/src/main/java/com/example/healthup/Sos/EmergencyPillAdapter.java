@@ -40,7 +40,7 @@ public class EmergencyPillAdapter extends RecyclerView.Adapter<EmergencyPillAdap
     public void onBindViewHolder(PillViewHolder holder, int position) {
         Pill pill = pillList.get(position);
         holder.name.setText(pill.getName());
-        holder.frequency.setText(String.format("%d φορές την εβδομάδα", pill.getTimesPerWeek()));
+        holder.frequency.setText(String.format("%d times per week", pill.getTimesPerWeek()));
     }
 
     @Override

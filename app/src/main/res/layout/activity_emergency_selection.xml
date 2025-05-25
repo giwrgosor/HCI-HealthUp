@@ -45,7 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:text="Κλήσεις SOS"
+        android:text="SOS Calls"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="24sp"
@@ -90,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:gravity="center"
-            android:text="Ασθενοφόρο"
+            android:text="Ambulance"
             android:textColor="#000000"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -135,7 +135,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:gravity="center"
-            android:text="Αστυνομία"
+            android:text="Police"
             android:textColor="#000000"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -180,7 +180,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:gravity="center"
-            android:text="Πυροσβεστική"
+            android:text="Fire Department"
             android:textColor="#000000"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -190,7 +190,7 @@
             android:layout_height="72dp"
             android:layout_gravity="center"
             android:layout_marginBottom="8dp"
-            android:contentDescription="Ambulance Icon"
+            android:contentDescription="Fire department icon"
             android:src="@drawable/firefighter" />
 
         <TextView

@@ -43,7 +43,7 @@ import java.util.ArrayList;
 public class UserSosInfoActivity extends AppCompatActivity {
 
     private static final int PERMISSION_REQUEST_CODE = 1000;
-    private String message = "Ενεργοποιήθηκε η λειτουργία έκτακτης ανάγκης για τον χρήστη: ";
+    private String message = "Emergency mode enabled for the user: ";
     private String numberCalled;
     private ImageButton homeButtonEmergencyProfile;
 
@@ -91,7 +91,7 @@ public class UserSosInfoActivity extends AppCompatActivity {
         }
 
         numberCalled = getIntent().getStringExtra("PhoneNum");
-        message = message + user.getName() + " " + user.getSurname() + ". Έχει κληθεί το " + numberCalled +". ";
+        message = message + user.getName() + " " + user.getSurname() + ". The" + numberCalled +" has been called to his location. ";
         if (checkPermissions()) {
             getLastLocationAndSendSms();
         } else {
@@ -141,7 +141,7 @@ public class UserSosInfoActivity extends AppCompatActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                 getLastLocationAndSendSms();
             } else {
-                Toast.makeText(this, "Η αποστολή των SMS απέτυχε. Θα πρέπει να επιτρέψετε στην εφαρμογή να στείλει τα απαραίτητα SMS.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Failed to sent the SMS. You must allow the app to send SMS by accepting the permission message.", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -157,10 +157,10 @@ public class UserSosInfoActivity extends AppCompatActivity {
             if (location != null) {
                 double lat = location.getLatitude();
                 double lon = location.getLongitude();
-                message = message + "Η τοποθεσία του χρήστη είναι (Google Maps): https://www.google.com/maps?q="+ lat + ","+ lon;
+                message = message + "The users location is (Google Maps): https://www.google.com/maps?q="+ lat + ","+ lon;
             }
         } catch (SecurityException e) {
-            Toast.makeText(this, "Δεν δώσατε άδεια στην εφαρμογή να χρησιμοποιήσει την τοποθεσία σας.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "You did not give permission to access your location", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -177,9 +177,9 @@ public class UserSosInfoActivity extends AppCompatActivity {
             }
             for (String number : phoneNumbers) {
                 smsManager.sendMultipartTextMessage(number, null, parts, null, null);            }
-            Toast.makeText(this, "Στάλθηκαν τα SMS με επιτυχία!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "The SMS were send with success!", Toast.LENGTH_SHORT).show();
         } catch (SecurityException e) {
-            Toast.makeText(this, "Απορρίφθηκε η άδεια να σταλθεί SMS", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Permission to send SMS was denied.", Toast.LENGTH_SHORT).show();
         }
     }
 }

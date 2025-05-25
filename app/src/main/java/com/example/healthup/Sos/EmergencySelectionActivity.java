@@ -72,9 +72,9 @@ public class EmergencySelectionActivity extends AppCompatActivity {
 
         voiceEmergencySelection_btn = findViewById(R.id.voiceRecEmergencySelection);
 
-        police_btn.setOnClickListener(v -> showConfirmationDialog("Αστυνομία","tel:100"));
-        ambulance_btn.setOnClickListener(v -> showConfirmationDialog("ΕΚΑΒ","tel:166"));
-        fire_btn.setOnClickListener(v -> showConfirmationDialog("Πυροσβεστική","tel:199"));
+        police_btn.setOnClickListener(v -> showConfirmationDialog("Police","tel:100"));
+        ambulance_btn.setOnClickListener(v -> showConfirmationDialog("Ambulance","tel:166"));
+        fire_btn.setOnClickListener(v -> showConfirmationDialog("Fire Department","tel:199"));
         homeButtonEmergency.setOnClickListener(v -> startActivity(new Intent(EmergencySelectionActivity.this, MainMenuActivity.class)));
 
         voiceEmergencySelection_btn.setOnClickListener(new View.OnClickListener() {
@@ -82,8 +82,8 @@ public class EmergencySelectionActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int REQUEST_SPEECH_RECOGNIZER = 3000;
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "en-US");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Please tell us which service you would like to call.");
                 startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
             }
         });
@@ -92,8 +92,8 @@ public class EmergencySelectionActivity extends AppCompatActivity {
 
     private void showConfirmationDialog(String serviceName, String phoneNumber) {
         new AlertDialog.Builder(this)
-                .setTitle("Επιβεβαίωση Κλήσης")
-                .setMessage("Θέλετε σίγουρα να καλέσετε το/την " + serviceName + "?")
+                .setTitle("Call Confirmation")
+                .setMessage("Are you sure you want to call the " + serviceName + "?")
                 .setPositiveButton("Yes", (dialog, which) -> callEmergency(phoneNumber))
                 .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
                 .show();
