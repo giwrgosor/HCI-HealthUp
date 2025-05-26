@@ -181,7 +181,7 @@ public class DisplayContactsActivity extends AppCompatActivity {
         btn_deleteDisplayContact.setOnClickListener(view -> {
             new AlertDialog.Builder(this)
                     .setTitle("Delete Confrimation")
-                    .setMessage("Are you sure you want to delete the contact \"" + name + "\";")
+                    .setMessage("Are you sure you want to delete the contact \"" + name + "\"?")
                     .setPositiveButton("Yes", (dialog, which) -> {
                         if (name != null && phone != null) {
                             Contact contactToDelete = new Contact(name, phone);
