@@ -86,8 +86,9 @@ public class DisplayPillsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int REQUEST_SPEECH_RECOGNIZER = 3000;
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"What do you want?");
                 startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
             }
         });

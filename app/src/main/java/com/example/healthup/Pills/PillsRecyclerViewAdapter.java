@@ -74,17 +74,17 @@ public class PillsRecyclerViewAdapter extends RecyclerView.Adapter<PillsRecycler
 
         holder.pillListDelete.setOnClickListener(v -> {
             new AlertDialog.Builder(v.getContext())
-                    .setTitle("Επιβεβαίωση διαγραφής")
-                    .setMessage("Είστε σίγουρος ότι θέλετε να διαγράψετε το χάπι;")
-                    .setPositiveButton("Ναι", (dialog, which) -> {
+                    .setTitle("Delete Confirmation")
+                    .setMessage("Are you sure you want to delete this pill \"" + pill.getName() + "\"?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
                         Pill pillToDelete = pills.get(position);
                         pillsDAO.delete(pillToDelete);
                         pills.remove(position);
                         notifyItemRemoved(position);
                         notifyItemRangeChanged(position, pills.size());
-                        Toast.makeText(v.getContext(), "Το χάπι διαγράφηκε", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(v.getContext(), "Pill deleted", Toast.LENGTH_SHORT).show();
                     })
-                    .setNegativeButton("Όχι", null)
+                    .setNegativeButton("No", null)
                     .show();
         });
 

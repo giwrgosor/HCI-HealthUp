@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:text="Προσθήκη Χαπιών"
+        android:text="Add Pills"
         android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintTop_toTopOf="@+id/imageView2"
@@ -84,7 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="180dp"
-        android:text="Όνομα"
+        android:text="Name"
         android:textColor="@color/black"
         android:textSize="23sp"
         android:textStyle="bold"
@@ -110,7 +110,7 @@
         android:layout_marginTop="220dp"
         android:background="@android:color/transparent"
         android:ems="10"
-        android:hint="Συμπληρώστε όνομα χαπιού"
+        android:hint="Enter pill name"
         android:inputType="text"
         android:textColor="@color/black"
         android:textColorHint="#999999"
@@ -124,7 +124,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="275dp"
-        android:text="Πρόγραμμα Εβδομάδας"
+        android:text="Weakly Schedule"
         android:textColor="@color/black"
         android:textSize="23sp"
         android:textStyle="bold"
@@ -154,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:backgroundTint="@color/blue"
-                android:text="ΔΕΥ"
+                android:text="MON"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
@@ -163,7 +163,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:backgroundTint="@color/blue"
-                android:text="ΤΡΙ"
+                android:text="TUE"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
@@ -172,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:backgroundTint="@color/blue"
-                android:text="ΤΕΤ"
+                android:text="WED"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
@@ -180,7 +180,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/blue"
-                android:text="ΠΕΜ"
+                android:text="THU"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -197,7 +197,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:backgroundTint="@color/blue"
-                android:text="ΠΑΡ"
+                android:text="FRI"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
@@ -206,7 +206,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:backgroundTint="@color/blue"
-                android:text="ΣΑΒ"
+                android:text="SAT"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
 
@@ -214,7 +214,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/blue"
-                android:text="ΚΥΡ"
+                android:text="SUN"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -242,7 +242,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Πριν το πρωινό"
+                android:text="Before Breakfast"
                 android:textColor="@color/black" />
 
             <CheckBox
@@ -262,7 +262,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Μετά το πρωινό"
+                android:text="After Breakfast"
                 android:textColor="@color/black" />
 
             <CheckBox
@@ -282,7 +282,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Μεσημέρι"
+                android:text="Noon"
                 android:textColor="@color/black" />
 
             <CheckBox
@@ -302,7 +302,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Απόγευμα"
+                android:text="Afternoon"
                 android:textColor="@color/black" />
 
             <CheckBox
@@ -322,7 +322,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Πριν το βραδινό"
+                android:text="Before Dinner"
                 android:textColor="@color/black" />
 
             <CheckBox
@@ -341,7 +341,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Πριν τον ύπνο"
+                android:text="Before Sleep"
                 android:textColor="@color/black" />
 
             <CheckBox
@@ -357,7 +357,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:backgroundTint="@color/green"
-        android:text="Προσθήκη"
+        android:text="Add"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"

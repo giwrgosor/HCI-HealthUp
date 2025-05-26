@@ -82,8 +82,9 @@ public class PillScheduleActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int REQUEST_SPEECH_RECOGNIZER = 3000;
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"What do you want?");
                 startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
             }
         });
@@ -100,20 +101,20 @@ public class PillScheduleActivity extends AppCompatActivity {
 
         String fullDay = getDays();
 
-        if (fullDay.contains("ΚΥΡ")){
-            dayTextView.setText("~   ΚΥΡΙΑΚΗ   ~");
-        } else if (fullDay.contains("ΔΕΥ")){
-            dayTextView.setText("~   ΔΕΥΤΕΡΑ   ~");
-        } else if (fullDay.contains("ΤΡΙ")) {
-            dayTextView.setText("~   ΤΡΙΤΗ   ~");
-        } else if (fullDay.contains("ΤΕΤ")){
-            dayTextView.setText("~   ΤΕΤΑΡΤΗ   ~");
-        } else if (fullDay.contains("ΠΕΜ")){
-            dayTextView.setText("~   ΠΕΜΠΤΗ   ~");
-        } else if (fullDay.contains("ΠΑΡ")){
-            dayTextView.setText("~   ΠΑΡΑΣΚΕΥΗ   ~");
+        if (fullDay.contains("SUN")){
+            dayTextView.setText("~   SUNDAY   ~");
+        } else if (fullDay.contains("MON")){
+            dayTextView.setText("~   MONDAY   ~");
+        } else if (fullDay.contains("TUE")) {
+            dayTextView.setText("~   TUESDAY   ~");
+        } else if (fullDay.contains("WED")){
+            dayTextView.setText("~   WEDNESDAY   ~");
+        } else if (fullDay.contains("THU")){
+            dayTextView.setText("~   THURSDAY   ~");
+        } else if (fullDay.contains("FRI")){
+            dayTextView.setText("~   FRIDAY   ~");
         } else {
-            dayTextView.setText("~   ΣΑΒΒΑΤΟ   ~");
+            dayTextView.setText("~   SATURDAY   ~");
         }
         //dayTextView.setText(fullDay);
 
@@ -121,15 +122,15 @@ public class PillScheduleActivity extends AppCompatActivity {
     }
 
     private String getDays() {
-        String[] greekDays = {"ΚΥΡ", "ΔΕΥ", "ΤΡΙ", "ΤΕΤ", "ΠΕΜ", "ΠΑΡ", "ΣΑΒ"};
+        String[] greekDays = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
         int dayIndex = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1;
         return greekDays[dayIndex];
     }
 
     private void displayScheduleForToday(String day) {
         String[] timeSlots = {
-                "Πριν το Πρωινό", "Μετά το Πρωινό", "Μεσημέρι",
-                "Απόγευμα", "Πριν το Βραδινό", "Πριν τον Ύπνο"
+                "Before Breakfast", "After Breakfast", "Moon",
+                "Afternoon", "Before Dinner", "Before Sleep"
         };
 
         ArrayList<Pill> allPills = pillDAO.findAll();
@@ -258,7 +259,7 @@ public class PillScheduleActivity extends AppCompatActivity {
 
                 if (!hasPills) {
                     TextView noPills = new TextView(this);
-                    noPills.setText("Δεν υπάρχουν χάπια");
+                    noPills.setText("No pills available");
                     noPills.setTextSize(14);
                     noPills.setTextColor(getResources().getColor(R.color.gray));
                     scheduleLayout.addView(noPills);

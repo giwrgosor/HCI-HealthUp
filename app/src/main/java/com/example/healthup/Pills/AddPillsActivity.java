@@ -31,7 +31,7 @@ import java.util.Map;
 public class AddPillsActivity extends AppCompatActivity {
     private EditText pillNameInput;
     private CheckBox beforeBreakfast, afterBreakfast, noon, afternoon, beforeDinner, beforeSleep;
-    private String selectedDay = "ΔΕΥ";
+    private String selectedDay = "MON";
     private final Map<String, Button> dayButtons = new HashMap<>();
     private final Map<String, boolean[]> daySchedules = new HashMap<>();
     private final PillsDAO pillsDAO = new PillsMemoryDAO();
@@ -94,8 +94,9 @@ public class AddPillsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int REQUEST_SPEECH_RECOGNIZER = 3000;
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"What do you want?");
                 startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
             }
         });
@@ -119,13 +120,13 @@ public class AddPillsActivity extends AppCompatActivity {
 
 
     private void setupDayButtons() {
-        dayButtons.put("ΔΕΥ", findViewById(R.id.mondayButton));
-        dayButtons.put("ΤΡΙ", findViewById(R.id.tuesdayButton));
-        dayButtons.put("ΤΕΤ", findViewById(R.id.wednesdayButton));
-        dayButtons.put("ΠΕΜ", findViewById(R.id.thursdayButton));
-        dayButtons.put("ΠΑΡ", findViewById(R.id.fridayButton));
-        dayButtons.put("ΣΑΒ", findViewById(R.id.saturdayButton));
-        dayButtons.put("ΚΥΡ", findViewById(R.id.sundayButton));
+        dayButtons.put("MON", findViewById(R.id.mondayButton));
+        dayButtons.put("TUE", findViewById(R.id.tuesdayButton));
+        dayButtons.put("WED", findViewById(R.id.wednesdayButton));
+        dayButtons.put("THU", findViewById(R.id.thursdayButton));
+        dayButtons.put("FRI", findViewById(R.id.fridayButton));
+        dayButtons.put("SAT", findViewById(R.id.saturdayButton));
+        dayButtons.put("SUN", findViewById(R.id.sundayButton));
 
         for (Map.Entry<String, Button> entry : dayButtons.entrySet()) {
             entry.getValue().setOnClickListener(v -> {
@@ -181,12 +182,12 @@ public class AddPillsActivity extends AppCompatActivity {
 
         String name = pillNameInput.getText().toString().trim();
         if (name.isEmpty()) {
-            Toast.makeText(this, "Παρακαλώ εισάγετε όνομα χαπιού", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter a pill name", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (pillsDAO.existsByName(name)) {
-            Toast.makeText(this, "Υπάρχει ήδη χάπι με αυτό το όνομα!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "A pill with this name already exists!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -197,7 +198,7 @@ public class AddPillsActivity extends AppCompatActivity {
         }
 
         pillsDAO.save(pill);
-        Toast.makeText(this, "Το χάπι αποθηκεύτηκε!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Pill saved successfully!", Toast.LENGTH_SHORT).show();
         finish();
     }
 

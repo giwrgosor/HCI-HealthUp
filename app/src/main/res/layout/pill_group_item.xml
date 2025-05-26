@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Περίοδος Ημέρας"
+            android:text="Period of Time"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="16sp"
@@ -36,7 +36,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Όνομα Χαπιού"
+                android:text="Pill Name"
                 android:textColor="@android:color/black"
                 android:textSize="14sp" />
 
