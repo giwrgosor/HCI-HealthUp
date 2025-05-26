@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
     private LocationDAO locationDAO;
     private Location location;
     private ImageButton menuButton;
-    private ImageButton voice_btn;
     private String mAnswer;
 
     String[] permissions = {
@@ -140,11 +139,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         ImageButton menuBtn = findViewById(R.id.menuButton);
-        ImageButton voiceBtn = findViewById(R.id.voiceRec);
 
         int blackColor = ContextCompat.getColor(this, android.R.color.black);
         menuBtn.setColorFilter(blackColor, PorterDuff.Mode.SRC_IN);
-        voiceBtn.setColorFilter(blackColor, PorterDuff.Mode.SRC_IN);
 
         String themePref = getSharedPreferences("settings", MODE_PRIVATE)
                 .getString("theme", "default");
@@ -173,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
             icon.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
 
             menuBtn.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
-            voiceBtn.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
 
         }
 
@@ -207,7 +203,6 @@ public class MainActivity extends AppCompatActivity {
         startSurname_edt = findViewById(R.id.startSurname_edt);
         startAddress_edt = findViewById(R.id.startAddress_edt);
         startName_edt = findViewById(R.id.startName_edt);
-        voice_btn = findViewById(R.id.voiceRec);
 
         String[] bloodTypes = {"Type","A", "B", "AB", "O"};
         String[] rhFactors = {"Rh","+", "-"};
@@ -278,17 +273,6 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
-            }
-        });
-
-        voice_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int REQUEST_SPEECH_RECOGNIZER = 3000;
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Please say the information you want to fill in, like 'My name is John Smith' or 'The address is 123 Main Street'. You can say anything you'd like to update.");
-                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
             }
         });
 

@@ -36,7 +36,6 @@ public class DisplayPillsActivity extends AppCompatActivity {
 
     private PillsDAO pillsDAO;
     private Pill pill;
-    private ImageButton voiceDisplayPills_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +60,6 @@ public class DisplayPillsActivity extends AppCompatActivity {
         adapter = new PillsRecyclerViewAdapter(this, pillList, pillsDAO);
 
         recyclerView.setAdapter(adapter);
-        voiceDisplayPills_btn = findViewById(R.id.voiceRecDisplayPills);
 
 
         int spacingPx = 32;
@@ -80,18 +78,6 @@ public class DisplayPillsActivity extends AppCompatActivity {
             ImageView icon = findViewById(R.id.imageView4);
             icon.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
         }
-
-        voiceDisplayPills_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int REQUEST_SPEECH_RECOGNIZER = 3000;
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"What do you want?");
-                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
-            }
-        });
 
         btn_addPill.setOnClickListener(new View.OnClickListener() {
             @Override

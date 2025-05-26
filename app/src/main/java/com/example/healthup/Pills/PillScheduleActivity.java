@@ -36,7 +36,6 @@ public class PillScheduleActivity extends AppCompatActivity {
     private LinearLayout scheduleLayout;
     private PillsDAO pillDAO;
     private TextView dayTextView;
-    private ImageButton voicePillSchedule_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +55,6 @@ public class PillScheduleActivity extends AppCompatActivity {
         dayTextView = findViewById(R.id.dayPill);
         pillDAO = new PillsMemoryDAO();
 
-        voicePillSchedule_btn = findViewById(R.id.voiceRecPillSchedule);
 
         if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK)
                 == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
@@ -76,18 +74,6 @@ public class PillScheduleActivity extends AppCompatActivity {
                 ((android.widget.TextView) findViewById(id)).setTextColor(whiteColor);
             }
         }
-
-        voicePillSchedule_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int REQUEST_SPEECH_RECOGNIZER = 3000;
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"What do you want?");
-                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
-            }
-        });
 
         btn_displayPill.setOnClickListener(view -> {
             Intent intent = new Intent(PillScheduleActivity.this, DisplayPillsActivity.class);

@@ -37,7 +37,6 @@ public class AddPillsActivity extends AppCompatActivity {
     private final PillsDAO pillsDAO = new PillsMemoryDAO();
     private Button btn_addPill;
     private ImageButton btn_homePill;
-    private ImageButton voiceAddPills_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +60,6 @@ public class AddPillsActivity extends AppCompatActivity {
 
         btn_addPill = findViewById(R.id.addPillButton);
         btn_homePill = findViewById(R.id.homePill);
-
-        voiceAddPills_btn = findViewById(R.id.voiceRecAddPills);
 
         setupDayButtons();
         updateDayButtonColors();
@@ -88,18 +85,6 @@ public class AddPillsActivity extends AppCompatActivity {
             ImageView icon = findViewById(R.id.imageView4);
             icon.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
         }
-
-        voiceAddPills_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int REQUEST_SPEECH_RECOGNIZER = 3000;
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"What do you want?");
-                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
-            }
-        });
 
         btn_addPill.setOnClickListener(new View.OnClickListener() {
             @Override

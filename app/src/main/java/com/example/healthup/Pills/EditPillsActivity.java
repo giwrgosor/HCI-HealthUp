@@ -38,7 +38,6 @@ public class EditPillsActivity extends AppCompatActivity {
     private Button btn_saveChanges;
     private Pill pill;
     private ImageButton btn_homePill;
-    private ImageButton voiceEditPills_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +61,6 @@ public class EditPillsActivity extends AppCompatActivity {
 
         btn_saveChanges = findViewById(R.id.savePillButton);
         btn_homePill = findViewById(R.id.homeEditPills);
-
-        voiceEditPills_btn = findViewById(R.id.voiceRecEditPills);
 
         setupDayButtons();
 
@@ -117,17 +114,6 @@ public class EditPillsActivity extends AppCompatActivity {
             }
         });
 
-        voiceEditPills_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int REQUEST_SPEECH_RECOGNIZER = 3000;
-                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"What do you want?");
-                startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
-            }
-        });
     }
 
     private void setupDayButtons() {
