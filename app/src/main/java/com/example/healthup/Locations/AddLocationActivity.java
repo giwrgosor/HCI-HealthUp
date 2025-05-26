@@ -114,7 +114,7 @@ public class AddLocationActivity extends AppCompatActivity {
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"What do you want?");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"What would you like to do?");
                 startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
             }
         });
