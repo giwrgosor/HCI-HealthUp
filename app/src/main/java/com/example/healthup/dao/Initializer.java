@@ -20,10 +20,6 @@ public abstract class Initializer {
 //        ExampleDAO exampleDAO = getExampleDAO();
 //        exampleDAO.save(new Example());
 
-        LocationDAO locationDAO = getLocationDAO();
-        locationDAO.save(new Location("Medical Center", 37.984472, 23.752042, "Mihalakopoulou 114", "Athens", "11527"));
-        locationDAO.save(new Location("Public Hospital", 38.011428, 23.680210, "Thivon 372", "Peristeri", "12135"));
-
         ContactsDAO contactsDAO = getContactsDAO();
         contactsDAO.save(new Contact("John", "6907777777", false));
         contactsDAO.save(new Contact("Helen", "6907777771", false));

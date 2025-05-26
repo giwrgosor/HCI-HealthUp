@@ -243,18 +243,23 @@ public class MainMenuActivity extends AppCompatActivity {
         returnHome_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // This opens Google maps app only
                 LocationDAO locationDAO = new LocationMemoryDAO();
                 com.example.healthup.domain.Location location = locationDAO.findById(1);
                 String uri = "https://www.google.com/maps/dir/?api=1"
                         + "&destination=" + location.getLat() + "," + location.getLon()
                         + "&travelmode=driving";
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                intent.setPackage("com.google.android.apps.maps"); // Ensure it opens in Google Maps
+                intent.setPackage("com.google.android.apps.maps");
                 Context context = getApplicationContext();
                 if (intent.resolveActivity(context.getPackageManager()) != null) {
                     startActivity(intent);
                 } else {
-                    Toast.makeText(context, "Google Maps is not installed", Toast.LENGTH_SHORT).show();
+                    //
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                    view.getContext().startActivity(intent);
                 }
             }
         });
