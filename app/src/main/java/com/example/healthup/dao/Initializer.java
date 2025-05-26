@@ -21,8 +21,8 @@ public abstract class Initializer {
 //        exampleDAO.save(new Example());
 
         LocationDAO locationDAO = getLocationDAO();
-        locationDAO.save(new Location("Location", 37.984472, 23.752042, "Μιχαλακοπούλου 114", "Αθήνα", "11527"));
-        locationDAO.save(new Location("Hospital", 38.011428, 23.680210, "Θηβών 372", "Περιστέρι", "12135"));
+        locationDAO.save(new Location("Medical Center", 37.984472, 23.752042, "Mihalakopoulou 114", "Athens", "11527"));
+        locationDAO.save(new Location("Public Hospital", 38.011428, 23.680210, "Thivon 372", "Peristeri", "12135"));
 
         ContactsDAO contactsDAO = getContactsDAO();
         contactsDAO.save(new Contact("John", "6907777777", false));
@@ -32,33 +32,33 @@ public abstract class Initializer {
 
         PillsDAO pillDAO = getPillsDAO();
         Pill depon = new Pill("Depon");
-        depon.setScheduleForDay("ΔΕΥ", new boolean[]{true, false, false, true, false, true});
-        depon.setScheduleForDay("ΠΕΜ", new boolean[]{false, true, true, false, false, false});
+        depon.setScheduleForDay("MON", new boolean[]{true, false, false, true, false, true});
+        depon.setScheduleForDay("THU", new boolean[]{false, true, true, false, false, false});
         pillDAO.save(depon);
 
         Pill panadol = new Pill("Panadol Extra");
-        panadol.setScheduleForDay("ΤΡΙ", new boolean[]{false, false, true, true, true, false});
+        panadol.setScheduleForDay("TUE", new boolean[]{false, false, true, true, true, false});
         pillDAO.save(panadol);
 
         Pill algo = new Pill("Algofren");
-        algo.setScheduleForDay("ΠΕΜ", new boolean[]{true, true, false, false, true, false});
+        algo.setScheduleForDay("THU", new boolean[]{true, true, false, false, true, false});
         pillDAO.save(algo);
 
         Pill ponstan = new Pill("Ponstan");
-        ponstan.setScheduleForDay("ΚΥΡ", new boolean[]{false, false, false, true, false, true});
+        ponstan.setScheduleForDay("SUN", new boolean[]{false, false, false, true, false, true});
         pillDAO.save(ponstan);
 
         Pill nurofen = new Pill("Nurofen");
-        nurofen.setScheduleForDay("ΤΕΤ", new boolean[]{false, false, true, false, true, true});
+        nurofen.setScheduleForDay("WED", new boolean[]{false, false, true, false, true, true});
         pillDAO.save(nurofen);
 
         Pill legofer = new Pill("Legofer");
-        legofer.setScheduleForDay("ΠΑΡ", new boolean[]{false, false, true, false, true, false});
-        legofer.setScheduleForDay("ΣΑΒ", new boolean[]{false, false, true, false, true, false});
+        legofer.setScheduleForDay("FRI", new boolean[]{false, false, true, false, true, false});
+        legofer.setScheduleForDay("SAT", new boolean[]{false, false, true, false, true, false});
         pillDAO.save(legofer);
 
         UserDAO userDAO = new UserMemoryDAO();
-        userDAO.setUrl("https://bd4c-104-196-110-215.ngrok-free.app");
+        userDAO.setUrl("https://fd32-34-139-190-207.ngrok-free.app");
 
     }
 }
