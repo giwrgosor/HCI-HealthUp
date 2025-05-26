@@ -150,7 +150,10 @@ public class ViewLocationActivity extends AppCompatActivity {
                 if (intent.resolveActivity(context.getPackageManager()) != null) {
                     context.startActivity(intent);
                 } else {
-                    Toast.makeText(context, "Google Maps is not installed.", Toast.LENGTH_SHORT).show();                }
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    view.getContext().startActivity(intent);
+                }
             }
         });
 

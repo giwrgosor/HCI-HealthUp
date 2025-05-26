@@ -255,7 +255,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 if (intent.resolveActivity(context.getPackageManager()) != null) {
                     startActivity(intent);
                 } else {
-                    //
+                    // This opens Google on every available way (app, browser, ...)
                     intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
