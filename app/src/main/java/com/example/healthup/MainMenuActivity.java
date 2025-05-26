@@ -144,8 +144,9 @@ public class MainMenuActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int REQUEST_SPEECH_RECOGNIZER = 3000;
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"What do you want?");
                 startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
             }
         });
@@ -218,16 +219,16 @@ public class MainMenuActivity extends AppCompatActivity {
 
 
             } else {
-                weatherTempText.setText("Δεν βρέθηκε τοποθεσία.");
+                weatherTempText.setText("Location not found.");
             }
 
         } catch (SecurityException e) {
-            Toast.makeText(this, "Δεν δώσατε άδεια τοποθεσίας.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Location permission not granted.", Toast.LENGTH_SHORT).show();
         }
 
 
         TextView dateText = findViewById(R.id.date_text);
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE d MMMM", new Locale("el", "GR"));
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE d MMMM", Locale.ENGLISH);
         String currentDateAndTime = sdf.format(new Date());
         dateText.setText(currentDateAndTime);
 
@@ -253,7 +254,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 if (intent.resolveActivity(context.getPackageManager()) != null) {
                     startActivity(intent);
                 } else {
-                    Toast.makeText(context, "Το Google Maps δεν είναι εγκατεστημένο", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Google Maps is not installed", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -329,7 +330,7 @@ public class MainMenuActivity extends AppCompatActivity {
                                 if (intent.resolveActivity(getPackageManager()) != null) {
                                     startActivity(intent);
                                 } else {
-                                    Toast.makeText(MainMenuActivity.this, "Το Google Maps δεν είναι εγκατεστημένο", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainMenuActivity.this, "Google Maps is not installed", Toast.LENGTH_SHORT).show();
                                 }
                             } else if (action.equals("locations")) {
                                 Intent intent = new Intent(MainMenuActivity.this, LocationsActivity.class);
@@ -344,7 +345,7 @@ public class MainMenuActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MainMenuActivity.this, DisplayProfileActivity.class);
                                 startActivity(intent);
                             } else {
-                                Toast.makeText(MainMenuActivity.this, "Δεν αναγνωρίστηκε η οθόνη.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainMenuActivity.this, "Command not recognized.", Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (JSONException e) {
@@ -356,7 +357,7 @@ public class MainMenuActivity extends AppCompatActivity {
                     @Override
                     public void onError(String error) {
                         Log.e("HTTP_ERROR", error);
-                        Toast.makeText(MainMenuActivity.this, "Σφάλμα κατά την αποστολή του αιτήματος", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainMenuActivity.this, "Error sending request", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -365,7 +366,7 @@ public class MainMenuActivity extends AppCompatActivity {
             }
 
         } else {
-            Toast.makeText(MainMenuActivity.this, "Σφάλμα αναγνώρισης φωνής", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainMenuActivity.this, "Voice recognition error", Toast.LENGTH_SHORT).show();
         }
     }
 
