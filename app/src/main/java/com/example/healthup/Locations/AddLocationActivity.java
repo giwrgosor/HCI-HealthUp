@@ -137,16 +137,16 @@ public class AddLocationActivity extends AppCompatActivity {
                 LocationDAO locationDAO = new LocationMemoryDAO();
 
                 if(name.isEmpty()){
-                    Toast.makeText(AddLocationActivity.this, "Παρακαλώ συμπληρώστε το Όνομα της τοποθεσίας.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddLocationActivity.this, "Please enter the location name.", Toast.LENGTH_SHORT).show();
                 }
                 else if(address.isEmpty()){
-                    Toast.makeText(AddLocationActivity.this, "Παρακαλώ συμπληρώστε τη Διεύθυνση της τοποθεσίας.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddLocationActivity.this, "Please enter the location address.", Toast.LENGTH_SHORT).show();
                 }
                 else if(zip.isEmpty()){
-                    Toast.makeText(AddLocationActivity.this, "Παρακαλώ συμπληρώστε τον Ταχυδρομικό Κώδικα της τοποθεσίας.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddLocationActivity.this, "Please enter the zip code of the location.", Toast.LENGTH_SHORT).show();
                 }
                 else if(city.isEmpty()){
-                    Toast.makeText(AddLocationActivity.this, "Παρακαλώ συμπληρώστε την Πόλη της τοποθεσίας.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddLocationActivity.this, "Please enter the city of the location.", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Geocoder geocoder = new Geocoder(AddLocationActivity.this, Locale.getDefault());
@@ -159,10 +159,10 @@ public class AddLocationActivity extends AppCompatActivity {
                             double longitude = geoaddress.getLongitude();
 
                             locationDAO.save(new Location(name,latitude,longitude,address,city,zip));
-                            Toast.makeText(AddLocationActivity.this, "Η τοποθεσία προστέθηκε με επιτυχία!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddLocationActivity.this, "Location added successfully!", Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
-                            Toast.makeText(AddLocationActivity.this,"Δεν βρέθηκε η τοποθεσία. Βεβαιωθείτε ότι εισάγατε σωστά τα στοιχεία της τοποθεσίας!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddLocationActivity.this,"Location not found. Please make sure you entered the address correctly!", Toast.LENGTH_SHORT).show();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();

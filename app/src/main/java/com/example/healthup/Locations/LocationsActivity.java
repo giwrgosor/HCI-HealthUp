@@ -175,10 +175,10 @@ public class LocationsActivity extends AppCompatActivity {
                                     if (mapsIntent.resolveActivity(getPackageManager()) != null) {
                                         startActivity(mapsIntent);
                                     } else {
-                                        Toast.makeText(LocationsActivity.this, "Το Google Maps δεν είναι εγκατεστημένο", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LocationsActivity.this, "Google Maps is not installed.", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
-                                    Toast.makeText(LocationsActivity.this, "Η τοποθεσία δεν βρέθηκε", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LocationsActivity.this, "Location not found.", Toast.LENGTH_SHORT).show();
                                 }
                             }
 

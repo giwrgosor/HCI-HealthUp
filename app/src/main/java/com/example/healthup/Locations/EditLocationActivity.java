@@ -74,7 +74,7 @@ public class EditLocationActivity extends AppCompatActivity {
             name_edt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(EditLocationActivity.this,"Μόνο η διεύθυνση της τοποθεσίας \"Σπίτι\" μπορεί να μεταβληθεί!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(EditLocationActivity.this,"Only the address of the \"Home\" location can be modified!",Toast.LENGTH_LONG).show();
                 }
             });
         }
@@ -113,8 +113,9 @@ public class EditLocationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int REQUEST_SPEECH_RECOGNIZER = 3000;
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"What do you want?");
                 startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
             }
         });
@@ -136,16 +137,16 @@ public class EditLocationActivity extends AppCompatActivity {
                 String city = String.valueOf(city_edt.getText());
                 LocationDAO locationDAO = new LocationMemoryDAO();
                 if(name.isEmpty()){
-                    Toast.makeText(EditLocationActivity.this, "Παρακαλώ συμπληρώστε το Όνομα της τοποθεσίας.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditLocationActivity.this, "Please enter the location name.", Toast.LENGTH_SHORT).show();
                 }
                 else if(address.isEmpty()){
-                    Toast.makeText(EditLocationActivity.this, "Παρακαλώ συμπληρώστε τη Διεύθυνση της τοποθεσίας.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditLocationActivity.this, "Please enter the location address.", Toast.LENGTH_SHORT).show();
                 }
                 else if(zip.isEmpty()){
-                    Toast.makeText(EditLocationActivity.this, "Παρακαλώ συμπληρώστε τον Ταχυδρομικό Κώδικα της τοποθεσίας.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditLocationActivity.this, "Please enter the location zip code.", Toast.LENGTH_SHORT).show();
                 }
                 else if(city.isEmpty()){
-                    Toast.makeText(EditLocationActivity.this, "Παρακαλώ συμπληρώστε την Πόλη της τοποθεσίας.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditLocationActivity.this, "Please enter the location city.", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Geocoder geocoder = new Geocoder(EditLocationActivity.this, Locale.getDefault());
@@ -158,10 +159,10 @@ public class EditLocationActivity extends AppCompatActivity {
                             double longitude = geoaddress.getLongitude();
 
                             locationDAO.editLocation(location,name,latitude,longitude,address,city,zip);
-                            Toast.makeText(EditLocationActivity.this, "Η τοποθεσία ενημερώθηκε επιτυχώς!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditLocationActivity.this, "Location updated successfully!", Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
-                            Toast.makeText(EditLocationActivity.this,"Δεν βρέθηκε η τοποθεσία. Βεβαιωθείτε ότι εισάγατε σωστά τα στοιχεία της τοποθεσίας!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditLocationActivity.this,"Location not found. Please ensure the location details are correct!", Toast.LENGTH_SHORT).show();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();

@@ -105,8 +105,9 @@ public class ViewLocationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int REQUEST_SPEECH_RECOGNIZER = 3000;
                 Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, "el-GR");
-                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Πείτε τι θα θέλατε");
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-US");
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"What do you want?");
                 startActivityForResult(intent, REQUEST_SPEECH_RECOGNIZER);
             }
         });
@@ -149,8 +150,7 @@ public class ViewLocationActivity extends AppCompatActivity {
                 if (intent.resolveActivity(context.getPackageManager()) != null) {
                     context.startActivity(intent);
                 } else {
-                    Toast.makeText(context, "Το Google Maps δεν είναι εγκατεστημένο", Toast.LENGTH_SHORT).show();
-                }
+                    Toast.makeText(context, "Google Maps is not installed.", Toast.LENGTH_SHORT).show();                }
             }
         });
 
@@ -159,18 +159,18 @@ public class ViewLocationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(!(location.getId()==1)) {
                     new AlertDialog.Builder(context)
-                            .setTitle("Επιβεβαίωση Διαγραφής")
-                            .setMessage("Θέλετε σίγουρα να διαγράψετε την τοποθεσία " + location.getName() + "?")
-                            .setPositiveButton("Ναι", (dialog, which) -> {
+                            .setTitle("Delete Confirmation")
+                            .setMessage("Are you sure you want to delete the location " + location.getName() + "?")
+                            .setPositiveButton("Yes", (dialog, which) -> {
                                 LocationDAO locationDAO = new LocationMemoryDAO();
                                 locationDAO.delete(location);
-                                Toast.makeText(context, "Η τοποθεσία " + location.getName() + " διαγράφηκε!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "The location " + location.getName() + " has been deleted!", Toast.LENGTH_SHORT).show();
                                 finish();
                             })
-                            .setNegativeButton("Όχι", (dialog, which) -> dialog.dismiss())
+                            .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
                             .show();
                 }else{
-                    Toast.makeText(context, "Δεν επιτρέπεται η διαγραφή της τοποθεσίας \"ΣΠΙΤΙ\", αλλά μόνο η επεξεργασία της!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Deleting the location \"HOME\" is not allowed, only editing is permitted!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -224,22 +224,22 @@ public class ViewLocationActivity extends AppCompatActivity {
                                 if (mapsIntent.resolveActivity(getPackageManager()) != null) {
                                     startActivity(mapsIntent);
                                 } else {
-                                    Toast.makeText(context, "Το Google Maps δεν είναι εγκατεστημένο", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, "Google Maps is not installed.", Toast.LENGTH_SHORT).show();
                                 }
                             } else if (action.equals("delete")) {
                                 if (location.getId() == 1) {
-                                    Toast.makeText(context, "Δεν επιτρέπεται η διαγραφή της τοποθεσίας \"ΣΠΙΤΙ\", αλλά μόνο η επεξεργασία της!", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(context, "Deleting the location \"HOME\" is not allowed, only editing is permitted!", Toast.LENGTH_LONG).show();
                                 } else {
                                     new AlertDialog.Builder(context)
-                                            .setTitle("Επιβεβαίωση Διαγραφής")
-                                            .setMessage("Θέλετε σίγουρα να διαγράψετε την τοποθεσία " + location.getName() + ";")
-                                            .setPositiveButton("Ναι", (dialog, which) -> {
+                                            .setTitle("Delete Confirmation")
+                                            .setMessage("Are you sure you want to delete the location " + location.getName() + "?")
+                                            .setPositiveButton("Yes", (dialog, which) -> {
                                                 LocationDAO locationDAO = new LocationMemoryDAO();
                                                 locationDAO.delete(location);
-                                                Toast.makeText(context, "Η τοποθεσία διαγράφηκε!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(context, "The location has been deleted!", Toast.LENGTH_SHORT).show();
                                                 finish();
                                             })
-                                            .setNegativeButton("Όχι", (dialog, which) -> dialog.dismiss())
+                                            .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
                                             .show();
                                 }
                             } else if (action.equals("menu")) {
@@ -247,7 +247,7 @@ public class ViewLocationActivity extends AppCompatActivity {
                                 startActivity(intent);
                             }
                             else {
-                                Toast.makeText(context, "Δεν αναγνωρίστηκε ενέργεια.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Action not recognized.", Toast.LENGTH_SHORT).show();
                             }
 
                         } catch (JSONException e) {
@@ -259,7 +259,7 @@ public class ViewLocationActivity extends AppCompatActivity {
                     @Override
                     public void onError(String error) {
                         Log.e("HTTP_ERROR", error);
-                        Toast.makeText(context, "Σφάλμα κατά την αποστολή του αιτήματος", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Error sending request", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -267,7 +267,7 @@ public class ViewLocationActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         } else {
-            Toast.makeText(context, "Σφάλμα αναγνώρισης φωνής", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Speech recognition error", Toast.LENGTH_SHORT).show();
         }
     }
 

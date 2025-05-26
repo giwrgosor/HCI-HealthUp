@@ -79,7 +79,7 @@ public class LocationsListViewAdapter extends BaseAdapter {
                 if (intent.resolveActivity(context.getPackageManager()) != null) {
                     context.startActivity(intent);
                 } else {
-                    Toast.makeText(context, "Το Google Maps δεν είναι εγκατεστημένο", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Google Maps is not installed.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
