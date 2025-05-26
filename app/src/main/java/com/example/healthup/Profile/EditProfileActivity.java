@@ -1,18 +1,21 @@
 package com.example.healthup.Profile;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -76,11 +79,42 @@ public class EditProfileActivity extends AppCompatActivity {
         rhFactorSpinner = findViewById(R.id.editProfile_spinnerRhFactor);
         homeButtonEditProfile = findViewById(R.id.homeButtonEditProfile);
 
-        ArrayAdapter<String> bloodTypeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, bloodTypes);
+//        ArrayAdapter<String> bloodTypeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, bloodTypes);
+//        bloodTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        bloodTypeSpinner.setAdapter(bloodTypeAdapter);
+//
+//        ArrayAdapter<String> rhFactorAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, rhFactors);
+//        rhFactorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        rhFactorSpinner.setAdapter(rhFactorAdapter);
+
+        ArrayAdapter<String> bloodTypeAdapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_spinner_item,
+                bloodTypes
+        ) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                ((TextView) view).setTextColor(Color.BLACK);
+                return view;
+            }
+        };
         bloodTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bloodTypeSpinner.setAdapter(bloodTypeAdapter);
 
-        ArrayAdapter<String> rhFactorAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, rhFactors);
+
+        ArrayAdapter<String> rhFactorAdapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_spinner_item,
+                rhFactors
+        ) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                ((TextView) view).setTextColor(Color.BLACK);
+                return view;
+            }
+        };
         rhFactorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         rhFactorSpinner.setAdapter(rhFactorAdapter);
 
