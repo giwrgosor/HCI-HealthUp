@@ -3,18 +3,21 @@ package com.example.healthup;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
 
@@ -138,17 +141,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        ImageButton menuBtn = findViewById(R.id.menuButton);
-
-        int blackColor = ContextCompat.getColor(this, android.R.color.black);
-        menuBtn.setColorFilter(blackColor, PorterDuff.Mode.SRC_IN);
-
-        String themePref = getSharedPreferences("settings", MODE_PRIVATE)
-                .getString("theme", "default");
-
-        if (themePref.equals("colorblind")) {
-            setTheme(R.style.AppTheme_ColorBlind);
-        }
+        menuButton = findViewById(R.id.menuButton);
 
         if ((getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK) == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
             ImageView background = findViewById(R.id.startScreenBackground);
@@ -161,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
                     R.id.startTextCity, R.id.startTextZip, R.id.startScreenBlood
             };
 
-
             for (int id : textViewIds) {
                 ((android.widget.TextView) findViewById(id)).setTextColor(whiteColor);
             }
@@ -169,9 +161,10 @@ public class MainActivity extends AppCompatActivity {
             ImageView icon = findViewById(R.id.startScreenImg);
             icon.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
 
-            menuBtn.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
-
+            // Εδώ το σωστό reference
+            menuButton.setColorFilter(whiteColor, PorterDuff.Mode.SRC_IN);
         }
+
 
 
         menuButton = findViewById(R.id.menuButton);
@@ -207,13 +200,45 @@ public class MainActivity extends AppCompatActivity {
         String[] bloodTypes = {"Type","A", "B", "AB", "O"};
         String[] rhFactors = {"Rh","+", "-"};
 
-        ArrayAdapter<String> bloodTypeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, bloodTypes);
+//        ArrayAdapter<String> bloodTypeAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, bloodTypes);
+//        bloodTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinnerBloodType.setAdapter(bloodTypeAdapter);
+//
+//        ArrayAdapter<String> rhFactorAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, rhFactors);
+//        rhFactorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinnerRhFactor.setAdapter(rhFactorAdapter);
+
+        ArrayAdapter<String> bloodTypeAdapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_spinner_item,
+                bloodTypes
+        ) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                ((TextView) view).setTextColor(Color.BLACK);
+                return view;
+            }
+        };
         bloodTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerBloodType.setAdapter(bloodTypeAdapter);
 
-        ArrayAdapter<String> rhFactorAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, rhFactors);
+
+        ArrayAdapter<String> rhFactorAdapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_spinner_item,
+                rhFactors
+        ) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                ((TextView) view).setTextColor(Color.BLACK);
+                return view;
+            }
+        };
         rhFactorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRhFactor.setAdapter(rhFactorAdapter);
+
 
 
         save_btn.setOnClickListener(view -> {
