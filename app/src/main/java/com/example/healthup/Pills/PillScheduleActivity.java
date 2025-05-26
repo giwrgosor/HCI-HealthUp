@@ -151,21 +151,11 @@ public class PillScheduleActivity extends AppCompatActivity {
             slotTitle.setTextSize(22);
 
             int[] slotColors = {
-                    getResources().getColor(R.color.colorSlot1),
-                    getResources().getColor(R.color.colorSlot2),
                     getResources().getColor(R.color.colorSlot3),
-                    getResources().getColor(R.color.colorSlot4),
-                    getResources().getColor(R.color.colorSlot5),
-                    getResources().getColor(R.color.colorSlot6)
             };
 
             int[] darkSlotColors = {
-                    getResources().getColor(R.color.slot1),
                     getResources().getColor(R.color.slot2),
-                    getResources().getColor(R.color.slot3),
-                    getResources().getColor(R.color.slot4),
-                    getResources().getColor(R.color.slot5),
-                    getResources().getColor(R.color.slot6)
             };
 
 //            slotTitle.setTextColor(slotColors[i]);
@@ -173,9 +163,9 @@ public class PillScheduleActivity extends AppCompatActivity {
             int currentNightMode = getResources().getConfiguration().uiMode & android.content.res.Configuration.UI_MODE_NIGHT_MASK;
 
             if (currentNightMode == android.content.res.Configuration.UI_MODE_NIGHT_YES) {
-                slotTitle.setTextColor(darkSlotColors[i]);
+                slotTitle.setTextColor(darkSlotColors[0]);
             } else {
-                slotTitle.setTextColor(slotColors[i]);
+                slotTitle.setTextColor(slotColors[0]);
             }
 
 
