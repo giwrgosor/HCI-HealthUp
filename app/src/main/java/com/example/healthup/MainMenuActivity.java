@@ -329,13 +329,18 @@ public class MainMenuActivity extends AppCompatActivity {
                                 com.example.healthup.domain.Location location = locationDAO.findById(1);
                                 String uri = "https://www.google.com/maps/dir/?api=1"
                                         + "&destination=" + location.getLat() + "," + location.getLon()
-                                        + "&travelmode=driving";
+                                        + "&travelmode=walking";
                                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                                 intent.setPackage("com.google.android.apps.maps");
-                                if (intent.resolveActivity(getPackageManager()) != null) {
+                                Context context = getApplicationContext();
+                                if (intent.resolveActivity(context.getPackageManager()) != null) {
                                     startActivity(intent);
                                 } else {
-                                    Toast.makeText(MainMenuActivity.this, "Google Maps is not installed", Toast.LENGTH_SHORT).show();
+                                    // This opens Google on every available way (app, browser, ...)
+                                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                                    context.startActivity(intent);
                                 }
                             } else if (action.equals("locations")) {
                                 Intent intent = new Intent(MainMenuActivity.this, LocationsActivity.class);

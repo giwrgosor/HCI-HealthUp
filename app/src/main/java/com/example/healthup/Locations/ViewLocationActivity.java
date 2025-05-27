@@ -217,17 +217,22 @@ public class ViewLocationActivity extends AppCompatActivity {
                                 intent.putExtra("Location", location);
                                 startActivity(intent);
                             } else if (action.equals("goto")) {
+                                LocationDAO locationDAO = new LocationMemoryDAO();
+                                com.example.healthup.domain.Location searchlocation = locationDAO.findByName(location.getName());
                                 String uri = "https://www.google.com/maps/dir/?api=1"
-                                        + "&destination=" + location.getLat() + "," + location.getLon()
+                                        + "&destination=" + searchlocation.getLat() + "," + searchlocation.getLon()
                                         + "&travelmode=walking";
-
-                                Intent mapsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                                mapsIntent.setPackage("com.google.android.apps.maps");
-
-                                if (mapsIntent.resolveActivity(getPackageManager()) != null) {
-                                    startActivity(mapsIntent);
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                                intent.setPackage("com.google.android.apps.maps");
+                                Context context = getApplicationContext();
+                                if (intent.resolveActivity(context.getPackageManager()) != null) {
+                                    startActivity(intent);
                                 } else {
-                                    Toast.makeText(context, "Google Maps is not installed.", Toast.LENGTH_SHORT).show();
+                                    // This opens Google on every available way (app, browser, ...)
+                                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                                    startActivity(intent);
                                 }
                             } else if (action.equals("delete")) {
                                 if (location.getId() == 1) {

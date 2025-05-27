@@ -183,7 +183,7 @@ public class LocationsActivity extends AppCompatActivity {
 //                                }
 
                                 LocationDAO locationDAO = new LocationMemoryDAO();
-                                com.example.healthup.domain.Location location = locationDAO.findById(1);
+                                com.example.healthup.domain.Location location = locationDAO.findByName(name);
                                 String uri = "https://www.google.com/maps/dir/?api=1"
                                         + "&destination=" + location.getLat() + "," + location.getLon()
                                         + "&travelmode=walking";
