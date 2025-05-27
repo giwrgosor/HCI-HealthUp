@@ -10,15 +10,17 @@ import com.example.healthup.Sos.UserSosInfoActivity;
 public class EmergencyCallTracker extends PhoneStateListener {
     private final Context context;
     private boolean wasCalling = false;
+    private final String calledNumber;
 
-    public EmergencyCallTracker(Context context) {
-        this.context = context.getApplicationContext(); // Avoid memory leaks
+    public EmergencyCallTracker(Context context, String calledNumber) {
+        this.context = context.getApplicationContext(); // Prevent memory leak
+        this.calledNumber = calledNumber;
     }
 
     @SuppressWarnings("deprecation")
     @Override
-    public void onCallStateChanged(int state, String phoneNumber) {
-        super.onCallStateChanged(state, phoneNumber);
+    public void onCallStateChanged(int state, String ignoredPhoneNumber) {
+        super.onCallStateChanged(state, ignoredPhoneNumber);
 
         switch (state) {
             case TelephonyManager.CALL_STATE_OFFHOOK:
@@ -29,7 +31,7 @@ public class EmergencyCallTracker extends PhoneStateListener {
                 if (wasCalling) {
                     wasCalling = false;
                     Intent intent = new Intent(context, UserSosInfoActivity.class);
-                    intent.putExtra("PhoneNum",phoneNumber);
+                    intent.putExtra("PhoneNum", calledNumber);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 }

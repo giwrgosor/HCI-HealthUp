@@ -72,11 +72,6 @@ public class EmergencySelectionActivity extends AppCompatActivity {
 
         }
 
-        TelephonyManager telephonyManager =
-                (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        callTracker = new EmergencyCallTracker(this);
-        telephonyManager.listen(callTracker, PhoneStateListener.LISTEN_CALL_STATE);
-
         police_btn = findViewById(R.id.police_btn);
         ambulance_btn = findViewById(R.id.ambulance_btn);
         fire_btn = findViewById(R.id.firedepartment_btn);
@@ -112,17 +107,22 @@ public class EmergencySelectionActivity extends AppCompatActivity {
     }
 
     private void callEmergency(String phoneNumber) {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CALL_PHONE)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.CALL_PHONE}, 1);
             return;
         }
 
+        EmergencyCallTracker tracker = new EmergencyCallTracker(this, phoneNumber);
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        telephonyManager.listen(tracker, PhoneStateListener.LISTEN_CALL_STATE);
+
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse(phoneNumber));
         startActivity(callIntent);
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
