@@ -142,7 +142,7 @@ public class ViewLocationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String uri = "https://www.google.com/maps/dir/?api=1"
                         + "&destination=" + location.getLat() + "," + location.getLon()
-                        + "&travelmode=driving";
+                        + "&travelmode=walking";
 
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 intent.setPackage("com.google.android.apps.maps"); // Ensure it opens in Google Maps
@@ -219,7 +219,7 @@ public class ViewLocationActivity extends AppCompatActivity {
                             } else if (action.equals("goto")) {
                                 String uri = "https://www.google.com/maps/dir/?api=1"
                                         + "&destination=" + location.getLat() + "," + location.getLon()
-                                        + "&travelmode=driving";
+                                        + "&travelmode=walking";
 
                                 Intent mapsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                                 mapsIntent.setPackage("com.google.android.apps.maps");

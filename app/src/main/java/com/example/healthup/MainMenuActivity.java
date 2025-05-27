@@ -248,7 +248,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 com.example.healthup.domain.Location location = locationDAO.findById(1);
                 String uri = "https://www.google.com/maps/dir/?api=1"
                         + "&destination=" + location.getLat() + "," + location.getLon()
-                        + "&travelmode=driving";
+                        + "&travelmode=walking";
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 intent.setPackage("com.google.android.apps.maps");
                 Context context = getApplicationContext();

@@ -1,6 +1,7 @@
 package com.example.healthup.Locations;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -161,24 +162,42 @@ public class LocationsActivity extends AppCompatActivity {
                             }
 
                             if (action.equals("search")){
+//                                LocationDAO locationDAO = new LocationMemoryDAO();
+//                                Location location = locationDAO.findByName(name);
+//
+//                                if (location != null) {
+//                                    String uri = "https://www.google.com/maps/dir/?api=1"
+//                                            + "&destination=" + location.getLat() + "," + location.getLon()
+//                                            + "&travelmode=walking";
+//
+//                                    Intent mapsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+//                                    mapsIntent.setPackage("com.google.android.apps.maps");
+//
+//                                    if (mapsIntent.resolveActivity(getPackageManager()) != null) {
+//                                        startActivity(mapsIntent);
+//                                    } else {
+//                                        Toast.makeText(LocationsActivity.this, "Google Maps is not installed.", Toast.LENGTH_SHORT).show();
+//                                    }
+//                                } else {
+//                                    Toast.makeText(LocationsActivity.this, "Location not found.", Toast.LENGTH_SHORT).show();
+//                                }
+
                                 LocationDAO locationDAO = new LocationMemoryDAO();
-                                Location location = locationDAO.findByName(name);
-
-                                if (location != null) {
-                                    String uri = "https://www.google.com/maps/dir/?api=1"
-                                            + "&destination=" + location.getLat() + "," + location.getLon()
-                                            + "&travelmode=driving";
-
-                                    Intent mapsIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                                    mapsIntent.setPackage("com.google.android.apps.maps");
-
-                                    if (mapsIntent.resolveActivity(getPackageManager()) != null) {
-                                        startActivity(mapsIntent);
-                                    } else {
-                                        Toast.makeText(LocationsActivity.this, "Google Maps is not installed.", Toast.LENGTH_SHORT).show();
-                                    }
+                                com.example.healthup.domain.Location location = locationDAO.findById(1);
+                                String uri = "https://www.google.com/maps/dir/?api=1"
+                                        + "&destination=" + location.getLat() + "," + location.getLon()
+                                        + "&travelmode=walking";
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                                intent.setPackage("com.google.android.apps.maps");
+                                Context context = getApplicationContext();
+                                if (intent.resolveActivity(context.getPackageManager()) != null) {
+                                    startActivity(intent);
                                 } else {
-                                    Toast.makeText(LocationsActivity.this, "Location not found.", Toast.LENGTH_SHORT).show();
+                                    // This opens Google on every available way (app, browser, ...)
+                                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                                    startActivity(intent);
                                 }
                             }
 

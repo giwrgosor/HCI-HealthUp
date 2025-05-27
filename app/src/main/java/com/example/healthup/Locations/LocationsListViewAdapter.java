@@ -71,7 +71,7 @@ public class LocationsListViewAdapter extends BaseAdapter {
             public void onClick(View view) {
                 String uri = "https://www.google.com/maps/dir/?api=1"
                         + "&destination=" + ((Location)getItem(position)).getLat() + "," + ((Location)getItem(position)).getLon()
-                        + "&travelmode=driving";
+                        + "&travelmode=walking";
 
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 intent.setPackage("com.google.android.apps.maps"); // Ensure it opens in Google Maps
@@ -79,8 +79,10 @@ public class LocationsListViewAdapter extends BaseAdapter {
                 if (intent.resolveActivity(context.getPackageManager()) != null) {
                     context.startActivity(intent);
                 } else {
-                    Toast.makeText(context, "Google Maps is not installed.", Toast.LENGTH_SHORT).show();
-                }
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                    context.startActivity(intent);                }
             }
         });
 
