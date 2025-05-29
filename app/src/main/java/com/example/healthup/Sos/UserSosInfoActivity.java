@@ -91,6 +91,10 @@ public class UserSosInfoActivity extends AppCompatActivity {
         }
 
         numberCalled = getIntent().getStringExtra("PhoneNum");
+        numberCalled = getIntent().getStringExtra("PhoneNum");
+        if (numberCalled != null) {
+            numberCalled = numberCalled.substring(4);
+        }
         message = message + user.getName() + " " + user.getSurname() + ". The" + numberCalled +" has been called to his location. ";
         if (checkPermissions()) {
             getLastLocationAndSendSms();
