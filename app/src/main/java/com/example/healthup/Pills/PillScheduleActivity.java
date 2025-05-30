@@ -115,7 +115,7 @@ public class PillScheduleActivity extends AppCompatActivity {
 
     private void displayScheduleForToday(String day) {
         String[] timeSlots = {
-                "Before Breakfast", "After Breakfast", "Moon",
+                "Before Breakfast", "After Breakfast", "Noon",
                 "Afternoon", "Before Dinner", "Before Sleep"
         };
 
