@@ -30,6 +30,7 @@ import com.example.healthup.dao.LocationDAO;
 import com.example.healthup.dao.UserDAO;
 import com.example.healthup.domain.HttpRequest;
 import com.example.healthup.domain.Location;
+import com.example.healthup.domain.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -159,6 +160,13 @@ public class EditLocationActivity extends AppCompatActivity {
                             double longitude = geoaddress.getLongitude();
 
                             locationDAO.editLocation(location,name,latitude,longitude,address,city,zip);
+                            if(location.getId()==1){
+                                UserDAO userDAO = new UserMemoryDAO();
+                                User user = userDAO.getUser();
+                                user.setCity(city);
+                                user.setAddress(address);
+                                user.setZipcode(zip);
+                            }
                             Toast.makeText(EditLocationActivity.this, "Location updated successfully!", Toast.LENGTH_SHORT).show();
                             finish();
                         } else {
